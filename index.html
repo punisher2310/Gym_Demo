@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IceBug Bespoke | The Old Money Fitness Club</title>
+    <title>IceBug Bespoke | The Elite Institution</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Bodoni+Moda:ital,wght@0,400;0,900;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Bodoni+Moda:ital,wght@0,400;0,900;1,400&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -15,7 +15,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'old-money-gold': '#c5a059', 'luxury-black': '#0a0a0a' },
+                    colors: { 'gold': '#c5a059', 'dark': '#070707' },
                     fontFamily: { cinzel: ['Cinzel', 'serif'], bodoni: ['Bodoni Moda', 'serif'], inter: ['Inter', 'sans-serif'] }
                 }
             }
@@ -23,256 +23,216 @@
     </script>
     
     <style>
-        * { cursor: none !important; }
-        body { background: #0a0a0a; color: white; overflow-x: hidden; }
+        * { cursor: none !important; scroll-behavior: smooth; }
+        body { background: #070707; color: white; overflow-x: hidden; font-family: 'Inter', sans-serif; }
         
-        /* Preloader Styling */
-        #preloader { position: fixed; inset: 0; background: #0a0a0a; z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        #hello-text { font-family: 'Cinzel', serif; font-size: 3rem; color: #c5a059; }
+        /* Preloader */
+        #loader { position: fixed; inset: 0; background: #070707; z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
 
-        /* Bespoke Cursor */
+        /* Cursor */
         #c-dot { width: 6px; height: 6px; background: #c5a059; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
-        #c-ring { width: 35px; height: 35px; border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; transition: transform 0.15s ease-out; }
+        #c-ring { width: 40px; height: 40px; border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; }
 
-        /* Hero Layout - Fixed Video */
-        .hero-v-fixed { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
-        video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.3) sepia(0.2); }
+        /* Video Background Fix */
+        .v-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; }
+        #main-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); }
 
-        /* Glassmorphism Luxury */
-        .luxury-glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(197, 160, 89, 0.1); }
-        .page-wrap { position: relative; z-index: 10; background: transparent; }
+        /* Bespoke Glass */
+        .b-glass { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(30px); border: 1px solid rgba(197, 160, 89, 0.1); }
+        .reveal { opacity: 0; transform: translateY(40px); }
         
-        /* Section Dividers */
-        .luxury-line { width: 1px; height: 100px; background: linear-gradient(to bottom, #c5a059, transparent); margin: 0 auto; }
-        
-        .reveal { opacity: 0; transform: translateY(50px); }
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            #main-video { object-position: center; }
+            .hero-text { font-size: 3.5rem !important; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="preloader">
-        <div class="text-center">
-            <span id="hello-text">Hello</span>
-            <p class="text-[10px] tracking-[1em] uppercase text-gray-600 mt-4">Welcome to IceBug Elite</p>
-        </div>
+    <div id="loader">
+        <div id="hello" class="font-cinzel text-4xl text-gold italic">Hello</div>
+        <p class="text-[10px] tracking-[1em] uppercase text-gray-700 mt-4">Welcome to IceBug</p>
     </div>
 
     <div id="c-dot"></div><div id="c-ring"></div>
 
-    <div class="hero-v-fixed">
-        <video autoplay muted loop playsinline id="hero-video">
-            <source src="gym-video.mp4" type="video/mp4">
+    <div class="v-bg">
+        <video autoplay muted loop playsinline id="main-video">
+            <source src="gym-hero.mp4" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-luxury-black/50 to-luxury-black"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-dark"></div>
     </div>
 
-    <section class="h-screen flex items-center px-6 md:px-32 relative z-20" id="hero-trigger">
-        <div class="max-w-4xl">
-            <p class="font-inter text-old-money-gold text-xs tracking-[1em] mb-6 reveal uppercase">Est. 2026 — Kanpur</p>
-            <h1 class="font-cinzel text-6xl md:text-[110px] font-black leading-none mb-10 reveal">
-                REDEFINING <br><span class="italic font-bodoni text-old-money-gold">EXCELLENCE.</span>
+    <section class="h-screen flex items-center px-6 md:px-32 relative z-20">
+        <div class="max-w-5xl">
+            <div class="flex items-center space-x-4 mb-6 reveal">
+                <div class="w-12 h-[1px] bg-gold"></div>
+                <p class="font-cinzel text-gold text-xs tracking-[0.8em] uppercase">Private Estate • Kanpur</p>
+            </div>
+            <h1 class="hero-text font-cinzel text-6xl md:text-[120px] font-black leading-[0.9] mb-10 reveal">
+                THE ART OF <br><span class="italic font-bodoni text-gold">STRENGTH.</span>
             </h1>
-            <p class="font-inter text-gray-400 text-lg max-w-lg mb-12 reveal leading-relaxed">Quiet luxury meets industrial strength. This is not a gym; it's a private estate for your physical evolution.</p>
-            <div class="reveal flex items-center space-x-8">
-                <button class="border border-old-money-gold text-old-money-gold px-12 py-5 font-cinzel uppercase tracking-widest hover:bg-old-money-gold hover:text-black transition-all duration-700 text-sm">Join the Registry</button>
+            <p class="font-inter text-gray-400 text-lg md:text-xl max-w-xl mb-12 reveal leading-relaxed">Old Money aesthetics meets high-performance engineering. Join the elite 1%.</p>
+            <div class="reveal">
+                <a href="#trial" class="border border-gold text-gold px-12 py-5 font-cinzel uppercase tracking-widest hover:bg-gold hover:text-black transition-all duration-700">Claim Free Pass</a>
+            </div>
+        </div>
+        <div class="absolute right-10 bottom-20 hidden md:block rotate-90 origin-right">
+            <p class="font-cinzel text-[10px] tracking-[1.5em] text-gray-600 uppercase">Legacy is built in silence.</p>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 md:px-32 relative z-30 bg-dark/80 backdrop-blur-md">
+        <div class="grid md:grid-cols-2 gap-10 max-w-7xl mx-auto">
+            
+            <div class="b-glass p-12 reveal">
+                <div class="flex justify-between items-start mb-10">
+                    <h3 class="font-cinzel text-gold text-sm tracking-widest">LIVE ATTENDANCE</h3>
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-[10px] text-green-500 uppercase">Live Floor</span>
+                    </div>
+                </div>
+                <div class="text-8xl font-bodoni mb-6 italic">42 <span class="text-xl text-gray-700">/ 60</span></div>
+                <div class="w-full bg-white/5 h-1"><div class="bg-gold h-full w-[70%]"></div></div>
+                <p class="text-[10px] text-gray-600 mt-4 uppercase tracking-widest">Environment: High Performance</p>
+            </div>
+
+            <div class="b-glass p-12 reveal">
+                <h3 class="font-cinzel text-gold text-sm tracking-widest mb-10">VITAL PRECISION</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <input id="bw" type="number" placeholder="Weight (kg)" class="bg-transparent border-b border-gold/20 p-2 outline-none font-bodoni italic text-2xl focus:border-gold">
+                    <input id="bh" type="number" placeholder="Height (cm)" class="bg-transparent border-b border-gold/20 p-2 outline-none font-bodoni italic text-2xl focus:border-gold">
+                </div>
+                <button onclick="bCalc()" class="w-full mt-10 py-4 border border-gold/30 font-cinzel text-[10px] tracking-[0.5em] uppercase hover:bg-gold hover:text-black transition-all">Calculate Score</button>
+                <div id="br" class="text-center text-4xl font-bodoni text-gold mt-6 italic opacity-0">0.0</div>
             </div>
         </div>
     </section>
 
-    <div class="page-wrap">
-        <div class="luxury-line"></div>
-
-        <section class="py-40 px-6 md:px-32 reveal">
-            <div class="grid md:grid-cols-4 gap-0 border border-old-money-gold/10">
-                <div class="p-16 border-r border-old-money-gold/10 luxury-glass">
-                    <h4 class="font-cinzel text-[10px] text-old-money-gold tracking-widest mb-10 uppercase">Current Capacity</h4>
-                    <div class="text-6xl font-light font-bodoni">42 <span class="text-xs text-gray-600">/ 60</span></div>
-                </div>
-                <div class="p-16 border-r border-old-money-gold/10 luxury-glass">
-                    <h4 class="font-cinzel text-[10px] text-gray-600 tracking-widest mb-10 uppercase">Atmosphere</h4>
-                    <div class="text-3xl font-cinzel italic">Serene Power</div>
-                </div>
-                <div class="p-16 border-r border-old-money-gold/10 luxury-glass">
-                    <h4 class="font-cinzel text-[10px] text-gray-600 tracking-widest mb-10 uppercase">Private Hours</h4>
-                    <div class="text-3xl font-cinzel">24 / 7</div>
-                </div>
-                <div class="p-16 luxury-glass">
-                    <h4 class="font-cinzel text-[10px] text-gray-600 tracking-widest mb-10 uppercase">Support Status</h4>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <p class="text-xs font-inter text-green-500 uppercase tracking-widest">Live Help</p>
-                    </div>
+    <section class="py-40 px-6 md:px-32 bg-dark">
+        <h2 class="font-cinzel text-center text-4xl mb-32 tracking-[0.5em] uppercase reveal text-gray-500 italic">The <span class="text-gold">Engineers</span></h2>
+        <div class="grid md:grid-cols-3 gap-10">
+            <div class="relative group overflow-hidden reveal">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" class="w-full grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all"></div>
+                <div class="absolute bottom-10 left-10">
+                    <p class="font-cinzel text-gold text-xs italic">Power Engineer</p>
+                    <h4 class="font-cinzel text-2xl uppercase">Coach Aryan</h4>
                 </div>
             </div>
-        </section>
+            <div class="relative group overflow-hidden reveal" style="transition-delay: 0.2s;">
+                <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800" class="w-full grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div class="absolute bottom-10 left-10">
+                    <p class="font-cinzel text-gold text-xs italic">Physique Architect</p>
+                    <h4 class="font-cinzel text-2xl uppercase">Coach Rahul</h4>
+                </div>
+            </div>
+            <div class="relative group overflow-hidden reveal" style="transition-delay: 0.4s;">
+                <img src="uploaded:gym 1.jpeg-a1e22785-dfe7-47c6-b161-4bd008297161" class="w-full grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div class="absolute bottom-10 left-10">
+                    <p class="font-cinzel text-gold text-xs italic">The Founder</p>
+                    <h4 class="font-cinzel text-2xl uppercase">Anshuman Singh</h4>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <section class="py-40 px-6 md:px-32 grid md:grid-cols-2 gap-32 items-center reveal">
-            <div class="relative">
-                <img src="gym 1.jpeg" class="w-full grayscale brightness-75 border border-old-money-gold/20 shadow-2xl">
-                <div class="absolute -bottom-10 -left-10 w-64 h-64 border border-old-money-gold/10 -z-10"></div>
+    <section id="trial" class="py-40 px-6 md:px-32 bg-dark relative overflow-hidden">
+        <div class="max-w-4xl mx-auto b-glass p-16 relative z-10">
+            <h2 class="font-cinzel text-5xl mb-6 italic text-center">REQUEST <span class="text-gold">ACCESS.</span></h2>
+            <p class="text-center font-inter text-gray-500 uppercase tracking-[0.8em] text-[10px] mb-16">Complimentary 24-Hour Elite Pass</p>
+            
+            <form class="grid md:grid-cols-2 gap-10">
+                <input type="text" placeholder="IDENTITY NAME" class="bg-transparent border-b border-gold/20 p-4 font-bodoni italic text-xl outline-none focus:border-gold transition-all" required>
+                <input type="email" placeholder="SECURE EMAIL" class="bg-transparent border-b border-gold/20 p-4 font-bodoni italic text-xl outline-none focus:border-gold transition-all" required>
+                <input type="date" class="bg-transparent border-b border-gold/20 p-4 font-inter text-gray-500 outline-none focus:border-gold" required>
+                <input type="time" class="bg-transparent border-b border-gold/20 p-4 font-inter text-gray-500 outline-none focus:border-gold" required>
+                <button type="submit" class="md:col-span-2 bg-gold text-black py-8 font-cinzel font-black tracking-[1em] uppercase hover:bg-white transition-all shadow-2xl">Validate Invitation</button>
+            </form>
+        </div>
+        <div class="mt-20 flex flex-col items-center">
+            <div class="flex items-center space-x-4 mb-4">
+                <span class="w-3 h-3 bg-gold rounded-full animate-ping"></span>
+                <p class="font-cinzel text-gold text-xs tracking-widest uppercase">24/7 Concierge Support Live</p>
+            </div>
+            <p class="text-gray-700 text-[10px] uppercase tracking-widest font-inter text-center">Our health engineers are available for immediate consultation.</p>
+        </div>
+    </section>
+
+    <footer class="py-24 border-t border-gold/10 px-6 md:px-32 bg-dark">
+        <div class="grid md:grid-cols-4 gap-20">
+            <div>
+                <h1 class="font-cinzel text-2xl italic tracking-tighter mb-8">ICEBUG<span class="text-gold">.CO</span></h1>
+                <p class="text-[10px] text-gray-700 uppercase tracking-widest leading-loose">The Institutional Standard of Private Fitness. Swaroop Nagar, Kanpur.</p>
             </div>
             <div>
-                <h2 class="font-cinzel text-5xl md:text-7xl mb-12 leading-tight">THE <br><span class="italic font-bodoni text-old-money-gold">FOUNDATION.</span></h2>
-                <p class="font-inter text-gray-400 text-xl font-light italic leading-relaxed mb-12">"IceBug Elite is built for those who value privacy over publicity. We don't just train bodies; we cultivate legacies."</p>
-                <div class="flex items-center space-x-6">
-                    <div class="w-20 h-[1px] bg-old-money-gold"></div>
-                    <p class="font-cinzel font-bold uppercase text-2xl tracking-widest italic">Anshuman Singh</p>
+                <h5 class="font-cinzel text-gold text-[10px] uppercase mb-8 tracking-widest">Support</h5>
+                <ul class="text-[10px] uppercase tracking-widest space-y-4 text-gray-500">
+                    <li class="hover:text-gold cursor-pointer italic">24/7 Customer Help</li>
+                    <li class="hover:text-gold cursor-pointer italic">Health Concierge</li>
+                    <li class="hover:text-gold cursor-pointer italic">Membership Registry</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-cinzel text-gold text-[10px] uppercase mb-8 tracking-widest">Connect</h5>
+                <div class="flex space-x-8 text-2xl text-gray-800">
+                    <a href="https://instagram.com/icebug.co" class="hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-gold transition"><i class="fas fa-map-marker-alt"></i></a>
                 </div>
             </div>
-        </section>
-
-        <section class="py-40 px-6 md:px-32 reveal">
-            <div class="max-w-6xl mx-auto luxury-glass p-20 border-x border-old-money-gold/20">
-                <div class="grid md:grid-cols-2 gap-24 items-center">
-                    <div class="space-y-16">
-                        <h2 class="font-cinzel text-3xl italic text-old-money-gold tracking-widest underline decoration-old-money-gold/20 underline-offset-8">Physique Analysis</h2>
-                        <div class="space-y-8">
-                            <input id="bw" type="number" placeholder="Body Weight (KG)" class="w-full bg-transparent border-b border-old-money-gold/20 p-4 text-3xl font-bodoni italic outline-none focus:border-old-money-gold transition-all">
-                            <input id="bh" type="number" placeholder="Stature (CM)" class="w-full bg-transparent border-b border-old-money-gold/20 p-4 text-3xl font-bodoni italic outline-none focus:border-old-money-gold transition-all text-white">
-                            <button onclick="bCalc()" class="w-full bg-old-money-gold text-black py-6 font-cinzel font-bold uppercase text-xs tracking-[0.6em] hover:bg-white transition-all duration-700 shadow-2xl">Execute Analysis</button>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center justify-center border-l border-old-money-gold/5">
-                        <div id="br" class="text-[160px] font-bodoni font-black text-old-money-gold/10 italic leading-none">0.0</div>
-                        <p class="text-gray-700 font-inter text-[10px] uppercase tracking-[1.2em] mt-10">Bespoke Precision Rating</p>
-                    </div>
-                </div>
+            <div class="text-right">
+                <p class="font-cinzel text-gold text-lg italic">Elite Engineering</p>
+                <p class="text-[8px] text-gray-800 uppercase tracking-[1em] mt-4">IceBug Private Estate © 2026</p>
             </div>
-        </section>
-
-        <section class="py-60 px-6 md:px-32 relative reveal">
-             <h3 class="font-cinzel text-center text-4xl mb-32 tracking-[0.5em] uppercase">Private <span class="italic font-bodoni text-old-money-gold">Tiers</span></h3>
-             <div class="grid md:grid-cols-3 gap-0 border border-old-money-gold/10">
-                <div class="p-20 border-r border-old-money-gold/10 hover:bg-white/5 transition-all">
-                    <h4 class="font-inter text-gray-500 font-bold text-[10px] uppercase mb-12 tracking-[0.5em]">Standard</h4>
-                    <div class="text-5xl font-bodoni italic mb-12">₹1,499</div>
-                    <ul class="space-y-6 text-[10px] font-inter uppercase tracking-[0.3em] text-gray-500 mb-20">
-                        <li>/ Full Estate Access</li>
-                        <li>/ 24/7 Health Support</li>
-                    </ul>
-                    <button class="w-full py-4 border border-old-money-gold/20 text-[10px] font-cinzel tracking-widest hover:bg-old-money-gold hover:text-black transition-all">Inquire</button>
-                </div>
-                <div class="p-20 border-r border-old-money-gold/10 bg-old-money-gold text-black scale-105 shadow-2xl z-20">
-                    <h4 class="font-inter text-black/50 font-bold text-[10px] uppercase mb-12 tracking-[0.5em]">Elite Bespoke</h4>
-                    <div class="text-5xl font-bodoni italic mb-12">₹2,999</div>
-                    <ul class="space-y-6 text-[10px] font-inter uppercase tracking-[0.3em] text-black mb-20">
-                        <li>/ Private Human Engineer</li>
-                        <li>/ Bespoke Nutrition Hub</li>
-                    </ul>
-                    <button class="w-full py-4 bg-black text-white text-[10px] font-cinzel tracking-widest">Apply Now</button>
-                </div>
-                <div class="p-20 hover:bg-white/5 transition-all">
-                    <h4 class="font-inter text-gray-500 font-bold text-[10px] uppercase mb-12 tracking-[0.5em]">Executive</h4>
-                    <div class="text-5xl font-bodoni italic mb-12">₹4,999</div>
-                    <ul class="space-y-6 text-[10px] font-inter uppercase tracking-[0.3em] text-gray-500 mb-20">
-                        <li>/ Recovery Spa & Suite</li>
-                        <li>/ VIP Concierge</li>
-                    </ul>
-                    <button class="w-full py-4 border border-old-money-gold/20 text-[10px] font-cinzel tracking-widest hover:bg-old-money-gold hover:text-black transition-all">Inquire</button>
-                </div>
-             </div>
-        </section>
-
-        <section class="py-60 px-6 md:px-32 reveal" id="lead-form">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="font-cinzel text-5xl md:text-8xl font-black mb-12 italic leading-none tracking-tighter">SECURE YOUR <br><span class="italic font-bodoni text-old-money-gold underline underline-offset-8">LEGACY.</span></h2>
-                <p class="font-inter text-gray-600 mb-20 uppercase tracking-[1.5em] text-[10px]">Private Access & Bespoke Engineering Chart</p>
-                <form class="grid md:grid-cols-2 gap-16 text-left">
-                    <input type="text" placeholder="Identity Name" class="bg-transparent border-b border-old-money-gold/20 p-6 font-bodoni text-3xl italic outline-none focus:border-old-money-gold">
-                    <input type="tel" placeholder="Private WhatsApp" class="bg-transparent border-b border-old-money-gold/20 p-6 font-bodoni text-3xl italic outline-none focus:border-old-money-gold">
-                    <button class="md:col-span-2 bg-old-money-gold text-black py-8 font-cinzel font-black uppercase tracking-[0.5em] text-xl hover:bg-white transition-all duration-700 shadow-2xl">Claim Private Access</button>
-                </form>
-            </div>
-        </section>
-
-        <footer class="py-32 border-t border-old-money-gold/10 px-6 md:px-32 bg-luxury-black">
-            <div class="grid md:grid-cols-4 gap-20 mb-24">
-                <div class="md:col-span-1">
-                    <h1 class="font-cinzel text-2xl tracking-tighter mb-8 italic">ICEBUG<span class="text-old-money-gold">.CO</span></h1>
-                    <p class="text-xs text-gray-600 font-inter leading-relaxed tracking-widest uppercase">The pinnacle of private fitness in Kanpur. By Appointment only.</p>
-                </div>
-                <div class="space-y-6">
-                    <h5 class="font-cinzel text-xs text-old-money-gold uppercase tracking-widest">Institutional</h5>
-                    <ul class="text-[10px] uppercase tracking-[0.3em] space-y-4 text-gray-700">
-                        <li><a href="#" class="hover:text-old-money-gold transition">Our Philosophy</a></li>
-                        <li><a href="#" class="hover:text-old-money-gold transition">The Estate</a></li>
-                        <li><a href="#" class="hover:text-old-money-gold transition">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="space-y-6">
-                    <h5 class="font-cinzel text-xs text-old-money-gold uppercase tracking-widest">24/7 Support</h5>
-                    <ul class="text-[10px] uppercase tracking-[0.3em] space-y-4 text-gray-700">
-                        <li><a href="#" class="hover:text-old-money-gold transition">Concierge: +91 000 000 0000</a></li>
-                        <li><a href="#" class="hover:text-old-money-gold transition">Emergency Health Hub</a></li>
-                        <li><a href="https://instagram.com/icebug.co" class="hover:text-old-money-gold transition">Instagram Presence</a></li>
-                    </ul>
-                </div>
-                <div class="space-y-6 text-right">
-                    <h5 class="font-cinzel text-xs text-old-money-gold uppercase tracking-widest">Kanpur Locale</h5>
-                    <p class="text-[10px] text-gray-700 tracking-widest leading-loose uppercase">Swaroop Nagar, Kanpur<br>Uttar Pradesh, 208002</p>
-                </div>
-            </div>
-            <div class="text-center pt-12 border-t border-old-money-gold/5">
-                <p class="text-[8px] text-gray-800 tracking-[1em] uppercase">&copy; 2026 IceBug Elite Private Estate. All Legacies Reserved.</p>
-            </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 🌟 Preloader Logic (Languages)
-        const hellos = ["Hello", "नमस्ते", "Bonjour", "Ciao", "Hola", "Konnichiwa"];
+        // 🌟 Preloader with Language Change
+        const words = ["Hello", "नमस्ते", "Bonjour", "Ciao", "Hola"];
         let i = 0;
-        const interval = setInterval(() => {
-            document.getElementById('hello-text').innerText = hellos[i];
-            i++;
-            if(i === hellos.length) {
-                clearInterval(interval);
-                gsap.to("#preloader", { y: "-100%", duration: 1.5, ease: "expo.inOut", delay: 0.5 });
-            }
+        const wordInt = setInterval(() => {
+            document.getElementById('hello').innerText = words[i];
+            i = (i + 1) % words.length;
         }, 300);
 
-        // 🌟 Custom Cursor Engine
-        const curDot = document.getElementById('c-dot');
-        const curRing = document.getElementById('c-ring');
+        window.onload = () => {
+            setTimeout(() => {
+                clearInterval(wordInt);
+                gsap.to("#loader", { y: "-100%", duration: 1.2, ease: "power4.inOut" });
+            }, 2000);
+        };
+
+        // 🌟 Cursor
         document.addEventListener('mousemove', (e) => {
-            gsap.to(curDot, { x: e.clientX, y: e.clientY, duration: 0 });
-            gsap.to(curRing, { x: e.clientX - 17, y: e.clientY - 17, duration: 0.25 });
+            gsap.to("#c-dot", { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to("#c-ring", { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
         });
 
-        // 🌟 Immersive Zoom (Parallax Video Engine)
-        gsap.to("#hero-video", {
-            scrollTrigger: {
-                trigger: "#hero-trigger",
-                start: "top top",
-                end: "bottom top",
-                scrub: true
-            },
-            scale: 2.5,
-            opacity: 0.1,
-            filter: "blur(40px) sepia(1)"
-        });
-
-        // 🌟 Staggered Reveal Engine (Luxury Transitions)
+        // 🌟 Scroll Animations
         gsap.utils.toArray(".reveal").forEach(el => {
-            gsap.to(el, {
-                scrollTrigger: { trigger: el, start: "top 90%" },
-                opacity: 1, y: 0, duration: 2, ease: "power4.out"
-            });
+            gsap.to(el, { scrollTrigger: { trigger: el, start: "top 90%" }, opacity: 1, y: 0, duration: 1.5, ease: "power4.out" });
         });
 
-        // 🌟 Vitality Score Calculator
+        // 🌟 Parallax Video Zoom
+        gsap.to("#main-video", {
+            scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: true },
+            scale: 2, filter: "blur(20px) grayscale(1)"
+        });
+
+        // 🌟 Health Hub Logic
         function bCalc() {
             const w = document.getElementById('bw').value;
             const h = document.getElementById('bh').value;
             if(w && h) {
                 const bmi = (w / ((h/100)**2)).toFixed(1);
-                const display = document.getElementById('br');
-                display.innerText = bmi;
-                display.style.color = "#c5a059";
-                display.style.opacity = "1";
-                gsap.from(display, { scale: 0.5, opacity: 0, duration: 1.5, ease: "elastic.out(1, 0.5)" });
+                const res = document.getElementById('br');
+                res.innerText = "Score: " + bmi;
+                gsap.to(res, { opacity: 1, scale: 1.2, duration: 1, ease: "elastic.out" });
             }
         }
     </script>

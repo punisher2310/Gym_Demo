@@ -23,150 +23,249 @@
     </script>
     
     <style>
-        * { cursor: none !important; } /* Elite Custom Cursor */
-        body { background-color: #050505; overflow-x: hidden; }
+        * { cursor: none !important; }
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        /* Custom Cursor Dot */
-        #cursor { width: 12px; height: 12px; background: #f97316; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s ease; }
-        #cursor-follower { width: 40px; height: 40px; border: 1px solid #f97316; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; opacity: 0.5; }
+        /* Elite Cursor */
+        #cursor { width: 10px; height: 10px; background: #f97316; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
+        #cursor-blur { width: 40px; height: 40px; border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; }
 
-        /* Immersive Video Layer */
-        .hero-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
-        video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
-        .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), #050505); }
+        /* Immersive Hero Video */
+        .hero-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; }
+        #hero-video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
+        .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.2), #050505); }
 
-        /* Smooth Content Layout */
-        .content-wrap { position: relative; z-index: 10; background: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
+        /* Glassmorphism */
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .glass:hover { border-color: #f97316; }
+
+        /* Parallax Content */
+        .content-wrap { position: relative; z-index: 10; margin-top: 100vh; background: #050505; }
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.1s ease-out; }
         
-        /* 3D Tilt Card */
-        .tilt-card { transform-style: preserve-3d; transition: transform 0.2s ease; }
+        /* Smooth scrolling text */
+        .reveal { opacity: 0; transform: translateY(50px); }
     </style>
 </head>
-<body class="text-white font-inter">
+<body>
 
     <div id="cursor"></div>
-    <div id="cursor-follower"></div>
+    <div id="cursor-blur"></div>
 
-    <div class="hero-container">
-        <video autoplay muted loop playsinline id="mainVideo">
-            <source src="Gym_Demo/gym-hero.mp4" type="video/mp4">
+    <div class="hero-wrap">
+        <video autoplay muted loop playsinline id="hero-video">
+            <source src="gym hero video 2.mp4" type="video/mp4">
         </video>
         <div class="overlay"></div>
     </div>
 
-    <section class="h-screen flex items-center px-6 md:px-20 overflow-hidden" id="hero">
-        <div class="max-w-6xl">
-            <h1 class="text-8xl md:text-[160px] font-black uppercase tracking-tighter leading-[0.8] mb-10 hero-text">
-                UNLEASH <br><span class="text-agency-orange">ELITE.</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-400 max-w-xl font-light mb-12 hero-p">
-                Kanpur's first high-immersion fitness studio. Experience the future of training.
-            </p>
-            <div class="flex space-x-6 hero-btn">
-                <button class="bg-agency-orange text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:scale-110 transition">Claim Free Pass</button>
-            </div>
+    <section class="h-screen flex flex-col justify-center px-6 md:px-20 relative z-20" id="hero-trigger">
+        <h1 class="text-7xl md:text-[180px] font-black uppercase tracking-tighter leading-[0.8] mb-10 hero-title">
+            BEYOND <br><span class="text-agency-orange">LIMITS.</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-400 max-w-xl font-light mb-10 hero-p">
+            Kanpur's most elite fitness destination. Precision training meets futuristic design.
+        </p>
+        <div class="hero-cta">
+            <button class="bg-agency-orange text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:scale-110 transition duration-300">Get Free Pass</button>
         </div>
     </section>
 
-    <div class="content-wrap">
+    <main class="content-wrap">
         
-        <section class="py-40 px-6 reveal">
-            <div class="max-w-4xl mx-auto glass p-20 rounded-[50px] border-t border-agency-orange/30 shadow-2xl">
-                <h2 class="text-5xl font-black mb-16 text-center uppercase tracking-widest italic">Physique <span class="text-agency-orange">Analysis</span></h2>
-                <div class="grid md:grid-cols-2 gap-10">
-                    <input id="weight" type="number" placeholder="Weight (kg)" class="bg-black/50 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange transition">
-                    <input id="height" type="number" placeholder="Height (cm)" class="bg-black/50 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange transition">
-                    <button onclick="calculateBMI()" class="md:col-span-2 bg-white text-black font-black py-6 rounded-2xl uppercase text-xl hover:bg-agency-orange transition">Calculate BMI</button>
+        <section class="py-40 px-6 md:px-20 grid md:grid-cols-2 gap-20 items-center section-reveal">
+            <div class="tilt-card relative">
+                <div class="absolute -inset-4 border border-agency-orange/20 rounded-[40px] -z-10 translate-x-4 translate-y-4"></div>
+            </div>
+            <div>
+                <h3 class="text-agency-orange font-bold uppercase tracking-[0.3em] mb-4">Founder's Message</h3>
+                <h2 class="text-6xl font-black mb-8 leading-tight">WE DON'T TRAIN,<br>WE TRANSFORM.</h2>
+                <p class="text-gray-400 italic text-xl leading-relaxed">"Kanpur ke har fitness lover ko ek premium aur result-oriented environment dena hi mera sapna hai. IceBug Elite wahi dream hai."</p>
+                <div class="mt-10 flex items-center space-x-4">
+                    <div class="w-12 h-[1px] bg-agency-orange"></div>
+                    <p class="font-black uppercase text-2xl tracking-tighter italic">Anshuman Singh</p>
                 </div>
-                <div id="bmiResult" class="mt-10 text-5xl font-black text-center text-agency-orange"></div>
+            </div>
+        </section>
+
+        <section class="py-20 px-6 section-reveal">
+            <div class="max-w-6xl mx-auto glass p-12 rounded-[50px] flex flex-col md:flex-row justify-around items-center text-center">
+                <div class="mb-8 md:mb-0">
+                    <h4 class="text-gray-500 uppercase tracking-widest text-xs mb-2">Live Floor Attendance</h4>
+                    <div class="text-6xl font-black text-agency-orange">42 <span class="text-xl text-gray-700">/ 50</span></div>
+                    <p class="text-[10px] text-green-500 mt-2 font-bold uppercase">Optimal Training Time</p>
+                </div>
+                <div class="h-20 w-[1px] bg-white/5 hidden md:block"></div>
+                <div>
+                    <h4 class="text-gray-500 uppercase tracking-widest text-xs mb-2">Peak Hours Today</h4>
+                    <div class="text-3xl font-bold uppercase italic">6PM — 9PM</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-6 section-reveal">
+            <div class="max-w-4xl mx-auto glass p-20 rounded-[60px] border-t border-agency-orange/30">
+                <h2 class="text-5xl font-black mb-12 text-center uppercase italic">Physique <span class="text-agency-orange">Analyzer</span></h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <input id="weight-in" type="number" placeholder="Weight (kg)" class="bg-black/40 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange text-white">
+                    <input id="height-in" type="number" placeholder="Height (cm)" class="bg-black/40 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange text-white">
+                    <button onclick="calculateBMI()" class="md:col-span-2 bg-agency-orange text-black font-black py-6 rounded-2xl uppercase text-xl hover:scale-95 transition tracking-widest">Calculate My Status</button>
+                </div>
+                <div id="bmi-res" class="mt-10 text-5xl font-black text-center text-agency-orange italic"></div>
             </div>
         </section>
 
         <section class="py-40 px-6">
-            <h3 class="text-center text-8xl font-black mb-32 tracking-tighter uppercase">Packages</h3>
-            <div class="grid md:grid-cols-3 gap-16 max-w-7xl mx-auto">
-                
-                <div class="tilt-card glass p-12 rounded-[40px] border border-white/5 flex flex-col justify-between h-[500px]">
+            <h3 class="text-center text-8xl font-black mb-32 tracking-tighter uppercase">Elite Plans</h3>
+            <div class="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
+                <div class="tilt-card glass p-12 rounded-[40px] flex flex-col justify-between h-[650px]">
                     <div>
-                        <h4 class="text-gray-500 font-bold mb-4 uppercase">Starter</h4>
-                        <div class="text-6xl font-black mb-8 italic">₹1,499</div>
-                        <p class="text-gray-400 italic">Basic access to Kanpur's best equipment.</p>
+                        <h4 class="text-gray-500 font-bold uppercase mb-6 tracking-widest">Starter Pack</h4>
+                        <div class="text-7xl font-black italic text-white mb-8">₹1,499<span class="text-sm font-normal">/mo</span></div>
+                        <ul class="space-y-4 text-gray-400 italic text-sm border-t border-white/5 pt-8">
+                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Full Access (6AM - 10PM)</li>
+                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Standard Locker</li>
+                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Free Parking</li>
+                        </ul>
                     </div>
-                    <button class="w-full py-5 border border-white/20 rounded-2xl hover:bg-white hover:text-black font-bold transition uppercase">Select</button>
+                    <button class="w-full py-5 border border-white/10 rounded-2xl font-bold uppercase hover:bg-white hover:text-black transition">Select</button>
                 </div>
-
-                <div class="tilt-card bg-agency-orange p-12 rounded-[40px] shadow-2xl scale-110 flex flex-col justify-between h-[500px] text-black">
+                <div class="tilt-card bg-agency-orange p-12 rounded-[40px] flex flex-col justify-between h-[650px] text-black scale-110 shadow-2xl shadow-orange-950">
                     <div>
-                        <div class="text-xs font-black uppercase mb-4 tracking-widest opacity-50">Most Popular</div>
-                        <h4 class="font-bold mb-4 uppercase">Pro Athlete</h4>
-                        <div class="text-6xl font-black mb-8 italic">₹2,999</div>
-                        <p class="font-medium italic text-black/70">Personalized AI coaching & premium nutrition.</p>
+                        <div class="text-[10px] font-black uppercase mb-4 opacity-60 tracking-[0.4em]">Most Recommended</div>
+                        <h4 class="text-3xl font-black uppercase mb-6 italic">Pro Athlete</h4>
+                        <div class="text-7xl font-black italic text-white mb-8">₹2,999<span class="text-sm font-normal">/mo</span></div>
+                        <ul class="space-y-4 font-medium italic border-t border-black/10 pt-8 text-black/80">
+                            <li><i class="fas fa-bolt mr-3"></i>Dedicated Personal Trainer</li>
+                            <li><i class="fas fa-bolt mr-3"></i>AI Nutrition Hub Access</li>
+                            <li><i class="fas fa-bolt mr-3"></i>Unlimited Classes</li>
+                        </ul>
                     </div>
-                    <button class="w-full py-5 bg-black text-white rounded-2xl font-bold transition uppercase">Join Elite</button>
+                    <button class="w-full py-5 bg-black text-white rounded-2xl font-bold uppercase shadow-xl hover:scale-105 transition">Join Elite</button>
                 </div>
-
-                <div class="tilt-card glass p-12 rounded-[40px] border border-white/5 flex flex-col justify-between h-[500px]">
+                <div class="tilt-card glass p-12 rounded-[40px] flex flex-col justify-between h-[650px]">
                     <div>
-                        <h4 class="text-gray-500 font-bold mb-4 uppercase">Elite</h4>
-                        <div class="text-6xl font-black mb-8 italic">₹4,999</div>
-                        <p class="text-gray-400 italic">Unlimited access with recovery spa & sauna.</p>
+                        <h4 class="text-gray-500 font-bold uppercase mb-6 tracking-widest">Executive Elite</h4>
+                        <div class="text-7xl font-black italic text-white mb-8">₹4,999<span class="text-sm font-normal">/mo</span></div>
+                        <ul class="space-y-4 text-gray-400 italic text-sm border-t border-white/5 pt-8">
+                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Recovery Spa & Sauna</li>
+                            <li><i class="fas fa-check text-agency-orange mr-3"></i>All Pro Features</li>
+                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Priority Support</li>
+                        </ul>
                     </div>
-                    <button class="w-full py-5 border border-white/20 rounded-2xl hover:bg-white hover:text-black font-bold transition uppercase">Select</button>
+                    <button class="w-full py-5 border border-white/10 rounded-2xl font-bold uppercase hover:bg-white hover:text-black transition">Select</button>
                 </div>
-
             </div>
         </section>
 
-        <footer class="py-20 text-center border-t border-white/5">
-            <h1 class="text-4xl font-black mb-4">ICEBUG<span class="text-agency-orange">GYM</span></h1>
-            <p class="text-gray-600 text-xs tracking-widest uppercase">Powered by Icebug.co | Swaroop Nagar, Kanpur</p>
+        <section class="py-40 px-6 section-reveal">
+            <h3 class="text-center text-6xl font-black mb-20 italic uppercase tracking-tighter">Success Stories</h3>
+            <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                <div class="aspect-video glass rounded-[40px] overflow-hidden group">
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-transparent transition duration-500 pointer-events-none">
+                        <i class="fas fa-play text-4xl text-agency-orange"></i>
+                    </div>
+                    <video controls class="w-full h-full object-cover">
+                        <source src="testimonial-video.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="aspect-video glass rounded-[40px] overflow-hidden group">
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-transparent transition duration-500 pointer-events-none">
+                        <i class="fas fa-play text-4xl text-agency-orange"></i>
+                    </div>
+                    <video controls class="w-full h-full object-cover">
+                        <source src="testimonial-2.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 bg-zinc-950 px-6 section-reveal" id="lead-form">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-7xl font-black mb-8 italic uppercase leading-none">CLAIM YOUR <span class="text-agency-orange">FREE PASS</span></h2>
+                <p class="text-gray-400 mb-16 italic text-xl">Get 1 Day Free Pass & Personalized Diet Chart Instantly.</p>
+                <form class="grid md:grid-cols-2 gap-8 text-left">
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-[0.5em] text-gray-500 ml-2">Full Name</label>
+                        <input type="text" placeholder="e.g. Ansh Singh" class="w-full bg-black p-6 rounded-3xl border border-white/5 outline-none focus:border-agency-orange transition text-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-[0.5em] text-gray-500 ml-2">WhatsApp No.</label>
+                        <input type="tel" placeholder="e.g. 9876543210" class="w-full bg-black p-6 rounded-3xl border border-white/5 outline-none focus:border-agency-orange transition text-white">
+                    </div>
+                    <button class="md:col-span-2 bg-agency-orange py-7 rounded-[30px] font-black uppercase text-2xl text-black hover:scale-[0.98] transition shadow-2xl shadow-orange-950/40">Get My Free Pass & Diet Chart</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="py-24 border-t border-white/5 px-6 md:px-20 bg-black">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-16">
+                <h1 class="text-5xl font-black mb-8 md:mb-0 tracking-tighter">ICEBUG<span class="text-agency-orange">GYM.</span></h1>
+                <div class="flex space-x-12 text-3xl">
+                    <a href="https://instagram.com/icebug.co" class="text-gray-600 hover:text-agency-orange transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-agency-orange transition"><i class="fas fa-map-marker-alt"></i></a>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between text-[10px] text-gray-800 tracking-[0.5em] uppercase border-t border-white/5 pt-12">
+                <p>&copy; 2026 IceBug Elite Studios</p>
+                <div class="flex space-x-8 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of Service</a>
+                </div>
+            </div>
         </footer>
-    </div>
+
+    </main>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Custom Cursor Logic
-        const cursor = document.querySelector('#cursor');
-        const follower = document.querySelector('#cursor-follower');
+        // 1. ELITE CURSOR LOGIC
+        const cursor = document.getElementById('cursor');
+        const blur = document.getElementById('cursor-blur');
         document.addEventListener('mousemove', (e) => {
             gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            gsap.to(follower, { x: e.clientX - 15, y: e.clientY - 15, duration: 0.3 });
+            gsap.to(blur, { x: e.clientX - 15, y: e.clientY - 15, duration: 0.3 });
         });
 
-        // 2. Immersive Hero Parallax (Video Zooms in on Scroll)
-        gsap.to("#mainVideo", {
+        // 2. IMMERSIVE HERO ANIMATION (Zoom & Parallax)
+        gsap.to("#hero-video", {
             scrollTrigger: {
-                trigger: "#hero",
+                trigger: "#hero-trigger",
                 start: "top top",
                 end: "bottom top",
                 scrub: true
             },
-            scale: 2,
-            opacity: 0.2
+            scale: 2.8,
+            opacity: 0.1,
+            filter: "blur(20px)"
         });
 
-        // 3. Hero Text Storytelling Reveal
-        const tl = gsap.timeline();
-        tl.from(".hero-text", { y: 100, opacity: 0, duration: 1.2, ease: "power4.out" })
-          .from(".hero-p", { y: 50, opacity: 0, duration: 0.8 }, "-=0.8")
-          .from(".hero-btn", { y: 30, opacity: 0, duration: 0.6 }, "-=0.6");
+        gsap.to(".hero-title", {
+            scrollTrigger: { trigger: "#hero-trigger", start: "top top", scrub: true },
+            y: -250, opacity: 0
+        });
 
-        // 4. Reveal Sections on Scroll
-        gsap.utils.toArray(".reveal").forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: { trigger: el, start: "top 85%" },
-                y: 100, opacity: 0, duration: 1.5, ease: "power4.out"
+        // 3. STORYTELLING REVEAL ANIMATIONS
+        gsap.utils.toArray(".section-reveal").forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: "power4.out"
             });
         });
 
-        // 5. 3D Tilt Card Logic
+        // 4. 3D TILT EFFECT FOR CARDS
         document.querySelectorAll('.tilt-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const { left, top, width, height } = card.getBoundingClientRect();
-                const x = (e.clientX - left - width / 2) / 15;
-                const y = (e.clientY - top - height / 2) / 15;
+                const x = (e.clientX - left - width / 2) / 25;
+                const y = (e.clientY - top - height / 2) / 25;
                 card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
             });
             card.addEventListener('mouseleave', () => {
@@ -174,14 +273,19 @@
             });
         });
 
-        // BMI Logic
+        // 5. BMI CALCULATOR LOGIC
         function calculateBMI() {
-            const h = document.getElementById('height').value;
-            const w = document.getElementById('weight').value;
-            if(h && w) {
-                const bmi = (w / ((h/100)**2)).toFixed(1);
-                document.getElementById('bmiResult').innerText = "RESULT: " + bmi;
-                gsap.from("#bmiResult", { scale: 1.5, opacity: 0, duration: 0.5 });
+            const w = document.getElementById('weight-in').value;
+            const h = document.getElementById('height-in').value;
+            if (w && h) {
+                const bmi = (w / ((h / 100) ** 2)).toFixed(1);
+                let msg = "";
+                if (bmi < 18.5) msg = "Underweight";
+                else if (bmi < 25) msg = "Elite Athlete Range";
+                else msg = "Bulk Mode";
+                
+                document.getElementById('bmi-res').innerText = bmi + " — " + msg;
+                gsap.from("#bmi-res", { scale: 1.5, opacity: 0, duration: 0.5, ease: "back.out" });
             }
         }
     </script>

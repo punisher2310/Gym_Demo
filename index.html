@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IceBug Elite | Kanpur's Most Powerful Gym</title>
+    <title>IceBug Bespoke | Elite Fitness Engineering</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -15,8 +15,8 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'agency-dark': '#050505', 'agency-orange': '#f97316' },
-                    fontFamily: { inter: ['Inter', 'sans-serif'] }
+                    colors: { 'bespoke-black': '#030303', 'bespoke-orange': '#ff5f00' },
+                    fontFamily: { inter: ['Inter', 'sans-serif'], sync: ['Syncopate', 'sans-serif'] }
                 }
             }
         }
@@ -24,268 +24,266 @@
     
     <style>
         * { cursor: none !important; }
-        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: #030303; color: white; overflow-x: hidden; }
         
-        /* Elite Cursor */
-        #cursor { width: 10px; height: 10px; background: #f97316; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
-        #cursor-blur { width: 40px; height: 40px; border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; }
+        /* Premium Custom Cursor */
+        #cursor { width: 8px; height: 8px; background: #ff5f00; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
+        #cursor-follower { width: 40px; height: 40px; border: 1px solid rgba(255, 95, 0, 0.3); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; transition: transform 0.15s ease-out; }
 
-        /* Immersive Hero Video */
-        .hero-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; }
-        #hero-video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
-        .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.2), #050505); }
+        /* Immersive Video Layer */
+        .hero-v-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
+        #v-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) grayscale(0.2); transform: scale(1.1); }
 
-        /* Glassmorphism */
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
-        .glass:hover { border-color: #f97316; }
+        /* Bespoke Glassmorphism */
+        .b-glass { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.03); }
+        .orange-glow:hover { box-shadow: 0 0 40px rgba(255, 95, 0, 0.2); border-color: #ff5f00; }
 
-        /* Parallax Content */
-        .content-wrap { position: relative; z-index: 10; margin-top: 100vh; background: #050505; }
-        .tilt-card { transform-style: preserve-3d; transition: transform 0.1s ease-out; }
+        /* Section Spacing */
+        .content-layer { position: relative; z-index: 10; background: transparent; }
+        .section-spacer { height: 20vh; }
         
-        /* Smooth scrolling text */
-        .reveal { opacity: 0; transform: translateY(50px); }
+        /* Animations */
+        .reveal-up { opacity: 0; transform: translateY(100px); }
+        .reveal-left { opacity: 0; transform: translateX(-100px); }
     </style>
 </head>
-<body>
+<body class="font-inter">
 
     <div id="cursor"></div>
-    <div id="cursor-blur"></div>
+    <div id="cursor-follower"></div>
 
-    <div class="hero-wrap">
-        <video autoplay muted loop playsinline id="hero-video">
-            <source src="gym hero video 2.mp4" type="video/mp4">
+    <div class="hero-v-wrap">
+        <video autoplay muted loop playsinline id="v-bg">
+            <source src="gym-hero.mp4" type="video/mp4">
         </video>
-        <div class="overlay"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-bespoke-black/50 to-bespoke-black"></div>
     </div>
 
-    <section class="h-screen flex flex-col justify-center px-6 md:px-20 relative z-20" id="hero-trigger">
-        <h1 class="text-7xl md:text-[180px] font-black uppercase tracking-tighter leading-[0.8] mb-10 hero-title">
-            BEYOND <br><span class="text-agency-orange">LIMITS.</span>
+    <section class="h-screen flex flex-col justify-center px-6 md:px-32 relative z-20" id="hero-trigger">
+        <p class="font-sync text-bespoke-orange text-xs tracking-[1em] mb-6 reveal-up">ICEBUG BESPOKE SERIES</p>
+        <h1 class="text-6xl md:text-[140px] font-black uppercase tracking-tighter leading-none mb-10 hero-main-text">
+            FORGE <br><span class="text-transparent border-t-0 border-x-0 border-b-2 border-white">ELITE.</span>
         </h1>
-        <p class="text-xl md:text-2xl text-gray-400 max-w-xl font-light mb-10 hero-p">
-            Kanpur's most elite fitness destination. Precision training meets futuristic design.
-        </p>
-        <div class="hero-cta">
-            <button class="bg-agency-orange text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:scale-110 transition duration-300">Get Free Pass</button>
+        <div class="flex items-center space-x-10 hero-cta">
+            <button class="bg-bespoke-orange text-black px-12 py-6 rounded-none font-black uppercase tracking-widest hover:bg-white transition-all duration-500 text-sm">Join the Elite</button>
+            <div class="hidden md:block h-[1px] w-40 bg-white/20"></div>
+            <p class="hidden md:block text-xs uppercase tracking-widest text-gray-500">Scroll to Explore Engineering</p>
         </div>
     </section>
 
-    <main class="content-wrap">
-        
-        <section class="py-40 px-6 md:px-20 grid md:grid-cols-2 gap-20 items-center section-reveal">
-            <div class="tilt-card relative">
-                <div class="absolute -inset-4 border border-agency-orange/20 rounded-[40px] -z-10 translate-x-4 translate-y-4"></div>
-            </div>
-            <div>
-                <h3 class="text-agency-orange font-bold uppercase tracking-[0.3em] mb-4">Founder's Message</h3>
-                <h2 class="text-6xl font-black mb-8 leading-tight">WE DON'T TRAIN,<br>WE TRANSFORM.</h2>
-                <p class="text-gray-400 italic text-xl leading-relaxed">"Kanpur ke har fitness lover ko ek premium aur result-oriented environment dena hi mera sapna hai. IceBug Elite wahi dream hai."</p>
-                <div class="mt-10 flex items-center space-x-4">
-                    <div class="w-12 h-[1px] bg-agency-orange"></div>
-                    <p class="font-black uppercase text-2xl tracking-tighter italic">Anshuman Singh</p>
+    <div class="content-layer">
+
+        <section class="py-40 px-6 md:px-32 section-spacer-top">
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="b-glass p-12 orange-glow reveal-up">
+                    <h4 class="text-bespoke-orange font-bold text-xs tracking-widest mb-6 uppercase">Live Attendance</h4>
+                    <div class="text-7xl font-black mb-4">42 <span class="text-sm font-light text-gray-600">/ 60</span></div>
+                    <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                        <div class="bg-bespoke-orange h-full w-[70%]"></div>
+                    </div>
+                </div>
+                <div class="b-glass p-12 orange-glow reveal-up" style="transition-delay: 0.1s;">
+                    <h4 class="text-gray-500 font-bold text-xs tracking-widest mb-6 uppercase">Current Atmosphere</h4>
+                    <div class="text-4xl font-bold italic">HIGH INTENSITY</div>
+                    <p class="text-xs text-gray-600 mt-4 tracking-widest uppercase">Peak Hours: 18:00 - 21:00</p>
+                </div>
+                <div class="b-glass p-12 orange-glow reveal-up" style="transition-delay: 0.2s;">
+                    <h4 class="text-gray-500 font-bold text-xs tracking-widest mb-6 uppercase">Bespoke Perks</h4>
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <span class="border border-white/10 px-4 py-2 text-[10px] uppercase">AI Coach</span>
+                        <span class="border border-white/10 px-4 py-2 text-[10px] uppercase">Sauna</span>
+                        <span class="border border-white/10 px-4 py-2 text-[10px] uppercase">Recovery</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-20 px-6 section-reveal">
-            <div class="max-w-6xl mx-auto glass p-12 rounded-[50px] flex flex-col md:flex-row justify-around items-center text-center">
-                <div class="mb-8 md:mb-0">
-                    <h4 class="text-gray-500 uppercase tracking-widest text-xs mb-2">Live Floor Attendance</h4>
-                    <div class="text-6xl font-black text-agency-orange">42 <span class="text-xl text-gray-700">/ 50</span></div>
-                    <p class="text-[10px] text-green-500 mt-2 font-bold uppercase">Optimal Training Time</p>
-                </div>
-                <div class="h-20 w-[1px] bg-white/5 hidden md:block"></div>
-                <div>
-                    <h4 class="text-gray-500 uppercase tracking-widest text-xs mb-2">Peak Hours Today</h4>
-                    <div class="text-3xl font-bold uppercase italic">6PM — 9PM</div>
+        <section class="py-40 px-6 md:px-32 grid md:grid-cols-2 gap-32 items-center">
+            <div class="relative reveal-left">
+                <img src="gym 1.jpeg" class="w-full grayscale filter contrast-125 rounded-none shadow-2xl">
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 border border-bespoke-orange/30 -z-10"></div>
+            </div>
+            <div class="reveal-up">
+                <h2 class="font-sync text-4xl md:text-6xl mb-12 leading-tight">ENGINEERED BY <br><span class="text-bespoke-orange">EXPERTS.</span></h2>
+                <p class="text-gray-400 text-xl font-light leading-relaxed mb-10 italic">"Icebug Bespoke is not a gym. It is a laboratory where we engineer elite human performance. We build what others can only dream of."</p>
+                <div class="flex items-center space-x-6">
+                    <div class="w-20 h-[1px] bg-white"></div>
+                    <p class="font-black uppercase text-2xl">Anshuman Singh</p>
                 </div>
             </div>
         </section>
 
-        <section class="py-40 px-6 section-reveal">
-            <div class="max-w-4xl mx-auto glass p-20 rounded-[60px] border-t border-agency-orange/30">
-                <h2 class="text-5xl font-black mb-12 text-center uppercase italic">Physique <span class="text-agency-orange">Analyzer</span></h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <input id="weight-in" type="number" placeholder="Weight (kg)" class="bg-black/40 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange text-white">
-                    <input id="height-in" type="number" placeholder="Height (cm)" class="bg-black/40 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange text-white">
-                    <button onclick="calculateBMI()" class="md:col-span-2 bg-agency-orange text-black font-black py-6 rounded-2xl uppercase text-xl hover:scale-95 transition tracking-widest">Calculate My Status</button>
-                </div>
-                <div id="bmi-res" class="mt-10 text-5xl font-black text-center text-agency-orange italic"></div>
-            </div>
-        </section>
-
-        <section class="py-40 px-6">
-            <h3 class="text-center text-8xl font-black mb-32 tracking-tighter uppercase">Elite Plans</h3>
-            <div class="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
-                <div class="tilt-card glass p-12 rounded-[40px] flex flex-col justify-between h-[650px]">
-                    <div>
-                        <h4 class="text-gray-500 font-bold uppercase mb-6 tracking-widest">Starter Pack</h4>
-                        <div class="text-7xl font-black italic text-white mb-8">₹1,499<span class="text-sm font-normal">/mo</span></div>
-                        <ul class="space-y-4 text-gray-400 italic text-sm border-t border-white/5 pt-8">
-                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Full Access (6AM - 10PM)</li>
-                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Standard Locker</li>
-                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Free Parking</li>
-                        </ul>
+        <section class="py-40 px-6 md:px-32">
+            <h3 class="font-sync text-center text-4xl mb-32">THE <span class="text-bespoke-orange text-outline">ENGINEERS.</span></h3>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="group relative overflow-hidden h-[500px] b-glass reveal-up">
+                    <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=80" class="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+                    <div class="absolute bottom-10 left-10">
+                        <p class="text-bespoke-orange text-xs font-bold uppercase tracking-widest mb-2">Powerlifting</p>
+                        <h4 class="text-2xl font-black uppercase">Coach Aryan</h4>
                     </div>
-                    <button class="w-full py-5 border border-white/10 rounded-2xl font-bold uppercase hover:bg-white hover:text-black transition">Select</button>
                 </div>
-                <div class="tilt-card bg-agency-orange p-12 rounded-[40px] flex flex-col justify-between h-[650px] text-black scale-110 shadow-2xl shadow-orange-950">
-                    <div>
-                        <div class="text-[10px] font-black uppercase mb-4 opacity-60 tracking-[0.4em]">Most Recommended</div>
-                        <h4 class="text-3xl font-black uppercase mb-6 italic">Pro Athlete</h4>
-                        <div class="text-7xl font-black italic text-white mb-8">₹2,999<span class="text-sm font-normal">/mo</span></div>
-                        <ul class="space-y-4 font-medium italic border-t border-black/10 pt-8 text-black/80">
-                            <li><i class="fas fa-bolt mr-3"></i>Dedicated Personal Trainer</li>
-                            <li><i class="fas fa-bolt mr-3"></i>AI Nutrition Hub Access</li>
-                            <li><i class="fas fa-bolt mr-3"></i>Unlimited Classes</li>
-                        </ul>
+                <div class="group relative overflow-hidden h-[500px] b-glass reveal-up" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800&q=80" class="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+                    <div class="absolute bottom-10 left-10">
+                        <p class="text-bespoke-orange text-xs font-bold uppercase tracking-widest mb-2">Mobility</p>
+                        <h4 class="text-2xl font-black uppercase">Coach Priya</h4>
                     </div>
-                    <button class="w-full py-5 bg-black text-white rounded-2xl font-bold uppercase shadow-xl hover:scale-105 transition">Join Elite</button>
-                </div>
-                <div class="tilt-card glass p-12 rounded-[40px] flex flex-col justify-between h-[650px]">
-                    <div>
-                        <h4 class="text-gray-500 font-bold uppercase mb-6 tracking-widest">Executive Elite</h4>
-                        <div class="text-7xl font-black italic text-white mb-8">₹4,999<span class="text-sm font-normal">/mo</span></div>
-                        <ul class="space-y-4 text-gray-400 italic text-sm border-t border-white/5 pt-8">
-                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Recovery Spa & Sauna</li>
-                            <li><i class="fas fa-check text-agency-orange mr-3"></i>All Pro Features</li>
-                            <li><i class="fas fa-check text-agency-orange mr-3"></i>Priority Support</li>
-                        </ul>
-                    </div>
-                    <button class="w-full py-5 border border-white/10 rounded-2xl font-bold uppercase hover:bg-white hover:text-black transition">Select</button>
                 </div>
             </div>
         </section>
 
-        <section class="py-40 px-6 section-reveal">
-            <h3 class="text-center text-6xl font-black mb-20 italic uppercase tracking-tighter">Success Stories</h3>
-            <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-                <div class="aspect-video glass rounded-[40px] overflow-hidden group">
-                    <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-transparent transition duration-500 pointer-events-none">
-                        <i class="fas fa-play text-4xl text-agency-orange"></i>
+        <section class="py-40 px-6 md:px-32">
+            <div class="max-w-6xl mx-auto b-glass p-20 rounded-none border-x border-bespoke-orange/20 reveal-up">
+                <h2 class="font-sync text-3xl mb-16 text-center italic tracking-widest">PERFORMANCE <span class="text-bespoke-orange underline">HUB</span></h2>
+                <div class="grid md:grid-cols-2 gap-16">
+                    <div class="space-y-10">
+                        <div class="group">
+                            <label class="block text-[10px] uppercase text-gray-500 mb-4 tracking-[0.3em]">Current Weight (KG)</label>
+                            <input id="bw" type="number" placeholder="80" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange transition-all text-2xl font-black">
+                        </div>
+                        <div class="group">
+                            <label class="block text-[10px] uppercase text-gray-500 mb-4 tracking-[0.3em]">Exact Height (CM)</label>
+                            <input id="bh" type="number" placeholder="180" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange transition-all text-2xl font-black">
+                        </div>
+                        <button onclick="bespokeCalc()" class="w-full bg-white text-black py-6 font-black uppercase tracking-widest text-sm hover:bg-bespoke-orange transition-all duration-500">Calculate Vital Score</button>
                     </div>
-                    <video controls class="w-full h-full object-cover">
-                        <source src="testimonial-video.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="aspect-video glass rounded-[40px] overflow-hidden group">
-                    <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-transparent transition duration-500 pointer-events-none">
-                        <i class="fas fa-play text-4xl text-agency-orange"></i>
+                    <div class="flex items-center justify-center border-l border-white/5">
+                        <div id="br" class="text-[120px] font-black text-bespoke-orange/20 tracking-tighter">0.0</div>
                     </div>
-                    <video controls class="w-full h-full object-cover">
-                        <source src="testimonial-2.mp4" type="video/mp4">
-                    </video>
                 </div>
             </div>
         </section>
 
-        <section class="py-40 bg-zinc-950 px-6 section-reveal" id="lead-form">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-7xl font-black mb-8 italic uppercase leading-none">CLAIM YOUR <span class="text-agency-orange">FREE PASS</span></h2>
-                <p class="text-gray-400 mb-16 italic text-xl">Get 1 Day Free Pass & Personalized Diet Chart Instantly.</p>
-                <form class="grid md:grid-cols-2 gap-8 text-left">
-                    <div class="space-y-2">
-                        <label class="text-[10px] uppercase tracking-[0.5em] text-gray-500 ml-2">Full Name</label>
-                        <input type="text" placeholder="e.g. Ansh Singh" class="w-full bg-black p-6 rounded-3xl border border-white/5 outline-none focus:border-agency-orange transition text-white">
+        <section class="py-40 px-6 md:px-32">
+            <div class="grid md:grid-cols-3 gap-0 border border-white/10">
+                <div class="p-16 border-r border-white/10 hover:bg-white/5 transition-all reveal-up">
+                    <h4 class="font-sync text-xs mb-10 text-gray-600 tracking-widest uppercase">Essential</h4>
+                    <div class="text-5xl font-black mb-10">₹1,499</div>
+                    <ul class="space-y-6 text-xs uppercase tracking-widest text-gray-500 mb-20">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>Full Floor Access</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>Locker Suite</li>
+                    </ul>
+                    <button class="border border-white/20 w-full py-4 text-[10px] uppercase font-bold tracking-[0.5em] hover:bg-white hover:text-black transition-all">Inquire</button>
+                </div>
+                <div class="p-16 border-r border-white/10 bg-bespoke-orange text-black reveal-up" style="transition-delay: 0.1s;">
+                    <h4 class="font-sync text-xs mb-10 text-black/50 tracking-widest uppercase">Elite Bespoke</h4>
+                    <div class="text-5xl font-black mb-10 italic">₹2,999</div>
+                    <ul class="space-y-6 text-xs uppercase tracking-widest text-black mb-20">
+                        <li class="flex items-center font-black"><span class="w-2 h-2 bg-black mr-4"></span>Personal Engineer</li>
+                        <li class="flex items-center font-black"><span class="w-2 h-2 bg-black mr-4"></span>AI Nutrition Stack</li>
+                    </ul>
+                    <button class="bg-black text-white w-full py-4 text-[10px] uppercase font-bold tracking-[0.5em] hover:bg-white hover:text-black transition-all">Reserve Spot</button>
+                </div>
+                <div class="p-16 hover:bg-white/5 transition-all reveal-up" style="transition-delay: 0.2s;">
+                    <h4 class="font-sync text-xs mb-10 text-gray-600 tracking-widest uppercase">Executive</h4>
+                    <div class="text-5xl font-black mb-10">₹4,999</div>
+                    <ul class="space-y-6 text-xs uppercase tracking-widest text-gray-500 mb-20">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>Spa & Recovery</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>VIP Concierge</li>
+                    </ul>
+                    <button class="border border-white/20 w-full py-4 text-[10px] uppercase font-bold tracking-[0.5em] hover:bg-white hover:text-black transition-all">Inquire</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-6 md:px-32 bg-black">
+            <h3 class="font-sync text-center text-3xl mb-24 uppercase">EVIDENCE OF <span class="text-bespoke-orange">CHANGE.</span></h3>
+            <div class="grid md:grid-cols-2 gap-20 max-w-6xl mx-auto">
+                <div class="b-glass p-4 group reveal-up">
+                    <video controls class="w-full grayscale group-hover:grayscale-0 transition-all duration-500"><source src="test-1.mp4"></video>
+                    <p class="mt-6 text-[10px] uppercase tracking-widest text-gray-600">CLIENT: ARYAN SHARMA | TRANSFORMATION: 12 WEEKS</p>
+                </div>
+                <div class="b-glass p-4 group reveal-up" style="transition-delay: 0.1s;">
+                    <video controls class="w-full grayscale group-hover:grayscale-0 transition-all duration-500"><source src="test-2.mp4"></video>
+                    <p class="mt-6 text-[10px] uppercase tracking-widest text-gray-600">CLIENT: RAHUL SINGH | TRANSFORMATION: 24 WEEKS</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-60 px-6 md:px-32 relative overflow-hidden" id="final-form">
+            <div class="absolute -right-40 top-0 text-[300px] font-black text-white/5 uppercase select-none font-sync">ELITE</div>
+            <div class="max-w-4xl mx-auto text-center relative z-20">
+                <h2 class="text-6xl md:text-8xl font-black mb-12 italic uppercase leading-none">JOIN THE <br><span class="text-bespoke-orange underline">TOP 1%.</span></h2>
+                <p class="text-gray-500 mb-20 uppercase tracking-[1em] text-xs">One day free pass & bespoke diet plan.</p>
+                <form class="grid md:grid-cols-2 gap-12 text-left">
+                    <div class="group">
+                        <label class="text-[10px] uppercase tracking-widest text-gray-600 mb-4 block">Identity Name</label>
+                        <input type="text" placeholder="John Doe" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange font-bold text-xl uppercase">
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-[10px] uppercase tracking-[0.5em] text-gray-500 ml-2">WhatsApp No.</label>
-                        <input type="tel" placeholder="e.g. 9876543210" class="w-full bg-black p-6 rounded-3xl border border-white/5 outline-none focus:border-agency-orange transition text-white">
+                    <div class="group">
+                        <label class="text-[10px] uppercase tracking-widest text-gray-600 mb-4 block">Contact Channel (WhatsApp)</label>
+                        <input type="tel" placeholder="+91 000000000" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange font-bold text-xl uppercase">
                     </div>
-                    <button class="md:col-span-2 bg-agency-orange py-7 rounded-[30px] font-black uppercase text-2xl text-black hover:scale-[0.98] transition shadow-2xl shadow-orange-950/40">Get My Free Pass & Diet Chart</button>
+                    <button class="md:col-span-2 bg-bespoke-orange text-black py-8 font-black uppercase text-xl hover:bg-white transition-all duration-500 shadow-2xl shadow-orange-950/40">Secure My Spot</button>
                 </form>
             </div>
         </section>
 
-        <footer class="py-24 border-t border-white/5 px-6 md:px-20 bg-black">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-16">
-                <h1 class="text-5xl font-black mb-8 md:mb-0 tracking-tighter">ICEBUG<span class="text-agency-orange">GYM.</span></h1>
-                <div class="flex space-x-12 text-3xl">
-                    <a href="https://instagram.com/icebug.co" class="text-gray-600 hover:text-agency-orange transition"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-600 hover:text-agency-orange transition"><i class="fas fa-map-marker-alt"></i></a>
-                </div>
+        <footer class="py-24 border-t border-white/5 px-6 md:px-32 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-10 md:mb-0">
+                <h1 class="font-sync text-2xl tracking-tighter mb-4">ICEBUG<span class="text-bespoke-orange">.CO</span></h1>
+                <p class="text-[10px] text-gray-700 tracking-[0.5em] uppercase italic">Kanpur | Swaroop Nagar | Bespoke Fitness</p>
             </div>
-            <div class="flex flex-col md:flex-row justify-between text-[10px] text-gray-800 tracking-[0.5em] uppercase border-t border-white/5 pt-12">
-                <p>&copy; 2026 IceBug Elite Studios</p>
-                <div class="flex space-x-8 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white">Privacy Policy</a>
-                    <a href="#" class="hover:text-white">Terms of Service</a>
-                </div>
+            <div class="flex space-x-12 text-2xl">
+                <a href="https://instagram.com/icebug.co" class="text-gray-700 hover:text-bespoke-orange transition-all"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-700 hover:text-bespoke-orange transition-all"><i class="fas fa-map-marker-alt"></i></a>
             </div>
         </footer>
 
-    </main>
+    </div>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. ELITE CURSOR LOGIC
-        const cursor = document.getElementById('cursor');
-        const blur = document.getElementById('cursor-blur');
+        // 1. Bespoke Cursor Engine
+        const cur = document.getElementById('cursor');
+        const follow = document.getElementById('cursor-follower');
         document.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            gsap.to(blur, { x: e.clientX - 15, y: e.clientY - 15, duration: 0.3 });
+            gsap.to(cur, { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to(follow, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
         });
 
-        // 2. IMMERSIVE HERO ANIMATION (Zoom & Parallax)
-        gsap.to("#hero-video", {
+        // 2. Immersive Hero Engine
+        gsap.to("#v-bg", {
             scrollTrigger: {
                 trigger: "#hero-trigger",
                 start: "top top",
                 end: "bottom top",
                 scrub: true
             },
-            scale: 2.8,
+            scale: 3,
             opacity: 0.1,
-            filter: "blur(20px)"
+            filter: "blur(20px) grayscale(1)"
         });
 
-        gsap.to(".hero-title", {
-            scrollTrigger: { trigger: "#hero-trigger", start: "top top", scrub: true },
-            y: -250, opacity: 0
-        });
-
-        // 3. STORYTELLING REVEAL ANIMATIONS
-        gsap.utils.toArray(".section-reveal").forEach(el => {
+        // 3. Staggered Reveal Engine
+        gsap.utils.toArray(".reveal-up").forEach(el => {
             gsap.to(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 1.5,
-                ease: "power4.out"
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                opacity: 1, y: 0, duration: 1.5, ease: "expo.out"
             });
         });
 
-        // 4. 3D TILT EFFECT FOR CARDS
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const { left, top, width, height } = card.getBoundingClientRect();
-                const x = (e.clientX - left - width / 2) / 25;
-                const y = (e.clientY - top - height / 2) / 25;
-                card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
+        gsap.utils.toArray(".reveal-left").forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                opacity: 1, x: 0, duration: 1.5, ease: "expo.out"
             });
         });
 
-        // 5. BMI CALCULATOR LOGIC
-        function calculateBMI() {
-            const w = document.getElementById('weight-in').value;
-            const h = document.getElementById('height-in').value;
-            if (w && h) {
-                const bmi = (w / ((h / 100) ** 2)).toFixed(1);
-                let msg = "";
-                if (bmi < 18.5) msg = "Underweight";
-                else if (bmi < 25) msg = "Elite Athlete Range";
-                else msg = "Bulk Mode";
-                
-                document.getElementById('bmi-res').innerText = bmi + " — " + msg;
-                gsap.from("#bmi-res", { scale: 1.5, opacity: 0, duration: 0.5, ease: "back.out" });
+        // 4. Bespoke Calculator
+        function bespokeCalc() {
+            const w = document.getElementById('bw').value;
+            const h = document.getElementById('bh').value;
+            if(w && h) {
+                const bmi = (w / ((h/100)**2)).toFixed(1);
+                document.getElementById('br').innerText = bmi;
+                gsap.from("#br", { scale: 0.5, opacity: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+                document.getElementById('br').style.color = "#ff5f00";
+                document.getElementById('br').style.opacity = "1";
             }
         }
     </script>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IceBug Bespoke | Elite Fitness Engineering</title>
+    <title>IceBug Bespoke | The Old Money Fitness Club</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Bodoni+Moda:ital,wght@0,400;0,900;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -15,8 +15,8 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'bespoke-black': '#030303', 'bespoke-orange': '#ff5f00' },
-                    fontFamily: { inter: ['Inter', 'sans-serif'], sync: ['Syncopate', 'sans-serif'] }
+                    colors: { 'old-money-gold': '#c5a059', 'luxury-black': '#0a0a0a' },
+                    fontFamily: { cinzel: ['Cinzel', 'serif'], bodoni: ['Bodoni Moda', 'serif'], inter: ['Inter', 'sans-serif'] }
                 }
             }
         }
@@ -24,266 +24,255 @@
     
     <style>
         * { cursor: none !important; }
-        body { background-color: #030303; color: white; overflow-x: hidden; }
+        body { background: #0a0a0a; color: white; overflow-x: hidden; }
         
-        /* Premium Custom Cursor */
-        #cursor { width: 8px; height: 8px; background: #ff5f00; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
-        #cursor-follower { width: 40px; height: 40px; border: 1px solid rgba(255, 95, 0, 0.3); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; transition: transform 0.15s ease-out; }
+        /* Preloader Styling */
+        #preloader { position: fixed; inset: 0; background: #0a0a0a; z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        #hello-text { font-family: 'Cinzel', serif; font-size: 3rem; color: #c5a059; }
 
-        /* Immersive Video Layer */
-        .hero-v-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
-        #v-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) grayscale(0.2); transform: scale(1.1); }
+        /* Bespoke Cursor */
+        #c-dot { width: 6px; height: 6px; background: #c5a059; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
+        #c-ring { width: 35px; height: 35px; border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; transition: transform 0.15s ease-out; }
 
-        /* Bespoke Glassmorphism */
-        .b-glass { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.03); }
-        .orange-glow:hover { box-shadow: 0 0 40px rgba(255, 95, 0, 0.2); border-color: #ff5f00; }
+        /* Hero Layout - Fixed Video */
+        .hero-v-fixed { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
+        video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.3) sepia(0.2); }
 
-        /* Section Spacing */
-        .content-layer { position: relative; z-index: 10; background: transparent; }
-        .section-spacer { height: 20vh; }
+        /* Glassmorphism Luxury */
+        .luxury-glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(197, 160, 89, 0.1); }
+        .page-wrap { position: relative; z-index: 10; background: transparent; }
         
-        /* Animations */
-        .reveal-up { opacity: 0; transform: translateY(100px); }
-        .reveal-left { opacity: 0; transform: translateX(-100px); }
+        /* Section Dividers */
+        .luxury-line { width: 1px; height: 100px; background: linear-gradient(to bottom, #c5a059, transparent); margin: 0 auto; }
+        
+        .reveal { opacity: 0; transform: translateY(50px); }
     </style>
 </head>
-<body class="font-inter">
+<body>
 
-    <div id="cursor"></div>
-    <div id="cursor-follower"></div>
-
-    <div class="hero-v-wrap">
-        <video autoplay muted loop playsinline id="v-bg">
-            <source src="gym-hero.mp4" type="video/mp4">
-        </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-bespoke-black/50 to-bespoke-black"></div>
+    <div id="preloader">
+        <div class="text-center">
+            <span id="hello-text">Hello</span>
+            <p class="text-[10px] tracking-[1em] uppercase text-gray-600 mt-4">Welcome to IceBug Elite</p>
+        </div>
     </div>
 
-    <section class="h-screen flex flex-col justify-center px-6 md:px-32 relative z-20" id="hero-trigger">
-        <p class="font-sync text-bespoke-orange text-xs tracking-[1em] mb-6 reveal-up">ICEBUG BESPOKE SERIES</p>
-        <h1 class="text-6xl md:text-[140px] font-black uppercase tracking-tighter leading-none mb-10 hero-main-text">
-            FORGE <br><span class="text-transparent border-t-0 border-x-0 border-b-2 border-white">ELITE.</span>
-        </h1>
-        <div class="flex items-center space-x-10 hero-cta">
-            <button class="bg-bespoke-orange text-black px-12 py-6 rounded-none font-black uppercase tracking-widest hover:bg-white transition-all duration-500 text-sm">Join the Elite</button>
-            <div class="hidden md:block h-[1px] w-40 bg-white/20"></div>
-            <p class="hidden md:block text-xs uppercase tracking-widest text-gray-500">Scroll to Explore Engineering</p>
+    <div id="c-dot"></div><div id="c-ring"></div>
+
+    <div class="hero-v-fixed">
+        <video autoplay muted loop playsinline id="hero-video">
+            <source src="gym-video.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-luxury-black/50 to-luxury-black"></div>
+    </div>
+
+    <section class="h-screen flex items-center px-6 md:px-32 relative z-20" id="hero-trigger">
+        <div class="max-w-4xl">
+            <p class="font-inter text-old-money-gold text-xs tracking-[1em] mb-6 reveal uppercase">Est. 2026 — Kanpur</p>
+            <h1 class="font-cinzel text-6xl md:text-[110px] font-black leading-none mb-10 reveal">
+                REDEFINING <br><span class="italic font-bodoni text-old-money-gold">EXCELLENCE.</span>
+            </h1>
+            <p class="font-inter text-gray-400 text-lg max-w-lg mb-12 reveal leading-relaxed">Quiet luxury meets industrial strength. This is not a gym; it's a private estate for your physical evolution.</p>
+            <div class="reveal flex items-center space-x-8">
+                <button class="border border-old-money-gold text-old-money-gold px-12 py-5 font-cinzel uppercase tracking-widest hover:bg-old-money-gold hover:text-black transition-all duration-700 text-sm">Join the Registry</button>
+            </div>
         </div>
     </section>
 
-    <div class="content-layer">
+    <div class="page-wrap">
+        <div class="luxury-line"></div>
 
-        <section class="py-40 px-6 md:px-32 section-spacer-top">
-            <div class="grid md:grid-cols-3 gap-10">
-                <div class="b-glass p-12 orange-glow reveal-up">
-                    <h4 class="text-bespoke-orange font-bold text-xs tracking-widest mb-6 uppercase">Live Attendance</h4>
-                    <div class="text-7xl font-black mb-4">42 <span class="text-sm font-light text-gray-600">/ 60</span></div>
-                    <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
-                        <div class="bg-bespoke-orange h-full w-[70%]"></div>
-                    </div>
+        <section class="py-40 px-6 md:px-32 reveal">
+            <div class="grid md:grid-cols-4 gap-0 border border-old-money-gold/10">
+                <div class="p-16 border-r border-old-money-gold/10 luxury-glass">
+                    <h4 class="font-cinzel text-[10px] text-old-money-gold tracking-widest mb-10 uppercase">Current Capacity</h4>
+                    <div class="text-6xl font-light font-bodoni">42 <span class="text-xs text-gray-600">/ 60</span></div>
                 </div>
-                <div class="b-glass p-12 orange-glow reveal-up" style="transition-delay: 0.1s;">
-                    <h4 class="text-gray-500 font-bold text-xs tracking-widest mb-6 uppercase">Current Atmosphere</h4>
-                    <div class="text-4xl font-bold italic">HIGH INTENSITY</div>
-                    <p class="text-xs text-gray-600 mt-4 tracking-widest uppercase">Peak Hours: 18:00 - 21:00</p>
+                <div class="p-16 border-r border-old-money-gold/10 luxury-glass">
+                    <h4 class="font-cinzel text-[10px] text-gray-600 tracking-widest mb-10 uppercase">Atmosphere</h4>
+                    <div class="text-3xl font-cinzel italic">Serene Power</div>
                 </div>
-                <div class="b-glass p-12 orange-glow reveal-up" style="transition-delay: 0.2s;">
-                    <h4 class="text-gray-500 font-bold text-xs tracking-widest mb-6 uppercase">Bespoke Perks</h4>
-                    <div class="flex flex-wrap gap-4 mt-4">
-                        <span class="border border-white/10 px-4 py-2 text-[10px] uppercase">AI Coach</span>
-                        <span class="border border-white/10 px-4 py-2 text-[10px] uppercase">Sauna</span>
-                        <span class="border border-white/10 px-4 py-2 text-[10px] uppercase">Recovery</span>
+                <div class="p-16 border-r border-old-money-gold/10 luxury-glass">
+                    <h4 class="font-cinzel text-[10px] text-gray-600 tracking-widest mb-10 uppercase">Private Hours</h4>
+                    <div class="text-3xl font-cinzel">24 / 7</div>
+                </div>
+                <div class="p-16 luxury-glass">
+                    <h4 class="font-cinzel text-[10px] text-gray-600 tracking-widest mb-10 uppercase">Support Status</h4>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <p class="text-xs font-inter text-green-500 uppercase tracking-widest">Live Help</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-40 px-6 md:px-32 grid md:grid-cols-2 gap-32 items-center">
-            <div class="relative reveal-left">
-                <img src="gym 1.jpeg" class="w-full grayscale filter contrast-125 rounded-none shadow-2xl">
-                <div class="absolute -bottom-10 -right-10 w-64 h-64 border border-bespoke-orange/30 -z-10"></div>
+        <section class="py-40 px-6 md:px-32 grid md:grid-cols-2 gap-32 items-center reveal">
+            <div class="relative">
+                <img src="gym 1.jpeg" class="w-full grayscale brightness-75 border border-old-money-gold/20 shadow-2xl">
+                <div class="absolute -bottom-10 -left-10 w-64 h-64 border border-old-money-gold/10 -z-10"></div>
             </div>
-            <div class="reveal-up">
-                <h2 class="font-sync text-4xl md:text-6xl mb-12 leading-tight">ENGINEERED BY <br><span class="text-bespoke-orange">EXPERTS.</span></h2>
-                <p class="text-gray-400 text-xl font-light leading-relaxed mb-10 italic">"Icebug Bespoke is not a gym. It is a laboratory where we engineer elite human performance. We build what others can only dream of."</p>
+            <div>
+                <h2 class="font-cinzel text-5xl md:text-7xl mb-12 leading-tight">THE <br><span class="italic font-bodoni text-old-money-gold">FOUNDATION.</span></h2>
+                <p class="font-inter text-gray-400 text-xl font-light italic leading-relaxed mb-12">"IceBug Elite is built for those who value privacy over publicity. We don't just train bodies; we cultivate legacies."</p>
                 <div class="flex items-center space-x-6">
-                    <div class="w-20 h-[1px] bg-white"></div>
-                    <p class="font-black uppercase text-2xl">Anshuman Singh</p>
+                    <div class="w-20 h-[1px] bg-old-money-gold"></div>
+                    <p class="font-cinzel font-bold uppercase text-2xl tracking-widest italic">Anshuman Singh</p>
                 </div>
             </div>
         </section>
 
-        <section class="py-40 px-6 md:px-32">
-            <h3 class="font-sync text-center text-4xl mb-32">THE <span class="text-bespoke-orange text-outline">ENGINEERS.</span></h3>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="group relative overflow-hidden h-[500px] b-glass reveal-up">
-                    <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=80" class="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                    <div class="absolute bottom-10 left-10">
-                        <p class="text-bespoke-orange text-xs font-bold uppercase tracking-widest mb-2">Powerlifting</p>
-                        <h4 class="text-2xl font-black uppercase">Coach Aryan</h4>
-                    </div>
-                </div>
-                <div class="group relative overflow-hidden h-[500px] b-glass reveal-up" style="transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800&q=80" class="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                    <div class="absolute bottom-10 left-10">
-                        <p class="text-bespoke-orange text-xs font-bold uppercase tracking-widest mb-2">Mobility</p>
-                        <h4 class="text-2xl font-black uppercase">Coach Priya</h4>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-40 px-6 md:px-32">
-            <div class="max-w-6xl mx-auto b-glass p-20 rounded-none border-x border-bespoke-orange/20 reveal-up">
-                <h2 class="font-sync text-3xl mb-16 text-center italic tracking-widest">PERFORMANCE <span class="text-bespoke-orange underline">HUB</span></h2>
-                <div class="grid md:grid-cols-2 gap-16">
-                    <div class="space-y-10">
-                        <div class="group">
-                            <label class="block text-[10px] uppercase text-gray-500 mb-4 tracking-[0.3em]">Current Weight (KG)</label>
-                            <input id="bw" type="number" placeholder="80" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange transition-all text-2xl font-black">
+        <section class="py-40 px-6 md:px-32 reveal">
+            <div class="max-w-6xl mx-auto luxury-glass p-20 border-x border-old-money-gold/20">
+                <div class="grid md:grid-cols-2 gap-24 items-center">
+                    <div class="space-y-16">
+                        <h2 class="font-cinzel text-3xl italic text-old-money-gold tracking-widest underline decoration-old-money-gold/20 underline-offset-8">Physique Analysis</h2>
+                        <div class="space-y-8">
+                            <input id="bw" type="number" placeholder="Body Weight (KG)" class="w-full bg-transparent border-b border-old-money-gold/20 p-4 text-3xl font-bodoni italic outline-none focus:border-old-money-gold transition-all">
+                            <input id="bh" type="number" placeholder="Stature (CM)" class="w-full bg-transparent border-b border-old-money-gold/20 p-4 text-3xl font-bodoni italic outline-none focus:border-old-money-gold transition-all text-white">
+                            <button onclick="bCalc()" class="w-full bg-old-money-gold text-black py-6 font-cinzel font-bold uppercase text-xs tracking-[0.6em] hover:bg-white transition-all duration-700 shadow-2xl">Execute Analysis</button>
                         </div>
-                        <div class="group">
-                            <label class="block text-[10px] uppercase text-gray-500 mb-4 tracking-[0.3em]">Exact Height (CM)</label>
-                            <input id="bh" type="number" placeholder="180" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange transition-all text-2xl font-black">
-                        </div>
-                        <button onclick="bespokeCalc()" class="w-full bg-white text-black py-6 font-black uppercase tracking-widest text-sm hover:bg-bespoke-orange transition-all duration-500">Calculate Vital Score</button>
                     </div>
-                    <div class="flex items-center justify-center border-l border-white/5">
-                        <div id="br" class="text-[120px] font-black text-bespoke-orange/20 tracking-tighter">0.0</div>
+                    <div class="flex flex-col items-center justify-center border-l border-old-money-gold/5">
+                        <div id="br" class="text-[160px] font-bodoni font-black text-old-money-gold/10 italic leading-none">0.0</div>
+                        <p class="text-gray-700 font-inter text-[10px] uppercase tracking-[1.2em] mt-10">Bespoke Precision Rating</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-40 px-6 md:px-32">
-            <div class="grid md:grid-cols-3 gap-0 border border-white/10">
-                <div class="p-16 border-r border-white/10 hover:bg-white/5 transition-all reveal-up">
-                    <h4 class="font-sync text-xs mb-10 text-gray-600 tracking-widest uppercase">Essential</h4>
-                    <div class="text-5xl font-black mb-10">₹1,499</div>
-                    <ul class="space-y-6 text-xs uppercase tracking-widest text-gray-500 mb-20">
-                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>Full Floor Access</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>Locker Suite</li>
+        <section class="py-60 px-6 md:px-32 relative reveal">
+             <h3 class="font-cinzel text-center text-4xl mb-32 tracking-[0.5em] uppercase">Private <span class="italic font-bodoni text-old-money-gold">Tiers</span></h3>
+             <div class="grid md:grid-cols-3 gap-0 border border-old-money-gold/10">
+                <div class="p-20 border-r border-old-money-gold/10 hover:bg-white/5 transition-all">
+                    <h4 class="font-inter text-gray-500 font-bold text-[10px] uppercase mb-12 tracking-[0.5em]">Standard</h4>
+                    <div class="text-5xl font-bodoni italic mb-12">₹1,499</div>
+                    <ul class="space-y-6 text-[10px] font-inter uppercase tracking-[0.3em] text-gray-500 mb-20">
+                        <li>/ Full Estate Access</li>
+                        <li>/ 24/7 Health Support</li>
                     </ul>
-                    <button class="border border-white/20 w-full py-4 text-[10px] uppercase font-bold tracking-[0.5em] hover:bg-white hover:text-black transition-all">Inquire</button>
+                    <button class="w-full py-4 border border-old-money-gold/20 text-[10px] font-cinzel tracking-widest hover:bg-old-money-gold hover:text-black transition-all">Inquire</button>
                 </div>
-                <div class="p-16 border-r border-white/10 bg-bespoke-orange text-black reveal-up" style="transition-delay: 0.1s;">
-                    <h4 class="font-sync text-xs mb-10 text-black/50 tracking-widest uppercase">Elite Bespoke</h4>
-                    <div class="text-5xl font-black mb-10 italic">₹2,999</div>
-                    <ul class="space-y-6 text-xs uppercase tracking-widest text-black mb-20">
-                        <li class="flex items-center font-black"><span class="w-2 h-2 bg-black mr-4"></span>Personal Engineer</li>
-                        <li class="flex items-center font-black"><span class="w-2 h-2 bg-black mr-4"></span>AI Nutrition Stack</li>
+                <div class="p-20 border-r border-old-money-gold/10 bg-old-money-gold text-black scale-105 shadow-2xl z-20">
+                    <h4 class="font-inter text-black/50 font-bold text-[10px] uppercase mb-12 tracking-[0.5em]">Elite Bespoke</h4>
+                    <div class="text-5xl font-bodoni italic mb-12">₹2,999</div>
+                    <ul class="space-y-6 text-[10px] font-inter uppercase tracking-[0.3em] text-black mb-20">
+                        <li>/ Private Human Engineer</li>
+                        <li>/ Bespoke Nutrition Hub</li>
                     </ul>
-                    <button class="bg-black text-white w-full py-4 text-[10px] uppercase font-bold tracking-[0.5em] hover:bg-white hover:text-black transition-all">Reserve Spot</button>
+                    <button class="w-full py-4 bg-black text-white text-[10px] font-cinzel tracking-widest">Apply Now</button>
                 </div>
-                <div class="p-16 hover:bg-white/5 transition-all reveal-up" style="transition-delay: 0.2s;">
-                    <h4 class="font-sync text-xs mb-10 text-gray-600 tracking-widest uppercase">Executive</h4>
-                    <div class="text-5xl font-black mb-10">₹4,999</div>
-                    <ul class="space-y-6 text-xs uppercase tracking-widest text-gray-500 mb-20">
-                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>Spa & Recovery</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-bespoke-orange mr-4"></span>VIP Concierge</li>
+                <div class="p-20 hover:bg-white/5 transition-all">
+                    <h4 class="font-inter text-gray-500 font-bold text-[10px] uppercase mb-12 tracking-[0.5em]">Executive</h4>
+                    <div class="text-5xl font-bodoni italic mb-12">₹4,999</div>
+                    <ul class="space-y-6 text-[10px] font-inter uppercase tracking-[0.3em] text-gray-500 mb-20">
+                        <li>/ Recovery Spa & Suite</li>
+                        <li>/ VIP Concierge</li>
                     </ul>
-                    <button class="border border-white/20 w-full py-4 text-[10px] uppercase font-bold tracking-[0.5em] hover:bg-white hover:text-black transition-all">Inquire</button>
+                    <button class="w-full py-4 border border-old-money-gold/20 text-[10px] font-cinzel tracking-widest hover:bg-old-money-gold hover:text-black transition-all">Inquire</button>
                 </div>
-            </div>
+             </div>
         </section>
 
-        <section class="py-40 px-6 md:px-32 bg-black">
-            <h3 class="font-sync text-center text-3xl mb-24 uppercase">EVIDENCE OF <span class="text-bespoke-orange">CHANGE.</span></h3>
-            <div class="grid md:grid-cols-2 gap-20 max-w-6xl mx-auto">
-                <div class="b-glass p-4 group reveal-up">
-                    <video controls class="w-full grayscale group-hover:grayscale-0 transition-all duration-500"><source src="test-1.mp4"></video>
-                    <p class="mt-6 text-[10px] uppercase tracking-widest text-gray-600">CLIENT: ARYAN SHARMA | TRANSFORMATION: 12 WEEKS</p>
-                </div>
-                <div class="b-glass p-4 group reveal-up" style="transition-delay: 0.1s;">
-                    <video controls class="w-full grayscale group-hover:grayscale-0 transition-all duration-500"><source src="test-2.mp4"></video>
-                    <p class="mt-6 text-[10px] uppercase tracking-widest text-gray-600">CLIENT: RAHUL SINGH | TRANSFORMATION: 24 WEEKS</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-60 px-6 md:px-32 relative overflow-hidden" id="final-form">
-            <div class="absolute -right-40 top-0 text-[300px] font-black text-white/5 uppercase select-none font-sync">ELITE</div>
-            <div class="max-w-4xl mx-auto text-center relative z-20">
-                <h2 class="text-6xl md:text-8xl font-black mb-12 italic uppercase leading-none">JOIN THE <br><span class="text-bespoke-orange underline">TOP 1%.</span></h2>
-                <p class="text-gray-500 mb-20 uppercase tracking-[1em] text-xs">One day free pass & bespoke diet plan.</p>
-                <form class="grid md:grid-cols-2 gap-12 text-left">
-                    <div class="group">
-                        <label class="text-[10px] uppercase tracking-widest text-gray-600 mb-4 block">Identity Name</label>
-                        <input type="text" placeholder="John Doe" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange font-bold text-xl uppercase">
-                    </div>
-                    <div class="group">
-                        <label class="text-[10px] uppercase tracking-widest text-gray-600 mb-4 block">Contact Channel (WhatsApp)</label>
-                        <input type="tel" placeholder="+91 000000000" class="w-full bg-transparent border-b border-white/10 p-4 outline-none focus:border-bespoke-orange font-bold text-xl uppercase">
-                    </div>
-                    <button class="md:col-span-2 bg-bespoke-orange text-black py-8 font-black uppercase text-xl hover:bg-white transition-all duration-500 shadow-2xl shadow-orange-950/40">Secure My Spot</button>
+        <section class="py-60 px-6 md:px-32 reveal" id="lead-form">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-cinzel text-5xl md:text-8xl font-black mb-12 italic leading-none tracking-tighter">SECURE YOUR <br><span class="italic font-bodoni text-old-money-gold underline underline-offset-8">LEGACY.</span></h2>
+                <p class="font-inter text-gray-600 mb-20 uppercase tracking-[1.5em] text-[10px]">Private Access & Bespoke Engineering Chart</p>
+                <form class="grid md:grid-cols-2 gap-16 text-left">
+                    <input type="text" placeholder="Identity Name" class="bg-transparent border-b border-old-money-gold/20 p-6 font-bodoni text-3xl italic outline-none focus:border-old-money-gold">
+                    <input type="tel" placeholder="Private WhatsApp" class="bg-transparent border-b border-old-money-gold/20 p-6 font-bodoni text-3xl italic outline-none focus:border-old-money-gold">
+                    <button class="md:col-span-2 bg-old-money-gold text-black py-8 font-cinzel font-black uppercase tracking-[0.5em] text-xl hover:bg-white transition-all duration-700 shadow-2xl">Claim Private Access</button>
                 </form>
             </div>
         </section>
 
-        <footer class="py-24 border-t border-white/5 px-6 md:px-32 flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-10 md:mb-0">
-                <h1 class="font-sync text-2xl tracking-tighter mb-4">ICEBUG<span class="text-bespoke-orange">.CO</span></h1>
-                <p class="text-[10px] text-gray-700 tracking-[0.5em] uppercase italic">Kanpur | Swaroop Nagar | Bespoke Fitness</p>
+        <footer class="py-32 border-t border-old-money-gold/10 px-6 md:px-32 bg-luxury-black">
+            <div class="grid md:grid-cols-4 gap-20 mb-24">
+                <div class="md:col-span-1">
+                    <h1 class="font-cinzel text-2xl tracking-tighter mb-8 italic">ICEBUG<span class="text-old-money-gold">.CO</span></h1>
+                    <p class="text-xs text-gray-600 font-inter leading-relaxed tracking-widest uppercase">The pinnacle of private fitness in Kanpur. By Appointment only.</p>
+                </div>
+                <div class="space-y-6">
+                    <h5 class="font-cinzel text-xs text-old-money-gold uppercase tracking-widest">Institutional</h5>
+                    <ul class="text-[10px] uppercase tracking-[0.3em] space-y-4 text-gray-700">
+                        <li><a href="#" class="hover:text-old-money-gold transition">Our Philosophy</a></li>
+                        <li><a href="#" class="hover:text-old-money-gold transition">The Estate</a></li>
+                        <li><a href="#" class="hover:text-old-money-gold transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-6">
+                    <h5 class="font-cinzel text-xs text-old-money-gold uppercase tracking-widest">24/7 Support</h5>
+                    <ul class="text-[10px] uppercase tracking-[0.3em] space-y-4 text-gray-700">
+                        <li><a href="#" class="hover:text-old-money-gold transition">Concierge: +91 000 000 0000</a></li>
+                        <li><a href="#" class="hover:text-old-money-gold transition">Emergency Health Hub</a></li>
+                        <li><a href="https://instagram.com/icebug.co" class="hover:text-old-money-gold transition">Instagram Presence</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-6 text-right">
+                    <h5 class="font-cinzel text-xs text-old-money-gold uppercase tracking-widest">Kanpur Locale</h5>
+                    <p class="text-[10px] text-gray-700 tracking-widest leading-loose uppercase">Swaroop Nagar, Kanpur<br>Uttar Pradesh, 208002</p>
+                </div>
             </div>
-            <div class="flex space-x-12 text-2xl">
-                <a href="https://instagram.com/icebug.co" class="text-gray-700 hover:text-bespoke-orange transition-all"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-gray-700 hover:text-bespoke-orange transition-all"><i class="fas fa-map-marker-alt"></i></a>
+            <div class="text-center pt-12 border-t border-old-money-gold/5">
+                <p class="text-[8px] text-gray-800 tracking-[1em] uppercase">&copy; 2026 IceBug Elite Private Estate. All Legacies Reserved.</p>
             </div>
         </footer>
-
     </div>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Bespoke Cursor Engine
-        const cur = document.getElementById('cursor');
-        const follow = document.getElementById('cursor-follower');
+        // 🌟 Preloader Logic (Languages)
+        const hellos = ["Hello", "नमस्ते", "Bonjour", "Ciao", "Hola", "Konnichiwa"];
+        let i = 0;
+        const interval = setInterval(() => {
+            document.getElementById('hello-text').innerText = hellos[i];
+            i++;
+            if(i === hellos.length) {
+                clearInterval(interval);
+                gsap.to("#preloader", { y: "-100%", duration: 1.5, ease: "expo.inOut", delay: 0.5 });
+            }
+        }, 300);
+
+        // 🌟 Custom Cursor Engine
+        const curDot = document.getElementById('c-dot');
+        const curRing = document.getElementById('c-ring');
         document.addEventListener('mousemove', (e) => {
-            gsap.to(cur, { x: e.clientX, y: e.clientY, duration: 0 });
-            gsap.to(follow, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
+            gsap.to(curDot, { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to(curRing, { x: e.clientX - 17, y: e.clientY - 17, duration: 0.25 });
         });
 
-        // 2. Immersive Hero Engine
-        gsap.to("#v-bg", {
+        // 🌟 Immersive Zoom (Parallax Video Engine)
+        gsap.to("#hero-video", {
             scrollTrigger: {
                 trigger: "#hero-trigger",
                 start: "top top",
                 end: "bottom top",
                 scrub: true
             },
-            scale: 3,
+            scale: 2.5,
             opacity: 0.1,
-            filter: "blur(20px) grayscale(1)"
+            filter: "blur(40px) sepia(1)"
         });
 
-        // 3. Staggered Reveal Engine
-        gsap.utils.toArray(".reveal-up").forEach(el => {
+        // 🌟 Staggered Reveal Engine (Luxury Transitions)
+        gsap.utils.toArray(".reveal").forEach(el => {
             gsap.to(el, {
                 scrollTrigger: { trigger: el, start: "top 90%" },
-                opacity: 1, y: 0, duration: 1.5, ease: "expo.out"
+                opacity: 1, y: 0, duration: 2, ease: "power4.out"
             });
         });
 
-        gsap.utils.toArray(".reveal-left").forEach(el => {
-            gsap.to(el, {
-                scrollTrigger: { trigger: el, start: "top 90%" },
-                opacity: 1, x: 0, duration: 1.5, ease: "expo.out"
-            });
-        });
-
-        // 4. Bespoke Calculator
-        function bespokeCalc() {
+        // 🌟 Vitality Score Calculator
+        function bCalc() {
             const w = document.getElementById('bw').value;
             const h = document.getElementById('bh').value;
             if(w && h) {
                 const bmi = (w / ((h/100)**2)).toFixed(1);
-                document.getElementById('br').innerText = bmi;
-                gsap.from("#br", { scale: 0.5, opacity: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
-                document.getElementById('br').style.color = "#ff5f00";
-                document.getElementById('br').style.opacity = "1";
+                const display = document.getElementById('br');
+                display.innerText = bmi;
+                display.style.color = "#c5a059";
+                display.style.opacity = "1";
+                gsap.from(display, { scale: 0.5, opacity: 0, duration: 1.5, ease: "elastic.out(1, 0.5)" });
             }
         }
     </script>

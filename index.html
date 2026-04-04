@@ -4,169 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Fitness | Transforming Lives in Kanpur</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'agency-dark': '#0d0d0d', // The dark gray from image 3
+                        'agency-orange': '#f97316', // Same orange accent
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
     <style>
-        /* Modern Glassmorphism & Neon Shadows */
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
-        .neon-shadow { box-shadow: 0 0 15px #f97316; }
-        .neon-border { border-color: #f97316; }
-        .video-background { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        /* Modern Glassmorphism & Neon Shadows (image 3 reference) */
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.08); }
+        .neon-shadow { filter: drop-shadow(0 0 10px #f97316); }
+        .neon-border { border-color: rgba(249, 115, 22, 0.3); }
+        
+        /* Video Background */
+        .video-background { position: relative; width: 100%; height: 100vh; overflow: hidden; background-color: black; }
         video { object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
         
-        /* BMI Calculator Styling */
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        /* Custom Orange selection color */
+        ::selection { background-color: #f97316; color: black; }
     </style>
 </head>
-<body class="bg-black text-white font-sans overflow-x-hidden">
+<body class="bg-agency-dark text-white font-inter overflow-x-hidden antialiased">
 
-    <section class="video-background flex items-center justify-center">
-        <video autoplay muted loop playsinline poster="https://via.placeholder.com/1920x1080/000000/000000?text=Cinematic+Gym+Video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-man-lifting-weights-in-a-dimly-lit-gym-22877-large.mp4" type="video/mp4">
+    <section class="video-background flex items-center px-6 md:px-12">
+        <video autoplay muted loop playsinline class="z-0">
+            <source src="video/gym-hero.mp4" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-black/70"></div>
-        <div class="relative z-10 text-center px-6">
-            <h1 class="text-6xl md:text-9xl font-black uppercase italic tracking-tighter leading-none mb-4 hero-title">NO LIMITS. <br><span class="text-orange-500 neon-text">NO EXCUSES.</span></h1>
-            <p class="text-xl md:text-2xl italic text-gray-300 mb-10 max-w-2xl mx-auto hero-subtitle">Transform your body at Kanpur's premier elite fitness studio.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 hero-cta">
-                <button class="bg-orange-600 px-12 py-5 rounded-full font-black uppercase text-lg hover:bg-orange-700 transition transform hover:scale-105 shadow-xl shadow-orange-900/50">Get Free Pass & Diet Chart</button>
-                <button class="border-2 border-white px-12 py-5 rounded-full font-black uppercase text-lg hover:bg-white hover:text-black transition">Explore Plans</button>
+        
+        <div class="absolute inset-0 bg-black/80 z-10"></div>
+        
+        <div class="relative z-20 max-w-7xl mx-auto w-full pt-20">
+            <h1 class="text-7xl md:text-[140px] font-black uppercase tracking-tighter leading-none mb-8 hero-title text-shadow-xl">
+                NO LIMITS. <br>
+                <span class="text-agency-orange neon-shadow">NO EXCUSES.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl font-light hero-subtitle">Transform your body and mind at Kanpur's premier, high-applicability fitness studio.</p>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 hero-cta">
+                <button class="bg-agency-orange text-black px-12 py-5 rounded-xl font-bold uppercase text-lg hover:scale-105 transition-transform duration-300 shadow-xl shadow-orange-950/40">Get Free Pass & Diet Chart</button>
+                <button class="border border-white/30 px-12 py-5 rounded-xl font-bold uppercase text-lg hover:bg-white hover:text-black transition duration-300">Explore Elite Plans</button>
             </div>
         </div>
     </section>
 
-    <section class="py-24 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center reveal">
-        <div class="owner-photo">
-            <img src="https://images.unsplash.com/photo-1620311029177-f2df01b446f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Founder Anshuman Singh" class="rounded-3xl shadow-2xl grayscale hover:grayscale-0 transition duration-700 w-full object-cover">
+    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center reveal">
+        <div class="owner-photo relative">
+            <div class="absolute inset-0 border-4 border-agency-orange/30 -translate-x-4 translate-y-4 rounded-3xl"></div>
+            <img src="https://images.unsplash.com/photo-1620311029177-f2df01b446f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Founder Anshuman Singh" class="rounded-3xl shadow-2xl grayscale hover:grayscale-0 transition duration-700 w-full object-cover relative z-10">
         </div>
         <div class="owner-text">
-            <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-3">Meet the Visionary</h3>
-            <h2 class="text-5xl font-black mb-8 italic">BUILDING A HEALTHIER KANPUR, ONE LIFE AT A TIME.</h2>
-            <p class="text-gray-400 mb-10 italic leading-relaxed">"Main Kanpur ke har fitness enthusiast ko ek aisi jagah dena chahta tha jahan technology aur hardwork ka sahi combination ho. Hum sirf body nahi, character build karte hain."</p>
-            <div class="flex items-center space-x-6">
-                <img src="https://via.placeholder.com/80x40/000000/FFFFFF?text=SIGNATURE" alt="Signature" class="opacity-70">
+            <h3 class="text-agency-orange font-bold uppercase tracking-widest mb-3">Meet the Head Coach</h3>
+            <h2 class="text-5xl md:text-6xl font-black mb-8 tracking-tight">BUILDING LIVES THAT<br><span class="text-agency-orange">STAND OUT</span></h2>
+            <p class="text-gray-400 mb-12 font-light leading-relaxed">"Main Kanpur ke har fitness enthusiast ko ek aisi jagah dena chahta tha jahan technology aur hardwork ka sahi combination ho. We don't just transform bodies; we forge unbreakable mindsets."</p>
+            <div class="flex items-center space-x-6 glass p-6 rounded-2xl">
+                <img src="https://via.placeholder.com/100x50/000000/FFFFFF?text=SIGNATURE" alt="Signature" class="opacity-70 neon-shadow">
                 <div>
-                    <p class="font-bold uppercase italic text-lg">Anshuman Singh</p>
-                    <p class="text-gray-500 text-sm">Founder & Head Coach</p>
+                    <p class="font-bold uppercase text-lg">Anshuman Singh</p>
+                    <p class="text-gray-500 text-sm">Founder, IceBug Gym</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-20 px-6 bg-zinc-950 reveal">
-        <div class="max-w-xl mx-auto text-center border-4 neon-border rounded-3xl p-10 bg-black neon-shadow">
-            <h3 class="text-4xl font-black mb-10 text-orange-500 uppercase italic">Calculate Your BMI</h3>
-            <div class="space-y-6">
-                <input id="weight" type="number" placeholder="Weight (kg)" class="w-full p-5 bg-zinc-900 border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-orange-500 transition text-lg">
-                <input id="height" type="number" placeholder="Height (cm)" class="w-full p-5 bg-zinc-900 border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-orange-500 transition text-lg">
-                <button onclick="calculateBMI()" class="w-full bg-white text-black font-black py-5 rounded-xl uppercase hover:bg-orange-500 transition text-lg tracking-widest">CHECK NOW</button>
-                <div id="bmiResult" class="text-3xl font-black text-orange-500 mt-6 min-h-[40px]"></div>
+    <section class="py-24 px-6 md:px-12 bg-black reveal border-t border-agency-dark">
+        <div class="max-w-xl mx-auto text-center border-4 neon-border rounded-3xl p-12 bg-agency-dark neon-shadow relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-agency-orange/10 rounded-full -translate-x-10 -translate-y-10 blur-3xl"></div>
+            <h3 class="text-4xl font-black mb-10 text-agency-orange uppercase tracking-tight">AI BMI Calculator</h3>
+            <div class="space-y-6 relative z-10">
+                <input id="weight" type="number" placeholder="Weight (kg)" class="w-full p-6 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-agency-orange transition text-lg">
+                <input id="height" type="number" placeholder="Height (cm)" class="w-full p-6 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-agency-orange transition text-lg">
+                <button onclick="calculateBMI()" class="w-full bg-white text-black font-black py-5 rounded-xl uppercase hover:bg-agency-orange transition text-lg tracking-widest">CHECK STATUS NOW</button>
+                <div id="bmiResult" class="text-3xl font-black text-agency-orange mt-6 min-h-[40px] drop-shadow-lg"></div>
             </div>
         </div>
     </section>
 
-    <section class="py-24 px-6 reveal">
-        <h3 class="text-center text-5xl font-black mb-16 uppercase italic underline decoration-orange-500 decoration-4">Membership Plans</h3>
+    <section class="py-24 px-6 md:px-12 reveal border-t border-agency-dark">
+        <h3 class="text-center text-6xl font-black mb-20 uppercase tracking-tighter">ELITE PACKAGES</h3>
         <div class="grid md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-            <div class="p-10 border border-zinc-900 rounded-2xl hover:border-orange-500 transition group text-center glass">
-                <h4 class="text-2xl font-bold mb-4 uppercase">Starter</h4>
-                <div class="text-5xl font-black mb-6">₹1,499<span class="text-sm font-normal text-gray-600">/mo</span></div>
-                <ul class="space-y-4 mb-10 text-gray-400 italic">
-                    <li>Full Gym Access</li>
-                    <li>Cardio Zone</li>
-                    <li>Locker Room</li>
-                </ul>
-                <button class="w-full border border-zinc-800 py-4 rounded-full group-hover:bg-orange-600 group-hover:border-orange-600 transition font-bold uppercase text-sm">Select Plan</button>
-            </div>
-            <div class="p-10 bg-orange-600 rounded-2xl transform scale-105 shadow-2xl shadow-orange-950 text-center relative overflow-hidden flex flex-col justify-between">
-                <div class="absolute top-0 right-0 bg-white text-orange-600 px-6 py-1 text-sm font-black uppercase transform rotate-45 translate-x-5 translate-y-5">Popular</div>
+            <div class="p-10 border border-zinc-900 rounded-2xl hover:border-agency-orange/50 transition duration-300 group text-center glass flex flex-col justify-between">
                 <div>
-                    <h4 class="text-2xl font-bold mb-4 uppercase">Pro Athlete</h4>
-                    <div class="text-5xl font-black mb-6 text-white">₹2,999<span class="text-sm font-normal text-orange-200">/mo</span></div>
-                    <ul class="space-y-4 mb-10 text-orange-100 italic">
-                        <li>Unlimited Access</li>
-                        <li>Personal Trainer</li>
-                        <li>Diet Plan</li>
+                    <h4 class="text-2xl font-bold mb-4 uppercase text-gray-400">Starter</h4>
+                    <div class="text-6xl font-black mb-8 tracking-tighter text-white">₹1,499<span class="text-sm font-light text-gray-700">/mo</span></div>
+                    <ul class="space-y-4 mb-10 text-gray-400 font-light">
+                        <li>Full Gym Access</li>
+                        <li>Standard Cardio Zone</li>
+                        <li>Shared Locker Room</li>
                     </ul>
                 </div>
-                <button class="w-full bg-white text-black font-black py-4 rounded-full uppercase text-sm">Select Plan</button>
+                <button class="w-full border border-zinc-800 py-4 rounded-xl group-hover:bg-white group-hover:text-black transition duration-300 font-bold uppercase text-sm">Select Plan</button>
             </div>
-            <div class="p-10 border border-zinc-900 rounded-2xl hover:border-orange-500 transition group text-center glass">
-                <h4 class="text-2xl font-bold mb-4 uppercase">Elite</h4>
-                <div class="text-5xl font-black mb-6">₹4,999<span class="text-sm font-normal text-gray-600">/mo</span></div>
-                <ul class="space-y-4 mb-10 text-gray-400 italic">
-                    <li>All Pro Features</li>
-                    <li>Sauna & Spa</li>
-                    <li>Supplement Discount</li>
-                </ul>
-                <button class="w-full border border-zinc-800 py-4 rounded-full group-hover:bg-orange-600 group-hover:border-orange-600 transition font-bold uppercase text-sm">Select Plan</button>
+            <div class="p-10 bg-agency-orange rounded-2xl transform scale-105 shadow-2xl shadow-orange-950 text-center relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 bg-white text-agency-orange px-6 py-1 text-sm font-black uppercase transform rotate-45 translate-x-5 translate-y-5">Popular</div>
+                <div>
+                    <h4 class="text-2xl font-bold mb-4 uppercase text-black/80">Pro Athlete</h4>
+                    <div class="text-6xl font-black mb-8 tracking-tighter text-white">₹2,999<span class="text-sm font-light text-black/50">/mo</span></div>
+                    <ul class="space-y-4 mb-10 text-white font-light">
+                        <li>Unlimited Access</li>
+                        <li>Dedicated Personal Trainer</li>
+                        <li>AI Personalized Diet Plan</li>
+                    </ul>
+                </div>
+                <button class="w-full bg-white text-black font-black py-4 rounded-xl uppercase text-sm hover:scale-105 transition duration-300">Select Plan</button>
+            </div>
+            <div class="p-10 border border-zinc-900 rounded-2xl hover:border-agency-orange/50 transition duration-300 group text-center glass flex flex-col justify-between">
+                <div>
+                    <h4 class="text-2xl font-bold mb-4 uppercase text-gray-400">Elite</h4>
+                    <div class="text-6xl font-black mb-8 tracking-tighter text-white">₹4,999<span class="text-sm font-light text-gray-700">/mo</span></div>
+                    <ul class="space-y-4 mb-10 text-gray-400 font-light">
+                        <li>All Pro Features</li>
+                        <li>Sauna & Spa Access</li>
+                        <li>Supplement Store Discount</li>
+                    </ul>
+                </div>
+                <button class="w-full border border-zinc-800 py-4 rounded-xl group-hover:bg-white group-hover:text-black transition duration-300 font-bold uppercase text-sm">Select Plan</button>
             </div>
         </div>
     </section>
 
-    <section class="py-24 bg-zinc-950 px-6 reveal">
-        <div class="max-w-4xl mx-auto glass p-16 rounded-3xl text-center shadow-xl">
-            <h2 class="text-4xl font-black mb-5 uppercase italic leading-tight">GET A FREE DAY PASS &<br>PERSONALIZED DIET CHART</h2>
-            <p class="mb-12 text-gray-400 italic max-w-xl mx-auto">Start your fitness journey at Kanpur's best gym. No credit card required, instant access.</p>
-            <form class="grid md:grid-cols-2 gap-8 text-left">
-                <div>
-                    <label class="block text-gray-500 uppercase text-xs font-bold mb-2">WhatsApp Number</label>
-                    <input type="tel" placeholder="e.g., 9876543210" class="w-full bg-black border border-zinc-800 p-5 rounded-xl focus:border-orange-500 focus:neon-shadow outline-none text-lg">
-                </div>
-                <div>
-                    <label class="block text-gray-500 uppercase text-xs font-bold mb-2">Full Name</label>
-                    <input type="text" placeholder="e.g., Ansh Singh" class="w-full bg-black border border-zinc-800 p-5 rounded-xl focus:border-orange-500 focus:neon-shadow outline-none text-lg">
-                </div>
-                <button class="md:col-span-2 bg-orange-600 py-6 rounded-xl font-black uppercase text-2xl hover:bg-orange-700 transition transform hover:scale-105">Claim My Free Pass Now</button>
-            </form>
+    <footer class="py-16 border-t border-agency-dark px-6 text-center bg-black mt-16">
+        <h1 class="text-5xl font-black text-white mb-10 tracking-tighter">ICEBUG<span class="text-agency-orange">GYM</span></h1>
+        <div class="flex justify-center space-x-10 mb-12 text-3xl">
+            <a href="#" class="text-gray-700 hover:text-agency-orange transition duration-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-700 hover:text-agency-orange transition duration-300"><i class="fas fa-map-marker-alt"></i></a>
         </div>
-    </section>
-
-    <section class="py-20 px-6 reveal">
-        <h3 class="text-center text-4xl font-black mb-16 uppercase italic">Success Stories (Real Kanpur People)</h3>
-        <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-            <video controls class="rounded-2xl border border-zinc-900 shadow-xl w-full">
-                <source src="https://via.placeholder.com/640x360/000000/FFFFFF?text=Client+Testimonial+1" type="video/mp4">
-            </video>
-            <video controls class="rounded-2xl border border-zinc-900 shadow-xl w-full">
-                <source src="https://via.placeholder.com/640x360/000000/FFFFFF?text=Client+Testimonial+2" type="video/mp4">
-            </video>
-        </div>
-    </section>
-
-    <footer class="py-16 border-t border-zinc-900 px-6 text-center bg-zinc-950">
-        <h1 class="text-4xl font-black text-white mb-8">ICEBUG<span class="text-orange-500">GYM</span></h1>
-        <div class="flex justify-center space-x-8 mb-10 text-3xl">
-            <a href="#" class="text-gray-600 hover:text-orange-500 transition"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-gray-600 hover:text-orange-500 transition"><i class="fas fa-map-marker-alt"></i></a>
-        </div>
-        <p class="text-gray-700 text-xs uppercase tracking-widest mb-2 leading-relaxed">Swaroop Nagar, Kanpur, Uttar Pradesh, 208002</p>
-        <p class="text-gray-800 text-xs uppercase tracking-widest">&copy; 2026 Icebug.co | <a href="#" class="underline">Privacy Policy</a></p>
+        <p class="text-gray-800 text-xs uppercase tracking-widest mb-2 font-light">Swaroop Nagar, Kanpur, Uttar Pradesh, 208002</p>
+        <p class="text-gray-900 text-xs uppercase tracking-widest font-light">&copy; 2026 IceBug Gym | <a href="#" class="underline">Privacy</a></p>
     </footer>
 
     <script>
         // GSAP Animations (ScrollTrigger)
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Content Animation
+        // Hero Content Animation on Load
         const heroTl = gsap.timeline();
-        heroTl.from(".hero-title", { duration: 1.5, y: 100, opacity: 0, ease: "power4.out" })
-              .from(".hero-subtitle", { duration: 1, y: 50, opacity: 0, ease: "power3.out" }, "-=1")
-              .from(".hero-cta", { duration: 1, y: 30, opacity: 0, ease: "power2.out" }, "-=0.5");
+        heroTl.from(".hero-title", { duration: 1.5, y: 150, opacity: 0, ease: "power4.out" })
+              .from(".hero-subtitle", { duration: 1, y: 70, opacity: 0, ease: "power3.out" }, "-=1")
+              .from(".hero-cta", { duration: 1, y: 50, opacity: 0, ease: "power2.out" }, "-=0.7");
 
-        // Section Reveal Animation
+        // Section Reveal Animation on Scroll
         gsap.utils.toArray(".reveal").forEach(section => {
             gsap.from(section, {
                 scrollTrigger: {
                     trigger: section,
-                    start: "top 80%",
+                    start: "top 85%",
                 },
-                y: 60,
+                y: 80,
                 opacity: 0,
-                duration: 1.2,
+                duration: 1.3,
                 ease: "power2.out"
             });
         });
@@ -180,17 +182,19 @@
             if (h > 0 && w > 0) {
                 const bmi = (w / ((h / 100) * (h / 100))).toFixed(1);
                 let category = "";
+                let color = "#f97316"; // Agency Orange (Healthy)
                 
-                if (bmi < 18.5) { category = "Underweight"; resultDisplay.style.color = "#a3e635"; } // Green
-                else if (bmi >= 18.5 && bmi <= 24.9) { category = "Healthy"; resultDisplay.style.color = "#f97316"; } // Orange
-                else { category = "Overweight"; resultDisplay.style.color = "#ef4444"; } // Red
+                if (bmi < 18.5) { category = "Underweight"; color = "#a3e635"; } // Lime
+                else if (bmi >= 18.5 && bmi <= 24.9) { category = "Healthy"; color = "#f97316"; } // Orange
+                else { category = "Overweight"; color = "#ef4444"; } // Red
                 
-                resultDisplay.innerHTML = "Your BMI: " + bmi + " (" + category + ")";
+                resultDisplay.innerHTML = "STATUS: " + category + " (" + bmi + ")";
+                resultDisplay.style.color = color;
                 
                 // Neon shimmer effect on result
                 gsap.from("#bmiResult", { opacity: 0, duration: 0.5, ease: "power2.out" });
             } else {
-                resultDisplay.innerHTML = "Please enter valid numbers.";
+                resultDisplay.innerHTML = "ENTER VALID DATA.";
                 resultDisplay.style.color = "white";
             }
         }

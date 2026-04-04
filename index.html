@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IceBug Elite | Kanpur's Finest Gym</title>
+    <title>IceBug Elite | Kanpur's Most Powerful Gym</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'agency-dark': '#080808', 'agency-orange': '#f97316' },
+                    colors: { 'agency-dark': '#050505', 'agency-orange': '#f97316' },
                     fontFamily: { inter: ['Inter', 'sans-serif'] }
                 }
             }
@@ -23,151 +23,150 @@
     </script>
     
     <style>
-        body { background-color: #080808; cursor: none; } /* Custom Cursor ready */
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
-        .hero-video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; }
-        .hero-video-container video { object-fit: cover; width: 100%; height: 100%; transform: scale(1.1); }
+        * { cursor: none !important; } /* Elite Custom Cursor */
+        body { background-color: #050505; overflow-x: hidden; }
         
-        /* Custom Cursor */
-        #cursor { width: 20px; height: 20px; background: #f97316; border-radius: 50%; position: fixed; pointer-events: none; z-index: 999; mix-blend-mode: difference; transition: transform 0.1s; }
+        /* Custom Cursor Dot */
+        #cursor { width: 12px; height: 12px; background: #f97316; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s ease; }
+        #cursor-follower { width: 40px; height: 40px; border: 1px solid #f97316; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; opacity: 0.5; }
+
+        /* Immersive Video Layer */
+        .hero-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
+        video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
+        .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), #050505); }
+
+        /* Smooth Content Layout */
+        .content-wrap { position: relative; z-index: 10; background: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
         
-        /* 3D Card Hover Base */
-        .tilt-card { transition: transform 0.1s ease-out; transform-style: preserve-3d; }
-        .parallax-section { position: relative; z-index: 10; margin-top: 100vh; background: #080808; }
-        
-        .neon-glow { text-shadow: 0 0 20px rgba(249, 115, 22, 0.5); }
+        /* 3D Tilt Card */
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.2s ease; }
     </style>
 </head>
-<body class="text-white font-inter antialiased">
+<body class="text-white font-inter">
 
     <div id="cursor"></div>
+    <div id="cursor-follower"></div>
 
-    <div class="hero-video-container">
-        <video autoplay muted loop playsinline id="heroVideo">
+    <div class="hero-container">
+        <video autoplay muted loop playsinline id="mainVideo">
             <source src="Gym_Demo/gym-hero.mp4" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="overlay"></div>
     </div>
 
-    <section class="h-screen flex items-center px-6 md:px-12 relative z-20" id="heroText">
-        <div class="max-w-7xl mx-auto w-full">
-            <h1 class="text-7xl md:text-[150px] font-black uppercase tracking-tighter leading-none mb-6">
-                ELITE <br><span class="text-agency-orange neon-glow">STRENGTH.</span>
+    <section class="h-screen flex items-center px-6 md:px-20 overflow-hidden" id="hero">
+        <div class="max-w-6xl">
+            <h1 class="text-8xl md:text-[160px] font-black uppercase tracking-tighter leading-[0.8] mb-10 hero-text">
+                UNLEASH <br><span class="text-agency-orange">ELITE.</span>
             </h1>
-            <p class="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl font-light">Experience the future of fitness in Kanpur. Immersion starts now.</p>
-            <div class="flex space-x-6">
-                <button class="bg-agency-orange text-black px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:scale-110 transition-transform">Claim Pass</button>
+            <p class="text-xl md:text-2xl text-gray-400 max-w-xl font-light mb-12 hero-p">
+                Kanpur's first high-immersion fitness studio. Experience the future of training.
+            </p>
+            <div class="flex space-x-6 hero-btn">
+                <button class="bg-agency-orange text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:scale-110 transition">Claim Free Pass</button>
             </div>
         </div>
     </section>
 
-    <main class="parallax-section">
+    <div class="content-wrap">
         
-        <section class="py-32 px-6 reveal">
-            <div class="max-w-4xl mx-auto glass p-16 rounded-[40px] text-center border-t border-agency-orange/20">
-                <h2 class="text-5xl font-black mb-12 italic uppercase">AI Performance <span class="text-agency-orange">Hub</span></h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <input id="weight" type="number" placeholder="Weight (kg)" class="bg-black border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange transition">
-                    <input id="height" type="number" placeholder="Height (cm)" class="bg-black border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange transition">
-                    <button onclick="calculateBMI()" class="md:col-span-2 bg-white text-black font-black py-6 rounded-2xl uppercase tracking-tighter hover:bg-agency-orange transition">Analyze My Physique</button>
+        <section class="py-40 px-6 reveal">
+            <div class="max-w-4xl mx-auto glass p-20 rounded-[50px] border-t border-agency-orange/30 shadow-2xl">
+                <h2 class="text-5xl font-black mb-16 text-center uppercase tracking-widest italic">Physique <span class="text-agency-orange">Analysis</span></h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <input id="weight" type="number" placeholder="Weight (kg)" class="bg-black/50 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange transition">
+                    <input id="height" type="number" placeholder="Height (cm)" class="bg-black/50 border border-white/10 p-6 rounded-2xl outline-none focus:border-agency-orange transition">
+                    <button onclick="calculateBMI()" class="md:col-span-2 bg-white text-black font-black py-6 rounded-2xl uppercase text-xl hover:bg-agency-orange transition">Calculate BMI</button>
                 </div>
-                <div id="bmiResult" class="mt-8 text-4xl font-black text-agency-orange"></div>
+                <div id="bmiResult" class="mt-10 text-5xl font-black text-center text-agency-orange"></div>
             </div>
         </section>
 
-        <section class="py-32 px-6">
-            <h3 class="text-center text-7xl font-black mb-24 tracking-tighter uppercase">Packages</h3>
-            <div class="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
+        <section class="py-40 px-6">
+            <h3 class="text-center text-8xl font-black mb-32 tracking-tighter uppercase">Packages</h3>
+            <div class="grid md:grid-cols-3 gap-16 max-w-7xl mx-auto">
                 
-                <div class="tilt-card glass p-12 rounded-[30px] border border-white/5 hover:border-agency-orange/40 transition-colors">
-                    <h4 class="text-gray-500 font-bold mb-4 uppercase">Starter</h4>
-                    <div class="text-6xl font-black mb-8">₹1,499</div>
-                    <ul class="space-y-4 mb-12 text-gray-400 font-light italic text-sm">
-                        <li><i class="fas fa-check text-agency-orange mr-2"></i>Full Access</li>
-                        <li><i class="fas fa-check text-agency-orange mr-2"></i>Standard Locker</li>
-                    </ul>
-                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black font-bold uppercase transition">Select</button>
+                <div class="tilt-card glass p-12 rounded-[40px] border border-white/5 flex flex-col justify-between h-[500px]">
+                    <div>
+                        <h4 class="text-gray-500 font-bold mb-4 uppercase">Starter</h4>
+                        <div class="text-6xl font-black mb-8 italic">₹1,499</div>
+                        <p class="text-gray-400 italic">Basic access to Kanpur's best equipment.</p>
+                    </div>
+                    <button class="w-full py-5 border border-white/20 rounded-2xl hover:bg-white hover:text-black font-bold transition uppercase">Select</button>
                 </div>
 
-                <div class="tilt-card bg-agency-orange p-12 rounded-[30px] shadow-2xl shadow-orange-950/50 scale-110 relative overflow-hidden text-black">
-                    <div class="absolute top-5 right-5 font-black text-xs uppercase tracking-widest opacity-40">Most Elite</div>
-                    <h4 class="font-bold mb-4 uppercase">Pro Athlete</h4>
-                    <div class="text-6xl font-black mb-8">₹2,999</div>
-                    <ul class="space-y-4 mb-12 font-medium italic text-sm">
-                        <li><i class="fas fa-bolt mr-2"></i>Personal Trainer</li>
-                        <li><i class="fas fa-bolt mr-2"></i>AI Nutrition Chart</li>
-                    </ul>
-                    <button class="w-full py-4 bg-black text-white rounded-xl font-bold uppercase transition">Join Elite</button>
+                <div class="tilt-card bg-agency-orange p-12 rounded-[40px] shadow-2xl scale-110 flex flex-col justify-between h-[500px] text-black">
+                    <div>
+                        <div class="text-xs font-black uppercase mb-4 tracking-widest opacity-50">Most Popular</div>
+                        <h4 class="font-bold mb-4 uppercase">Pro Athlete</h4>
+                        <div class="text-6xl font-black mb-8 italic">₹2,999</div>
+                        <p class="font-medium italic text-black/70">Personalized AI coaching & premium nutrition.</p>
+                    </div>
+                    <button class="w-full py-5 bg-black text-white rounded-2xl font-bold transition uppercase">Join Elite</button>
                 </div>
 
-                <div class="tilt-card glass p-12 rounded-[30px] border border-white/5 hover:border-agency-orange/40 transition-colors">
-                    <h4 class="text-gray-500 font-bold mb-4 uppercase">Elite</h4>
-                    <div class="text-6xl font-black mb-8">₹4,999</div>
-                    <ul class="space-y-4 mb-12 text-gray-400 font-light italic text-sm">
-                        <li><i class="fas fa-check text-agency-orange mr-2"></i>Sauna Access</li>
-                        <li><i class="fas fa-check text-agency-orange mr-2"></i>Spa & Recovery</li>
-                    </ul>
-                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black font-bold uppercase transition">Select</button>
+                <div class="tilt-card glass p-12 rounded-[40px] border border-white/5 flex flex-col justify-between h-[500px]">
+                    <div>
+                        <h4 class="text-gray-500 font-bold mb-4 uppercase">Elite</h4>
+                        <div class="text-6xl font-black mb-8 italic">₹4,999</div>
+                        <p class="text-gray-400 italic">Unlimited access with recovery spa & sauna.</p>
+                    </div>
+                    <button class="w-full py-5 border border-white/20 rounded-2xl hover:bg-white hover:text-black font-bold transition uppercase">Select</button>
                 </div>
 
             </div>
         </section>
 
-    </main>
+        <footer class="py-20 text-center border-t border-white/5">
+            <h1 class="text-4xl font-black mb-4">ICEBUG<span class="text-agency-orange">GYM</span></h1>
+            <p class="text-gray-600 text-xs tracking-widest uppercase">Powered by Icebug.co | Swaroop Nagar, Kanpur</p>
+        </footer>
+    </div>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Custom Cursor Follow
+        // 1. Custom Cursor Logic
         const cursor = document.querySelector('#cursor');
-        window.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3 });
+        const follower = document.querySelector('#cursor-follower');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            gsap.to(follower, { x: e.clientX - 15, y: e.clientY - 15, duration: 0.3 });
         });
 
-        // 2. Hero Immersive Zoom & Fade
-        gsap.to("#heroVideo", {
+        // 2. Immersive Hero Parallax (Video Zooms in on Scroll)
+        gsap.to("#mainVideo", {
             scrollTrigger: {
-                trigger: "#heroText",
+                trigger: "#hero",
                 start: "top top",
                 end: "bottom top",
                 scrub: true
             },
-            scale: 1.5,
-            opacity: 0.3
+            scale: 2,
+            opacity: 0.2
         });
 
-        gsap.to("#heroText", {
-            scrollTrigger: {
-                trigger: "#heroText",
-                start: "top top",
-                end: "bottom top",
-                scrub: true
-            },
-            y: -200,
-            opacity: 0
-        });
+        // 3. Hero Text Storytelling Reveal
+        const tl = gsap.timeline();
+        tl.from(".hero-text", { y: 100, opacity: 0, duration: 1.2, ease: "power4.out" })
+          .from(".hero-p", { y: 50, opacity: 0, duration: 0.8 }, "-=0.8")
+          .from(".hero-btn", { y: 30, opacity: 0, duration: 0.6 }, "-=0.6");
 
-        // 3. Staggered Section Reveal
-        gsap.utils.toArray(".reveal").forEach(section => {
-            gsap.from(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 80%",
-                },
-                y: 100,
-                opacity: 0,
-                duration: 1.5,
-                ease: "power4.out"
+        // 4. Reveal Sections on Scroll
+        gsap.utils.toArray(".reveal").forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: "top 85%" },
+                y: 100, opacity: 0, duration: 1.5, ease: "power4.out"
             });
         });
 
-        // 4. 3D Tilt Effect on Cards
-        const cards = document.querySelectorAll('.tilt-card');
-        cards.forEach(card => {
+        // 5. 3D Tilt Card Logic
+        document.querySelectorAll('.tilt-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const { left, top, width, height } = card.getBoundingClientRect();
-                const x = (e.clientX - left - width / 2) / 10;
-                const y = (e.clientY - top - height / 2) / 10;
+                const x = (e.clientX - left - width / 2) / 15;
+                const y = (e.clientY - top - height / 2) / 15;
                 card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
             });
             card.addEventListener('mouseleave', () => {
@@ -179,10 +178,10 @@
         function calculateBMI() {
             const h = document.getElementById('height').value;
             const w = document.getElementById('weight').value;
-            if (h && w) {
-                const bmi = (w / ((h / 100) ** 2)).toFixed(1);
-                document.getElementById('bmiResult').innerText = "BMI: " + bmi;
-                gsap.from("#bmiResult", { scale: 0, duration: 0.5, ease: "back.out" });
+            if(h && w) {
+                const bmi = (w / ((h/100)**2)).toFixed(1);
+                document.getElementById('bmiResult').innerText = "RESULT: " + bmi;
+                gsap.from("#bmiResult", { scale: 1.5, opacity: 0, duration: 0.5 });
             }
         }
     </script>

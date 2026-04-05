@@ -16,7 +16,9 @@
             theme: {
                 extend: {
                     colors: { 'smoky': '#11120D', 'olive': '#565449', 'bone': '#D8CFBC', 'floral': '#FFFBF4' },
-                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] },
+                    animation: { 'marquee': 'marquee 25s linear infinite' },
+                    keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } }
                 }
             }
         }
@@ -43,6 +45,10 @@
         .b-glass { background: rgba(86, 84, 73, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(216, 207, 188, 0.1); }
         .reveal { opacity: 0; transform: translateY(40px); }
         .luxury-line { width: 1px; height: 120px; background: linear-gradient(to bottom, #D8CFBC, transparent); margin: 0 auto; }
+
+        /* Marquee Scroller */
+        .marquee-wrapper { overflow: hidden; white-space: nowrap; width: 100%; display: flex; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+        .marquee-content { display: flex; width: max-content; }
 
         /* Chatbot */
         #chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9000; }
@@ -79,7 +85,7 @@
 
     <div class="v-bg">
         <video autoplay muted loop playsinline id="main-video">
-            <source src="gym-hero.mp4" type="video/mp4">
+            <source src="gym-video.mp4" type="video/mp4">
         </video>
         <div class="absolute inset-0 bg-gradient-to-b from-smoky/70 via-smoky/30 to-smoky"></div>
     </div>
@@ -107,11 +113,12 @@
             <div class="grid md:grid-cols-3 gap-16 max-w-7xl mx-auto">
                 <div class="reveal">
                     <div class="flex items-center space-x-2 mb-4">
-                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        <p class="text-[10px] uppercase tracking-widest text-olive font-bold">Live Floor Status</p>
+                        <span class="w-3 h-3 bg-green-500 rounded-full animate-ping absolute"></span>
+                        <span class="w-3 h-3 bg-green-500 rounded-full relative"></span>
+                        <p class="text-[10px] uppercase tracking-widest text-olive font-bold ml-2">Live Floor Tracker</p>
                     </div>
                     <div class="text-7xl font-serif text-floral mb-2 italic">42<span class="text-4xl text-bone font-sans not-italic">/60</span></div>
-                    <div class="w-full h-[2px] bg-olive/30 mt-4"><div class="w-[70%] h-full bg-bone"></div></div>
+                    <div class="w-full h-[2px] bg-olive/30 mt-4"><div class="w-[70%] h-full bg-bone shadow-[0_0_10px_#D8CFBC]"></div></div>
                 </div>
                 <div class="reveal" style="transition-delay: 0.2s;">
                     <p class="text-[10px] uppercase tracking-widest text-olive font-bold mb-4">Current Atmosphere</p>
@@ -137,7 +144,7 @@
                         <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
                     </div>
                     <h3 class="font-serif text-2xl text-floral mb-4">Strength Pavilion</h3>
-                    <p class="font-sans text-bone/70 text-sm leading-relaxed">Equipped with competition-grade Eleiko plates, customized racks, and calibrated Olympic bars. Built for serious lifters.</p>
+                    <p class="font-sans text-bone/70 text-sm leading-relaxed">Equipped with competition-grade plates, customized racks, and calibrated bars.</p>
                 </div>
                 <div class="b-glass p-10 reveal group" style="transition-delay: 0.2s;">
                     <div class="h-64 bg-olive/20 mb-8 overflow-hidden">
@@ -149,46 +156,78 @@
             </div>
         </section>
 
-        <section class="py-32 bg-[#0e0f0b] border-y border-olive/20 px-6 md:px-32">
-            <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 text-center">
-                <div class="reveal"><i class="fas fa-car text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Valet Parking</h4><p class="text-xs text-olive">Seamless arrivals.</p></div>
-                <div class="reveal"><i class="fas fa-hot-tub text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Recovery Spa</h4><p class="text-xs text-olive">Sauna & Ice baths.</p></div>
-                <div class="reveal"><i class="fas fa-coffee text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Protein Bar</h4><p class="text-xs text-olive">Post-workout nutrition.</p></div>
-                <div class="reveal"><i class="fas fa-lock text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Executive Lockers</h4><p class="text-xs text-olive">Private grooming suites.</p></div>
-            </div>
-        </section>
-
-        <section id="programs" class="py-40 px-6 md:px-32">
+        <section id="programs" class="py-40 px-6 md:px-32 bg-[#0e0f0b]">
             <h2 class="font-serif text-center text-4xl mb-24 text-floral">The <span class="italic text-bone">Engineers</span></h2>
             <div class="grid md:grid-cols-3 gap-10 max-w-7xl mx-auto">
                 <div class="relative group overflow-hidden reveal">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" class="w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-smoky to-transparent opacity-90"></div>
-                    <div class="absolute bottom-10 left-10">
-                        <p class="font-sans text-bone text-[10px] tracking-widest uppercase mb-2">Head of Power</p>
-                        <h4 class="font-serif text-3xl text-floral">Coach Aryan</h4>
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" class="w-full h-[550px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-smoky via-smoky/50 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-10 left-8 right-8">
+                        <p class="font-sans text-olive text-[10px] tracking-widest uppercase mb-1">Head of Power</p>
+                        <h4 class="font-serif text-3xl text-floral mb-4">Coach Aryan</h4>
+                        <p class="font-serif italic text-bone/80 text-sm border-l border-bone pl-3">"Strength is not built in a day, it is engineered through relentless discipline."</p>
                     </div>
                 </div>
                 <div class="relative group overflow-hidden reveal" style="transition-delay: 0.2s;">
-                    <img src="gym 1.jpeg" class="w-full h-[500px] object-cover grayscale brightness-75 border border-olive">
-                    <div class="absolute inset-0 bg-gradient-to-t from-smoky to-transparent opacity-90"></div>
-                    <div class="absolute bottom-10 left-10">
-                        <p class="font-sans text-bone text-[10px] tracking-widest uppercase mb-2">The Founder</p>
-                        <h4 class="font-serif text-3xl text-floral">Anshuman Singh</h4>
+                    <img src="gym 1.jpeg" class="w-full h-[550px] object-cover grayscale brightness-75 border border-olive">
+                    <div class="absolute inset-0 bg-gradient-to-t from-smoky via-smoky/50 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-10 left-8 right-8">
+                        <p class="font-sans text-olive text-[10px] tracking-widest uppercase mb-1">The Founder</p>
+                        <h4 class="font-serif text-3xl text-floral mb-4">Anshuman Singh</h4>
+                        <p class="font-serif italic text-bone/80 text-sm border-l border-bone pl-3">"IceBug is a sanctuary for the obsessed. We don't settle for average."</p>
                     </div>
                 </div>
                 <div class="relative group overflow-hidden reveal" style="transition-delay: 0.4s;">
-                    <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800" class="w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-smoky to-transparent opacity-90"></div>
-                    <div class="absolute bottom-10 left-10">
-                        <p class="font-sans text-bone text-[10px] tracking-widest uppercase mb-2">Physique Architect</p>
-                        <h4 class="font-serif text-3xl text-floral">Coach Rahul</h4>
+                    <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800" class="w-full h-[550px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-smoky via-smoky/50 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-10 left-8 right-8">
+                        <p class="font-sans text-olive text-[10px] tracking-widest uppercase mb-1">Physique Architect</p>
+                        <h4 class="font-serif text-3xl text-floral mb-4">Coach Rahul</h4>
+                        <p class="font-serif italic text-bone/80 text-sm border-l border-bone pl-3">"Your body is a canvas. Nutrition and biomechanics are the brushes."</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="hub" class="py-40 px-6 md:px-32 border-y border-olive/30 bg-[#0e0f0b]">
+        <section class="py-32 px-0 bg-smoky border-y border-olive/30 reveal">
+            <h3 class="font-serif text-center text-3xl mb-16 text-floral">Client <span class="italic text-bone">Legacies</span></h3>
+            <div class="marquee-wrapper">
+                <div class="marquee-content animate-marquee">
+                    <div class="b-glass p-8 w-[350px] mx-4 whitespace-normal flex-shrink-0">
+                        <div class="flex text-bone mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="font-sans text-sm text-floral/80 mb-6 italic">"The equipment and environment here are unmatched in Kanpur. The AI diet plan completely changed my prep."</p>
+                        <p class="font-serif text-olive uppercase tracking-widest text-[10px]">Rohan Verma</p>
+                    </div>
+                    <div class="b-glass p-8 w-[350px] mx-4 whitespace-normal flex-shrink-0">
+                        <div class="flex text-bone mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="font-sans text-sm text-floral/80 mb-6 italic">"As an executive, I needed a place that values privacy. The valet and recovery spa make it worth every penny."</p>
+                        <p class="font-serif text-olive uppercase tracking-widest text-[10px]">Amit Singhal</p>
+                    </div>
+                    <div class="b-glass p-8 w-[350px] mx-4 whitespace-normal flex-shrink-0">
+                        <div class="flex text-bone mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="font-sans text-sm text-floral/80 mb-6 italic">"Coach Aryan's powerlifting regimen pushed my deadlift past 200kg safely. Truly elite engineering."</p>
+                        <p class="font-serif text-olive uppercase tracking-widest text-[10px]">Karan Dixit</p>
+                    </div>
+                    <div class="b-glass p-8 w-[350px] mx-4 whitespace-normal flex-shrink-0">
+                        <div class="flex text-bone mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="font-sans text-sm text-floral/80 mb-6 italic">"The equipment and environment here are unmatched in Kanpur. The AI diet plan completely changed my prep."</p>
+                        <p class="font-serif text-olive uppercase tracking-widest text-[10px]">Rohan Verma</p>
+                    </div>
+                    <div class="b-glass p-8 w-[350px] mx-4 whitespace-normal flex-shrink-0">
+                        <div class="flex text-bone mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="font-sans text-sm text-floral/80 mb-6 italic">"As an executive, I needed a place that values privacy. The valet and recovery spa make it worth every penny."</p>
+                        <p class="font-serif text-olive uppercase tracking-widest text-[10px]">Amit Singhal</p>
+                    </div>
+                    <div class="b-glass p-8 w-[350px] mx-4 whitespace-normal flex-shrink-0">
+                        <div class="flex text-bone mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="font-sans text-sm text-floral/80 mb-6 italic">"Coach Aryan's powerlifting regimen pushed my deadlift past 200kg safely. Truly elite engineering."</p>
+                        <p class="font-serif text-olive uppercase tracking-widest text-[10px]">Karan Dixit</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hub" class="py-40 px-6 md:px-32 bg-[#0e0f0b]">
             <div class="b-glass p-16 max-w-6xl mx-auto rounded-none reveal">
                 <div class="grid md:grid-cols-2 gap-16 items-center">
                     <div>
@@ -241,22 +280,6 @@
             </div>
         </section>
 
-        <section class="py-32 px-6 md:px-32 bg-[#0e0f0b] border-y border-olive/30">
-            <div class="max-w-4xl mx-auto">
-                <h3 class="font-serif text-4xl text-floral mb-16 text-center">Concierge <span class="italic text-bone">Inquiries</span></h3>
-                <div class="space-y-6 reveal">
-                    <div class="border-b border-olive/50 pb-6">
-                        <button onclick="toggleFaq('f1')" class="w-full flex justify-between items-center text-left font-serif text-xl text-floral">What are the peak hours? <i class="fas fa-plus text-bone text-sm"></i></button>
-                        <div id="f1" class="faq-ans font-sans text-sm leading-relaxed mt-4">Our estate is open 24/7. Peak intensity is usually observed between 6:00 PM and 9:00 PM. Valet parking is always available.</div>
-                    </div>
-                    <div class="border-b border-olive/50 pb-6">
-                        <button onclick="toggleFaq('f2')" class="w-full flex justify-between items-center text-left font-serif text-xl text-floral">Does the 1-Day Pass include a diet chart? <i class="fas fa-plus text-bone text-sm"></i></button>
-                        <div id="f2" class="faq-ans font-sans text-sm leading-relaxed mt-4">Yes, the complimentary pass includes a full floor tour, one session, and a baseline bespoke diet chart from our AI hub.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="trial" class="py-40 px-6 md:px-32 relative z-30">
             <div class="max-w-4xl mx-auto b-glass p-16 reveal shadow-2xl">
                 <h2 class="font-serif text-5xl mb-6 text-floral text-center">Request <span class="italic text-bone">Access</span></h2>
@@ -284,7 +307,20 @@
             </div>
         </section>
 
-        <footer class="py-24 border-t border-olive px-6 md:px-32 bg-smoky relative z-30">
+        <section class="py-24 px-6 md:px-32 bg-[#0e0f0b] border-y border-olive/30">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <i class="fas fa-envelope-open-text text-3xl text-bone mb-6"></i>
+                <h3 class="font-serif text-3xl text-floral mb-4">Member <span class="italic text-bone">Relations</span></h3>
+                <p class="font-sans text-[10px] uppercase tracking-widest text-olive mb-8">Discreet grievance redressal for existing patrons.</p>
+                <form onsubmit="event.preventDefault(); alert('Feedback securely transmitted to Estate Management.');" class="space-y-6">
+                    <input type="text" placeholder="Member ID / Name" class="w-full bg-transparent border-b border-olive p-3 font-serif text-lg text-floral outline-none focus:border-bone text-center" required>
+                    <textarea placeholder="How can we improve your estate experience?" rows="3" class="w-full bg-transparent border-b border-olive p-3 font-sans text-sm text-floral outline-none focus:border-bone text-center resize-none" required></textarea>
+                    <button type="submit" class="border border-olive text-bone px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-bone hover:text-smoky transition-all">Submit Confidentially</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="py-24 px-6 md:px-32 bg-smoky relative z-30">
             <div class="grid md:grid-cols-4 gap-16 mb-16">
                 <div>
                     <h1 class="font-serif text-3xl text-floral mb-6">ICEBUG<span class="text-bone italic">.</span></h1>
@@ -326,15 +362,15 @@
             <div class="bg-bone text-smoky p-4 font-serif font-bold flex justify-between items-center border-b border-olive/20">
                 <div class="flex items-center space-x-2">
                     <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
-                    <span>Estate Concierge</span>
+                    <span>AI Concierge</span>
                 </div>
                 <button onclick="toggleChat()" class="text-smoky hover:text-black"><i class="fas fa-times"></i></button>
             </div>
             <div id="chat-messages">
-                <div class="msg-bot">Hello! I am your 24/7 estate concierge. How can I assist you with your fitness journey today?</div>
+                <div class="msg-bot">Hello! I am your 24/7 AI health & estate concierge. How can I assist you today?</div>
             </div>
             <div id="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Ask about plans, location..." onkeypress="handleChatPress(event)">
+                <input type="text" id="chat-input" placeholder="Ask about plans, diet, location..." onkeypress="handleChatPress(event)">
                 <button id="chat-btn" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
@@ -386,35 +422,81 @@
             }
         }
 
-        // FAQ Toggle
-        function toggleFaq(id) {
-            const el = document.getElementById(id);
-            el.style.display = el.style.display === "block" ? "none" : "block";
-        }
-
-        // Chatbot
+        // --- OPENAI CHATBOT LOGIC ---
         function toggleChat() {
             const win = document.getElementById('chat-window'); const btn = document.getElementById('chat-toggle-btn');
             if (win.style.display === "flex") { win.style.display = "none"; btn.style.display = "flex"; } 
             else { win.style.display = "flex"; btn.style.display = "none"; }
         }
+        
         function handleChatPress(e) { if (e.key === 'Enter') sendMsg(); }
-        function sendMsg() {
-            const input = document.getElementById('chat-input'); const text = input.value.trim();
+        
+        async function sendMsg() {
+            const input = document.getElementById('chat-input'); 
+            const text = input.value.trim();
             if (!text) return;
+            
             const chatBox = document.getElementById('chat-messages');
             chatBox.innerHTML += `<div class="msg-user">${text}</div>`;
-            input.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
+            input.value = ''; 
+            chatBox.scrollTop = chatBox.scrollHeight;
 
-            setTimeout(() => {
-                let reply = "Our concierge team will reach out. Please submit your details via the form above.";
-                const lower = text.toLowerCase();
-                if (lower.includes("price") || lower.includes("cost") || lower.includes("plan")) reply = "Standard access is ₹1,499. The Elite Bespoke experience is ₹2,999/mo.";
-                else if (lower.includes("location") || lower.includes("where")) reply = "We are an exclusive estate located in Swaroop Nagar, Kanpur.";
-                else if (lower.includes("trial") || lower.includes("free")) reply = "You can claim a 24-hour pass by using the 'Claim Pass' button in the menu.";
-                chatBox.innerHTML += `<div class="msg-bot">${reply}</div>`;
+            // Typing indicator
+            const typingId = "typing-" + Date.now();
+            chatBox.innerHTML += `<div id="${typingId}" class="msg-bot italic text-bone/50">Analyzing...</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // DHYAN DEIN: API KEY YAHAN DALNI HAI!
+            // Security Note: Real production mein API key backend (Node.js/Python) par hoti hai taaki koi chura na le.
+            const OPENAI_API_KEY = "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"; 
+
+            if(OPENAI_API_KEY === "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") {
+                // Fallback Logic agar API key nahi dali hai
+                setTimeout(() => {
+                    document.getElementById(typingId).remove();
+                    let reply = "I am operating in offline mode. Please add an OpenAI API key in the code to unlock my full AI potential. For now, please use the contact form.";
+                    chatBox.innerHTML += `<div class="msg-bot">${reply}</div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+                return;
+            }
+
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${OPENAI_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        messages: [
+                            { 
+                                role: "system", 
+                                // YAHAN AAPKA NAYA POWERFUL PROMPT HAI 👇
+                                content: "You are an elite Health & Customer Support Assistant for IceBug Private Fitness Estate in Kanpur. You are knowledgeable about HIIT, strength training, and nutrition. You are encouraging but professional. Keep answers under 3-4 sentences. If a user asks about memberships, explain the Standard (₹1,499), Elite Bespoke (₹2,999), and Executive (₹4,999) plans. If they ask about health, give safe, science-based advice but always include a short disclaimer to consult a doctor." 
+                            },
+                            { role: "user", content: text }
+                        ]
+                    })
+                });
+                
+                const data = await response.json();
+                document.getElementById(typingId).remove();
+                
+                if(data.choices && data.choices.length > 0) {
+                    const aiReply = data.choices[0].message.content;
+                    chatBox.innerHTML += `<div class="msg-bot">${aiReply}</div>`;
+                } else {
+                    chatBox.innerHTML += `<div class="msg-bot">I am currently experiencing a network anomaly. Please contact the concierge desk.</div>`;
+                }
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 800);
+
+            } catch (error) {
+                document.getElementById(typingId).remove();
+                chatBox.innerHTML += `<div class="msg-bot">Connection error. Please try again later.</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
         }
     </script>
 </body>

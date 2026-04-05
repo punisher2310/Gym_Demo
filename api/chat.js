@@ -1,13 +1,10 @@
 export default async function handler(req, res) {
-    // Sirf POST request allow karenge
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
     try {
         const { message } = req.body;
-
-        // Vercel ke environment variables se key nikalenge (Code mein nahi likhenge)
         const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -30,11 +27,17 @@ export default async function handler(req, res) {
 
         const data = await response.json();
         
-        // AI ka reply website ko wapas bhejenge
+        // 🚨 NAYA LOGIC: Agar OpenAI se error aaye, toh site crash na ho
+        if (data.error) {
+            console.error("OpenAI Error:", data.error);
+            return res.status(200).json({ reply: `System Notice: ${data.error.message}` });
+        }
+
+        // Agar sab theek hai toh reply bhej do
         res.status(200).json({ reply: data.choices[0].message.content });
 
     } catch (error) {
-        console.error(error);
+        console.error("Server Error:", error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }

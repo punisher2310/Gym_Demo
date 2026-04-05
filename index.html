@@ -461,25 +461,44 @@
                 return;
             }
 
+            async function sendMsg() {
+            const input = document.getElementById('chat-input'); 
+            const text = input.value.trim();
+            if (!text) return;
+            
+            const chatBox = document.getElementById('chat-messages');
+            chatBox.innerHTML += `<div class="msg-user">${text}</div>`;
+            input.value = ''; 
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const typingId = "typing-" + Date.now();
+            chatBox.innerHTML += `<div id="${typingId}" class="msg-bot italic text-bone/50">Analyzing...</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                // Ab request seedhe Vercel Backend par jayegi, OpenAI par nahi
+                const response = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENAI_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-3.5-turbo",
-                        messages: [
-                            { 
-                                role: "system", 
-                                // YAHAN AAPKA NAYA POWERFUL PROMPT HAI 👇
-                                content: "You are an elite Health & Customer Support Assistant for IceBug Private Fitness Estate in Kanpur. You are knowledgeable about HIIT, strength training, and nutrition. You are encouraging but professional. Keep answers under 3-4 sentences. If a user asks about memberships, explain the Standard (₹1,499), Elite Bespoke (₹2,999), and Executive (₹4,999) plans. If they ask about health, give safe, science-based advice but always include a short disclaimer to consult a doctor." 
-                            },
-                            { role: "user", content: text }
-                        ]
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
                 });
+                
+                const data = await response.json();
+                document.getElementById(typingId).remove();
+                
+                if (data.reply) {
+                    chatBox.innerHTML += `<div class="msg-bot">${data.reply}</div>`;
+                } else {
+                    chatBox.innerHTML += `<div class="msg-bot">Network anomaly. Please try again.</div>`;
+                }
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+            } catch (error) {
+                document.getElementById(typingId).remove();
+                chatBox.innerHTML += `<div class="msg-bot">Connection error. Please try again later.</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
                 
                 const data = await response.json();
                 document.getElementById(typingId).remove();

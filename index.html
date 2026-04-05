@@ -19,12 +19,8 @@
             theme: {
                 extend: {
                     colors: { 
-                        'brand-deep': '#190019', 
-                        'brand-dark': '#2B124C', 
-                        'brand-mid': '#522B5B',
-                        'brand-soft': '#854F6C', 
-                        'brand-light': '#DFB6B2', 
-                        'brand-cream': '#FBE4D8'
+                        'brand-charcoal': '#0D0D0D', 'brand-charcoal-light': '#1A1A1A', 
+                        'brand-almond': '#CECOB3', 'brand-almond-dim': '#AFA093', 'brand-bone': '#F5F5F0'
                     },
                     fontFamily: { display: ['Clash Display', 'sans-serif'], sans: ['Inter', 'sans-serif'] }
                 }
@@ -34,44 +30,44 @@
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-        body { background-color: #190019; color: #FBE4D8; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        body { background-color: #0D0D0D; color: #CECOB3; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #190019; }
-        ::-webkit-scrollbar-thumb { background: #522B5B; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: #0D0D0D; }
+        ::-webkit-scrollbar-thumb { background: #CECOB3; border-radius: 10px; }
 
         /* UI Utilities */
-        .glass-nav { background: rgba(25, 0, 25, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(223, 182, 178, 0.1); }
-        .glass-card { background: rgba(43, 18, 76, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(223, 182, 178, 0.1); border-radius: 24px; transition: transform 0.3s ease; }
-        .glass-card:hover { transform: translateY(-5px); border-color: rgba(223, 182, 178, 0.4); }
+        .glass-nav { background: rgba(13, 13, 13, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(206, 192, 179, 0.1); }
+        .glass-card { background: rgba(26, 26, 26, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(206, 192, 179, 0.1); border-radius: 24px; transition: transform 0.3s ease; }
+        .glass-card:hover { transform: translateY(-5px); border-color: rgba(206, 192, 179, 0.4); }
         
         /* Marquee */
-        .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; display: flex; align-items: center; background: #2B124C; padding: 12px 0; border-top: 1px solid rgba(251,228,216,0.1); border-bottom: 1px solid rgba(251,228,216,0.1); }
+        .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; display: flex; align-items: center; background: #1A1A1A; padding: 12px 0; border-top: 1px solid rgba(206,192,179,0.1); border-bottom: 1px solid rgba(206,192,179,0.1); }
         .marquee-content { display: flex; animation: scrollMarquee 25s linear infinite; }
         .marquee-content:hover { animation-play-state: paused; }
-        .review-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(25,0,25,0.5); padding: 8px 20px; border-radius: 100px; margin: 0 15px; font-size: 13px; border: 1px solid rgba(223,182,178,0.2); }
+        .review-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(13,13,13,0.5); padding: 8px 20px; border-radius: 100px; margin: 0 15px; font-size: 13px; border: 1px solid rgba(206,192,179,0.2); }
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Floating WA */
-        .wa-float { position: fixed; bottom: 24px; right: 24px; background-color: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 100; transition: transform 0.3s; }
+        .wa-float { position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 999; transition: transform 0.3s; }
         .wa-float:hover { transform: scale(1.1); }
 
         /* Forms */
-        .apple-input { width: 100%; background: rgba(25,0,25,0.6); border: 1px solid rgba(223,182,178,0.2); color: #FBE4D8; padding: 16px 20px; border-radius: 16px; outline: none; transition: all 0.3s; font-family: 'Inter', sans-serif; }
-        .apple-input:focus { border-color: #DFB6B2; background: rgba(43,18,76,0.8); }
+        .apple-input { width: 100%; background: rgba(26,26,26,0.6); border: 1px solid rgba(206,192,179,0.2); color: #CECOB3; padding: 18px 24px; border-radius: 16px; outline: none; transition: all 0.3s; font-family: 'Inter', sans-serif; font-size: 16px; }
+        .apple-input:focus { border-color: #CECOB3; background: rgba(26,26,26,0.9); }
 
-        /* Swiper Pagination */
+        /* Swiper Testimonials */
         .swiper-slide { height: auto; }
-        .swiper-pagination-bullet { background: rgba(223,182,178,0.4); opacity: 1; }
-        .swiper-pagination-bullet-active { background: #DFB6B2; width: 24px; border-radius: 4px; transition: width 0.3s; }
+        .swiper-pagination-bullet { background: rgba(206,192,179,0.4); opacity: 1; }
+        .swiper-pagination-bullet-active { background: #CECOB3; width: 24px; border-radius: 4px; transition: width 0.3s; }
 
         /* Image Masking */
         .img-mask { overflow: hidden; border-radius: 24px; }
         .img-mask img { transition: transform 0.5s ease; }
         .img-mask:hover img { transform: scale(1.05); }
 
-        /* Smooth Menu Transition */
-        .menu-transition { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* Sidebar Transition Fixed */
+        #side-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
 <body class="antialiased relative">
@@ -80,157 +76,158 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <div id="menu-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="closeMenu()"></div>
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="closeMenu()"></div>
 
-    <div id="side-menu" class="fixed top-0 left-0 h-full w-72 sm:w-80 bg-brand-deep border-r border-brand-light/20 z-50 transform -translate-x-full menu-transition shadow-2xl flex flex-col">
-        <div class="p-6 border-b border-brand-light/10 flex justify-between items-center">
-            <span class="font-display font-bold text-xl text-brand-cream">MENU</span>
-            <button onclick="closeMenu()" class="text-brand-light text-2xl hover:text-white transition"><i class="fas fa-times"></i></button>
+    <div id="side-menu" class="fixed top-0 left-0 h-full w-80 bg-brand-charcoal border-r border-brand-almond/20 z-50 transform -translate-x-full shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-brand-almond/10 flex justify-between items-center">
+            <span class="font-display font-bold text-xl text-brand-almond">MENU</span>
+            <button onclick="closeMenu()" class="text-brand-almond-dim text-3xl hover:text-white transition"><i class="fas fa-times"></i></button>
         </div>
-        <div class="flex-grow p-6 flex flex-col gap-6 text-lg font-medium text-brand-cream/80">
-            <a href="#gallery" onclick="closeMenu()" class="hover:text-brand-light transition flex items-center gap-3"><i class="fas fa-camera w-6 text-brand-mid"></i> Interior Photos</a>
-            <a href="#amenities" onclick="closeMenu()" class="hover:text-brand-light transition flex items-center gap-3"><i class="fas fa-dumbbell w-6 text-brand-mid"></i> Equipment</a>
-            <a href="#fees" onclick="closeMenu()" class="hover:text-brand-light transition flex items-center gap-3"><i class="fas fa-tag w-6 text-brand-mid"></i> Memberships</a>
-            <a href="#trainers" onclick="closeMenu()" class="hover:text-brand-light transition flex items-center gap-3"><i class="fas fa-users w-6 text-brand-mid"></i> Our Trainers</a>
-            <a href="#query" onclick="closeMenu()" class="hover:text-brand-light transition flex items-center gap-3"><i class="fas fa-headset w-6 text-brand-mid"></i> Member Query</a>
+        <div class="flex-grow p-6 flex flex-col gap-6 text-lg font-medium text-brand-almond/80">
+            <a href="#gallery" onclick="closeMenu()" class="hover:text-white transition flex items-center gap-4"><i class="fas fa-camera w-6"></i> Interior Photos</a>
+            <a href="#amenities" onclick="closeMenu()" class="hover:text-white transition flex items-center gap-4"><i class="fas fa-dumbbell w-6"></i> Equipment</a>
+            <a href="#fees" onclick="closeMenu()" class="hover:text-white transition flex items-center gap-4"><i class="fas fa-tag w-6"></i> Memberships & Fees</a>
+            <a href="#trainers" onclick="closeMenu()" class="hover:text-white transition flex items-center gap-4"><i class="fas fa-users w-6"></i> Our Trainers</a>
+            <a href="#query" onclick="closeMenu()" class="hover:text-white transition flex items-center gap-4"><i class="fas fa-headset w-6"></i> Member Query</a>
         </div>
-        <div class="p-6 border-t border-brand-light/10">
-            <a href="#contact" onclick="closeMenu()" class="block text-center w-full bg-brand-cream text-brand-deep py-3 rounded-full font-semibold hover:bg-white transition">Join Now</a>
+        <div class="p-6 border-t border-brand-almond/10">
+            <a href="#contact" onclick="closeMenu()" class="block text-center w-full bg-brand-almond text-brand-charcoal py-4 rounded-full font-bold hover:bg-white transition text-lg">Claim Free Trial</a>
         </div>
     </div>
 
     <nav class="fixed top-0 w-full z-40 glass-nav px-6 md:px-12 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-4">
-            <button onclick="openMenu()" class="text-brand-cream text-2xl hover:text-brand-light transition focus:outline-none"><i class="fas fa-bars"></i></button>
-            <div class="font-display font-semibold text-2xl tracking-widest text-brand-cream ml-2">ICEBUG<span class="text-brand-light">.</span></div>
+        <div class="flex items-center gap-5">
+            <button onclick="openMenu()" class="text-brand-almond text-2xl hover:text-white transition"><i class="fas fa-bars"></i></button>
+            <div class="font-display font-semibold text-2xl tracking-widest text-brand-almond">ICEBUG<span class="text-white">.</span></div>
         </div>
-        <a href="#contact" class="hidden sm:block bg-brand-cream text-brand-deep px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-white transition-colors">
+        <a href="#contact" class="hidden sm:block bg-brand-almond text-brand-charcoal px-8 py-3 rounded-full text-sm font-bold hover:bg-white transition-colors shadow-lg">
             Get Free Trial
         </a>
     </nav>
 
-    <header class="relative min-h-[90vh] flex flex-col justify-center items-center text-center px-6 pt-20 border-b border-brand-light/10">
+    <header class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 border-b border-brand-almond/10">
         <div class="absolute inset-0 z-0 overflow-hidden">
-            <video autoplay muted loop playsinline class="w-full h-full object-cover filter brightness-[0.5] saturate-[1.2]">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover filter brightness-[0.35]">
                 <source src="gym-hero.mp4" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-gradient-to-b from-brand-deep/40 via-transparent to-brand-deep"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-charcoal/40 via-transparent to-brand-charcoal"></div>
         </div>
         
-        <div class="relative z-10 max-w-4xl mx-auto gsap-reveal">
-            <div class="inline-flex items-center gap-2 bg-brand-deep/80 border border-brand-light/30 px-4 py-1.5 rounded-full text-xs font-medium text-brand-light mb-6 backdrop-blur-md">
+        <div class="relative z-10 max-w-5xl mx-auto gsap-reveal">
+            <div class="inline-flex items-center gap-2 bg-brand-charcoal/80 border border-brand-almond/30 px-4 py-1.5 rounded-full text-xs font-medium text-brand-almond mb-8 backdrop-blur-md">
                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Open 24/7 in Kanpur
             </div>
-            <h1 class="font-display text-5xl md:text-7xl font-semibold leading-tight mb-6 text-brand-cream drop-shadow-lg">
+            <h1 class="font-display text-5xl md:text-8xl font-bold leading-tight mb-6 text-brand-bone">
                 Engineered for <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-light to-white">Absolute Perfection.</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-almond to-white">Absolute Perfection.</span>
             </h1>
-            <p class="text-lg md:text-xl text-brand-cream/90 mb-10 max-w-2xl mx-auto font-light drop-shadow-md">
-                Premium infrastructure. Certified architects of fitness. Unmatched hygiene.
+            <p class="text-lg md:text-2xl text-brand-almond/80 mb-12 max-w-3xl mx-auto font-light">
+                Premium infrastructure. Certified architects of fitness. Unmatched hygiene. Stop training, start evolving.
             </p>
-            <a href="#contact" class="bg-brand-cream text-brand-deep px-8 py-4 rounded-full font-semibold text-lg hover:bg-white transition-all shadow-[0_0_20px_rgba(251,228,216,0.3)] hover:scale-105 inline-block">Claim 1-Day Trial</a>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="#contact" class="bg-brand-almond text-brand-charcoal px-10 py-5 rounded-full font-bold text-lg hover:bg-white transition-all shadow-xl hover:scale-105 inline-block">Claim 1-Day Trial</a>
+                <a href="#gallery" class="bg-transparent border border-brand-almond text-brand-almond px-10 py-5 rounded-full font-bold text-lg hover:bg-brand-almond hover:text-brand-charcoal transition-all inline-block">Explore Estate</a>
+            </div>
         </div>
     </header>
 
     <section class="marquee-container">
         <div class="marquee-content">
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"Best equipment in the city. - Rohan"</span></div>
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"Very hygienic & premium. - Aman"</span></div>
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"Great coaches and environment. - Priya"</span></div>
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"100% worth the membership. - Vikram"</span></div>
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"Best equipment in the city. - Rohan"</span></div>
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"Very hygienic & premium. - Aman"</span></div>
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"Great coaches and environment. - Priya"</span></div>
-            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-cream">"100% worth the membership. - Vikram"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"Best equipment in the city. - Rohan"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"Very hygienic & premium. - Aman"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"Great coaches and environment. - Priya"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"100% worth the membership. - Vikram"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"Best equipment in the city. - Rohan"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"Very hygienic & premium. - Aman"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"Great coaches and environment. - Priya"</span></div>
+            <div class="review-pill"><span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <span class="text-brand-bone">"100% worth the membership. - Vikram"</span></div>
         </div>
     </section>
 
-    <section id="amenities" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="text-center mb-16 gsap-reveal">
-            <h2 class="font-display text-3xl md:text-5xl font-semibold mb-4 text-brand-cream">Infrastructure & Equipment</h2>
-            <p class="text-brand-light">Imported machinery designed for peak performance.</p>
+    <section id="amenities" class="py-32 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center mb-20 gsap-reveal">
+            <h2 class="font-display text-4xl md:text-6xl font-bold mb-4 text-brand-bone">Infrastructure & Tech</h2>
+            <p class="text-brand-almond/60 text-lg">Imported machinery designed for peak performance.</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="glass-card p-8 gsap-reveal">
-                <div class="w-14 h-14 rounded-full bg-brand-mid flex items-center justify-center mb-6 border border-brand-light/20"><i class="fas fa-dumbbell text-2xl text-brand-cream"></i></div>
-                <h3 class="font-display text-xl font-semibold mb-2 text-brand-cream">Eleiko Standard</h3>
-                <p class="text-sm text-brand-cream/70 leading-relaxed">Competition-grade calibrated plates and bars for absolute precision.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-10 gsap-reveal">
+                <div class="w-16 h-16 rounded-full bg-brand-charcoal-light flex items-center justify-center mb-8 border border-brand-almond/20"><i class="fas fa-dumbbell text-3xl text-brand-almond"></i></div>
+                <h3 class="font-display text-2xl font-semibold mb-4 text-brand-bone">Eleiko Standard</h3>
+                <p class="text-base text-brand-almond/70 leading-relaxed">Competition-grade calibrated plates and bars for absolute precision and safe lifting mechanics.</p>
             </div>
-            <div class="glass-card p-8 gsap-reveal" style="transition-delay: 0.1s;">
-                <div class="w-14 h-14 rounded-full bg-brand-mid flex items-center justify-center mb-6 border border-brand-light/20"><i class="fas fa-wind text-2xl text-brand-cream"></i></div>
-                <h3 class="font-display text-xl font-semibold mb-2 text-brand-cream">HEPA Filtration</h3>
-                <p class="text-sm text-brand-cream/70 leading-relaxed">Centralized climate control filtering 99% of airborne particles.</p>
+            <div class="glass-card p-10 gsap-reveal" style="transition-delay: 0.1s;">
+                <div class="w-16 h-16 rounded-full bg-brand-charcoal-light flex items-center justify-center mb-8 border border-brand-almond/20"><i class="fas fa-wind text-3xl text-brand-almond"></i></div>
+                <h3 class="font-display text-2xl font-semibold mb-4 text-brand-bone">HEPA Filtration</h3>
+                <p class="text-base text-brand-almond/70 leading-relaxed">Centralized climate control filtering 99% of airborne particles. Breathe pure, clinical-grade air.</p>
             </div>
-            <div class="glass-card p-8 gsap-reveal" style="transition-delay: 0.2s;">
-                <div class="w-14 h-14 rounded-full bg-brand-mid flex items-center justify-center mb-6 border border-brand-light/20"><i class="fas fa-spa text-2xl text-brand-cream"></i></div>
-                <h3 class="font-display text-xl font-semibold mb-2 text-brand-cream">Recovery Suite</h3>
-                <p class="text-sm text-brand-cream/70 leading-relaxed">Access to premium steam, sauna, and massage therapy areas.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="gallery" class="py-12 px-6 md:px-12 max-w-7xl mx-auto gsap-reveal">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-            <div class="img-mask h-48 rounded-2xl"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-all duration-500"></div>
-            <div class="img-mask h-48 rounded-2xl"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-all duration-500"></div>
-            <div class="img-mask h-48 rounded-2xl"><img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-all duration-500"></div>
-            <div class="img-mask h-48 rounded-2xl"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-all duration-500"></div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="programs">
-            <div class="group img-mask h-64 md:h-80 relative cursor-pointer border border-brand-light/20">
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" alt="Strength" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-brand-deep via-brand-deep/50 to-transparent p-8 flex flex-col justify-end">
-                    <h3 class="font-display text-2xl font-semibold text-brand-cream mb-2">Strength & Hypertrophy</h3>
-                    <p class="text-sm text-brand-cream/80">Build lean muscle mass with science-backed lifting protocols.</p>
-                </div>
-            </div>
-            <div class="group img-mask h-64 md:h-80 relative cursor-pointer border border-brand-light/20">
-                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800" alt="Cardio" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-brand-deep via-brand-deep/50 to-transparent p-8 flex flex-col justify-end">
-                    <h3 class="font-display text-2xl font-semibold text-brand-cream mb-2">Fat Loss & HIIT</h3>
-                    <p class="text-sm text-brand-cream/80">High-intensity conditioning to melt fat and improve stamina.</p>
-                </div>
+            <div class="glass-card p-10 gsap-reveal" style="transition-delay: 0.2s;">
+                <div class="w-16 h-16 rounded-full bg-brand-charcoal-light flex items-center justify-center mb-8 border border-brand-almond/20"><i class="fas fa-spa text-3xl text-brand-almond"></i></div>
+                <h3 class="font-display text-2xl font-semibold mb-4 text-brand-bone">Recovery Suite</h3>
+                <p class="text-base text-brand-almond/70 leading-relaxed">Access to premium steam rooms, infrared saunas, and sports massage therapy areas post-workout.</p>
             </div>
         </div>
     </section>
 
-    <section class="py-24 px-6 md:px-12 bg-brand-dark/30 border-y border-brand-light/10 overflow-hidden">
-        <div class="max-w-6xl mx-auto gsap-reveal">
-            <div class="text-center mb-12">
-                <h2 class="font-display text-3xl md:text-5xl font-semibold mb-4 text-brand-cream">Real Transformations</h2>
-                <p class="text-brand-light">Results engineered at IceBug.</p>
+    <section id="gallery" class="py-16 px-6 md:px-12 max-w-7xl mx-auto gsap-reveal">
+        <h2 class="font-display text-3xl font-bold mb-8 text-brand-bone">The Estate</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+            <div class="img-mask h-64 rounded-2xl"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-80 hover:opacity-100"></div>
+            <div class="img-mask h-64 rounded-2xl"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-80 hover:opacity-100"></div>
+            <div class="img-mask h-64 rounded-2xl"><img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-80 hover:opacity-100"></div>
+            <div class="img-mask h-64 rounded-2xl"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600" class="w-full h-full object-cover opacity-80 hover:opacity-100"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10" id="programs">
+            <div class="group img-mask h-80 md:h-96 relative cursor-pointer border border-brand-almond/20 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" alt="Strength" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal via-brand-charcoal/60 to-transparent p-10 flex flex-col justify-end">
+                    <h3 class="font-display text-3xl font-bold text-brand-bone mb-3">Strength & Hypertrophy</h3>
+                    <p class="text-base text-brand-almond/90">Build lean muscle mass with science-backed lifting protocols and calibrated machinery.</p>
+                </div>
+            </div>
+            <div class="group img-mask h-80 md:h-96 relative cursor-pointer border border-brand-almond/20 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800" alt="Cardio" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal via-brand-charcoal/60 to-transparent p-10 flex flex-col justify-end">
+                    <h3 class="font-display text-3xl font-bold text-brand-bone mb-3">Fat Loss & Conditioning</h3>
+                    <p class="text-base text-brand-almond/90">High-intensity conditioning to melt fat, improve stamina, and build athletic endurance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 px-6 md:px-12 bg-brand-charcoal-light/30 border-y border-brand-almond/10 overflow-hidden">
+        <div class="max-w-7xl mx-auto gsap-reveal">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-6xl font-bold mb-6 text-brand-bone">Real Transformations</h2>
+                <p class="text-brand-almond/60 text-lg">Results engineered at IceBug. Swipe to see more.</p>
             </div>
             
-            <div class="swiper testimonialSwiper pb-12">
+            <div class="swiper testimonialSwiper pb-16">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <div class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center border border-brand-light/20">
+                        <div class="glass-card p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center border border-brand-almond/20">
                             <div class="w-full md:w-1/2 flex gap-4 relative">
-                                <div class="w-1/2 relative rounded-xl overflow-hidden shadow-lg border border-white/10">
-                                    <span class="absolute top-2 left-2 bg-red-900/80 text-white text-[10px] px-2 py-1 rounded font-bold z-10 backdrop-blur-md">BEFORE</span>
-                                    <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover grayscale opacity-70">
+                                <div class="w-1/2 relative rounded-2xl overflow-hidden shadow-lg border border-white/10">
+                                    <span class="absolute top-3 left-3 bg-red-900/90 text-white text-[10px] px-3 py-1 rounded font-bold z-10 backdrop-blur-md">BEFORE</span>
+                                    <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover grayscale opacity-60">
                                 </div>
-                                <div class="w-1/2 relative rounded-xl overflow-hidden shadow-lg border border-brand-light/40">
-                                    <span class="absolute top-2 right-2 bg-green-600/80 text-white text-[10px] px-2 py-1 rounded font-bold z-10 backdrop-blur-md">AFTER (12 WEEKS)</span>
+                                <div class="w-1/2 relative rounded-2xl overflow-hidden shadow-lg border border-brand-almond/40">
+                                    <span class="absolute top-3 right-3 bg-green-700/90 text-white text-[10px] px-3 py-1 rounded font-bold z-10 backdrop-blur-md">AFTER (12 WEEKS)</span>
                                     <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover">
                                 </div>
                             </div>
                             <div class="w-full md:w-1/2">
-                                <i class="fas fa-quote-left text-4xl text-brand-soft mb-4"></i>
-                                <p class="text-lg md:text-xl font-light leading-relaxed text-brand-cream italic mb-6">"I struggled with weight loss for years. Coach Rahul's tailored diet plan and the elite equipment at IceBug helped me drop 14kgs in 3 months. The environment here just forces you to be better."</p>
-                                <p class="font-semibold text-brand-light text-lg">Vivek T.</p>
-                                <p class="text-xs text-brand-cream/50 uppercase tracking-widest mt-1">Fat Loss Program</p>
+                                <i class="fas fa-quote-left text-5xl text-brand-almond-dim mb-6"></i>
+                                <p class="text-xl md:text-2xl font-light leading-relaxed text-brand-bone italic mb-8">"I struggled with weight loss for years. Coach Rahul's tailored diet plan and the elite equipment at IceBug helped me drop 14kgs in 3 months. The environment here just forces you to be better."</p>
+                                <p class="font-semibold text-brand-almond text-xl">Vivek T.</p>
+                                <p class="text-sm text-brand-almond/50 uppercase tracking-widest mt-2">Fat Loss Program</p>
                             </div>
                         </div>
                     </div>
+                    
                     <div class="swiper-slide">
-                        <div class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center border border-brand-light/20">
+                        <div class="glass-card p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center border border-brand-almond/20">
                             <div class="w-full md:w-1/2 flex gap-4 relative">
-                                <div class="w-1/2 relative rounded-xl overflow-hidden shadow-lg border border-white/10">
-                                    <span class="absolute top-2 left-2 bg-red-900/80 text-white text-[10px] px-2 py-1 rounded font-bold z-10 backdrop-blur-md">BEFORE</span>
-                                    <img src="https://images.unsplash.com/photo-1434596922112-19c563067271?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover grayscale opacity-70">
-                                </div>
-                                <div class="w-1/2 relative rounded-xl overflow-hidden shadow-lg border border-brand-light/40">
-                
+                                <div class="w-1/2 relative rounded-2xl overflow-hidden shadow-lg border border-white/10">
+                                    <span class="absolute top-3 left-3 bg-red-900/90 text-white text

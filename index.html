@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICEBUG | Apple-Grade Physical Estate</title>
+    <title>ICEBUG | The Premium Estate</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600;700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,600,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -17,297 +17,342 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'sans-serif'] },
-                    colors: { 'apple-dark': '#000000', 'apple-gray': '#1d1d1f', 'gold': '#F5E6C4', 'gold-dim': '#b8a682' }
+                    colors: { 
+                        'c-deep': '#190019',
+                        'c-dark': '#2B124C',
+                        'c-mid': '#522B5B',
+                        'c-soft': '#854F6C',
+                        'c-light': '#DFB6B2',
+                        'c-cream': '#FBE4D8'
+                    },
+                    fontFamily: { 
+                        display: ['Clash Display', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'] 
+                    }
                 }
             }
         }
     </script>
     
     <style>
-        /* Base & Apple-like Smoothness */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #000000; color: #f5f5f7; font-family: '-apple-system', 'SF Pro Display', sans-serif; overflow-x: hidden; }
+        /* Base Resets */
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+        body { background-color: #190019; color: #FBE4D8; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        /* Smooth Scroll Engine */
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-        .lenis.lenis-stopped { overflow: hidden; }
         ::-webkit-scrollbar { display: none; }
 
-        /* The requested Gradient (Dark outside, Light inside) */
-        .spotlight-bg { background: radial-gradient(circle at 50% 50%, #1f1f22 0%, #000000 80%); }
+        /* Custom Cursor */
+        #cursor-dot { width: 8px; height: 8px; background: #DFB6B2; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; transform: translate(-50%, -50%); transition: background 0.3s; }
+        #cursor-ring { width: 40px; height: 40px; border: 1px solid rgba(223, 182, 178, 0.5); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s; }
 
-        /* Glassmorphism */
-        .apple-glass { background: rgba(29, 29, 31, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        /* Preloader */
+        #loader { position: fixed; inset: 0; background: #190019; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* Shadow Figures (Silhouettes) */
-        .shadow-figure { filter: drop-shadow(0 0 20px rgba(245, 230, 196, 0.2)); color: #050505; text-shadow: 0 0 1px rgba(255,255,255,0.1); }
+        /* Video Background */
+        .v-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; overflow: hidden; }
+        .v-bg video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.3) sepia(0.5) hue-rotate(250deg) saturate(2); transform: scale(1.05); }
+        .bg-gradient-overlay { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, transparent 0%, #190019 90%); }
+
+        /* UI Glassmorphism */
+        .lux-glass { background: rgba(43, 18, 76, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(223, 182, 178, 0.1); }
         
-        /* Text Outlines for ZigZag */
-        .text-outline { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.3); }
+        /* Typography */
+        .text-outline { color: transparent; -webkit-text-stroke: 1px rgba(251, 228, 216, 0.4); }
+        .text-massive { font-size: clamp(4rem, 12vw, 15rem); line-height: 0.85; font-weight: 700; text-transform: uppercase; }
+        
+        /* Shadows & Silhouettes */
+        .shadow-figure { color: #190019; text-shadow: 0 0 30px rgba(223, 182, 178, 0.4); }
+        
+        /* Equipment Slider */
+        .equip-wrapper { display: flex; gap: 2rem; width: max-content; padding: 2rem 0; }
+        .equip-card { width: 300px; height: 400px; border-radius: 20px; overflow: hidden; position: relative; border: 1px solid rgba(223,182,178,0.2); }
+        .equip-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) sepia(0.2) hue-rotate(250deg); transition: transform 1s, filter 0.5s; }
+        .equip-card:hover img { transform: scale(1.1); filter: grayscale(0); }
 
-        /* Slideshow Equipment */
-        .equip-slider { display: flex; gap: 20px; overflow-x: hidden; width: 100%; padding: 20px 0; }
-        .equip-card { min-width: 300px; height: 200px; background: #1d1d1f; border-radius: 20px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.05); }
-        .equip-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter 0.5s; }
-        .equip-card:hover img { filter: grayscale(0); }
+        /* 3D Owner Card */
+        .preserve-3d { transform-style: preserve-3d; perspective: 1000px; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
 
-        /* Chatbot Jumping Robot */
-        #chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
-        #chat-toggle-btn { width: 60px; height: 60px; border-radius: 30px; background: #F5E6C4; color: #000; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 10px 30px rgba(245, 230, 196, 0.4); cursor: pointer; }
-        #chat-window { display: none; width: 340px; height: 500px; background: #1d1d1f; border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; position: absolute; bottom: 80px; right: 0; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+        /* Chatbot Robot */
+        #chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9000; }
+        #chat-toggle-btn { width: 60px; height: 60px; border-radius: 30px; background: #DFB6B2; color: #190019; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 10px 30px rgba(223, 182, 178, 0.4); transition: transform 0.3s; }
+        #chat-window { display: none; width: 340px; height: 500px; background: #2B124C; border: 1px solid rgba(251,228,216,0.2); border-radius: 24px; position: absolute; bottom: 80px; right: 0; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
     </style>
 </head>
-<body class="spotlight-bg">
+<body class="relative">
 
-    <nav class="fixed top-0 w-full z-50 apple-glass px-8 py-4 flex justify-between items-center border-b border-white/5 transition-all">
-        <div class="font-display font-bold tracking-widest text-xl">ICEBUG<span class="text-gold">.</span></div>
-        <div class="hidden md:flex space-x-10 text-xs font-semibold tracking-widest text-gray-400 uppercase">
-            <a href="#attendance" class="hover:text-white transition">Mark In</a>
-            <a href="#floor" class="hover:text-white transition">The Floor</a>
-            <a href="#tech" class="hover:text-white transition">Tech</a>
-            <a href="#owner" class="hover:text-gold transition text-gold">HQ</a>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <div id="loader">
+        <h1 class="font-display text-5xl md:text-7xl text-c-cream tracking-widest uppercase mb-4" id="hello-text">Hello</h1>
+        <p class="text-xs uppercase tracking-[0.5em] text-c-light">IceBug Estate</p>
+        <div class="w-48 h-[1px] bg-c-mid mt-8 overflow-hidden relative">
+            <div class="absolute top-0 left-0 h-full bg-c-cream w-full origin-left animate-[scaleX_2s_ease-in-out]"></div>
+        </div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 lux-glass px-8 py-5 flex justify-between items-center border-b border-c-light/10 transition-all hover-grow">
+        <div class="font-display font-bold tracking-widest text-xl text-c-cream">ICEBUG<span class="text-c-light">.</span></div>
+        <div class="hidden md:flex space-x-10 text-[10px] font-semibold tracking-widest text-c-cream/70 uppercase">
+            <a href="#attendance" class="hover:text-c-cream transition">Mark In</a>
+            <a href="#floor" class="hover:text-c-cream transition">The Floor</a>
+            <a href="#tech" class="hover:text-c-cream transition">Tech</a>
+            <a href="#owner" class="hover:text-c-light transition text-c-light">HQ</a>
         </div>
     </nav>
 
-    <section class="h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
-        <h1 class="absolute text-[20vw] font-bold text-outline opacity-30 select-none whitespace-nowrap z-0 tracking-tighter" id="bg-hero-text">ICEBUG</h1>
+    <div class="v-bg">
+        <video autoplay muted loop playsinline>
+            <source src="gym-hero.mp4" type="video/mp4">
+        </video>
+        <div class="bg-gradient-overlay"></div>
+    </div>
+
+    <main class="relative z-10 w-full">
         
-        <div class="z-10 mt-20">
-            <h2 class="text-5xl md:text-8xl font-display font-bold mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">Pro. Beyond.</h2>
-            <p class="text-xl md:text-3xl text-gray-400 font-medium mb-12">The most advanced physical estate.</p>
-        </div>
-    </section>
-
-    <section id="attendance" class="py-20 px-6 border-t border-white/5 relative z-10">
-        <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-gold text-sm tracking-[0.3em] uppercase mb-4 font-bold">Protocol Alpha</h3>
-            <h2 class="text-3xl md:text-5xl font-bold mb-6">Before you lift weight, <br>just mark your attendance here.</h2>
-            
-            <div class="apple-glass p-8 rounded-3xl max-w-lg mx-auto shadow-2xl mt-10 transform hover:scale-105 transition-transform duration-500">
-                <form onsubmit="event.preventDefault(); alert('Attendance Logged to Apple Health & Estate DB.');" class="flex flex-col gap-6">
-                    <input type="text" placeholder="Member ID / Face ID Match" class="bg-black/50 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-gold text-center text-lg font-medium">
-                    <button type="submit" class="bg-white text-black py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-gray-200 transition-colors">
-                        <i class="fas fa-fingerprint"></i> Authenticate & Enter
-                    </button>
-                </form>
-                <div class="mt-6 flex justify-between text-xs text-gray-500">
-                    <span><i class="fas fa-chart-bar"></i> 14 Sessions this month</span>
-                    <span class="text-green-500"><i class="fas fa-check-circle"></i> Streak: 4 Days</span>
-                </div>
+        <section class="h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+            <div class="z-10 hover-grow">
+                <h2 class="text-massive font-display text-c-cream mb-4">THE <span class="text-outline">ESTATE.</span></h2>
+                <p class="text-lg md:text-2xl text-c-light font-medium tracking-widest uppercase">Engineered for the 1%</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="py-32 overflow-hidden relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-gold text-xs tracking-[0.3em] uppercase mb-16 text-center font-bold">The Philosophy</h2>
-            
-            <div class="story-zig text-4xl md:text-7xl font-bold text-gray-300 mb-24 opacity-80 whitespace-nowrap">
-                Ordinary gyms sell <span class="text-white">access.</span>
-            </div>
-            
-            <div class="story-zag text-4xl md:text-7xl font-bold text-gray-300 mb-24 text-right opacity-80 whitespace-nowrap">
-                They crowd the <span class="text-white">floor.</span>
-            </div>
-
-            <div class="story-zig text-4xl md:text-7xl font-bold text-gold mb-24 whitespace-nowrap">
-                We engineer <span class="text-outline">perfection.</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="floor" class="min-h-screen py-20 relative border-t border-white/5 spotlight-bg overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20">
-                <h2 class="text-5xl md:text-7xl font-bold mb-4">The Floor.</h2>
-                <p class="text-gray-400 text-xl">Pure brutalist strength. Uncompromised.</p>
-            </div>
-
-            <div class="relative h-[400px] border-b border-white/10 flex items-end justify-center mb-16 overflow-hidden bg-gradient-to-t from-white/5 to-transparent rounded-3xl">
-                <div class="baki-shadow shadow-figure absolute bottom-0 left-0 text-[200px] leading-none">
-                    <i class="fas fa-child"></i> </div>
-                <div class="barbell-shadow absolute bottom-10 left-[50%] opacity-0 text-7xl shadow-figure">
-                    <i class="fas fa-dumbbell"></i>
-                </div>
-            </div>
-
-            <div class="equip-slider-wrapper relative">
-                <h3 class="text-xs text-gold uppercase tracking-widest mb-6 font-bold">Estate Arsenal</h3>
-                <div class="equip-slider" id="eq-slide">
-                    <div class="equip-card"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600"></div>
-                    <div class="equip-card"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600"></div>
-                    <div class="equip-card"><img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?auto=format&fit=crop&w=600"></div>
-                    <div class="equip-card"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=600"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="tech" class="min-h-screen py-32 border-t border-white/5 spotlight-bg">
-        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-            
-            <div class="relative h-[500px] apple-glass rounded-3xl flex items-center justify-center overflow-hidden">
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-64 h-64 border border-green-500/30 rounded-full animate-[ping_3s_linear_infinite]"></div>
-                    <div class="w-48 h-48 border border-white/20 rounded-full absolute"></div>
-                </div>
+        <section id="attendance" class="py-24 px-6 border-t border-c-light/10 bg-c-deep relative z-20">
+            <div class="max-w-4xl mx-auto text-center hover-grow">
+                <h3 class="text-c-light text-[10px] tracking-[0.4em] uppercase mb-4 font-bold">Protocol Alpha</h3>
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-10 text-c-cream">Before you lift weight, <br><span class="italic text-c-soft">just mark your attendance here.</span></h2>
                 
-                <div class="yoga-shadow shadow-figure text-[180px] z-10 transform scale-150 opacity-0">
-                    <i class="fas fa-om"></i> </div>
-
-                <div class="apple-ui-float absolute top-10 right-10 bg-black/80 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex items-center gap-3">
-                    <i class="fab fa-apple text-xl text-white"></i>
-                    <div>
-                        <p class="text-[8px] uppercase text-gray-400">Live Sync</p>
-                        <p class="text-sm font-bold text-red-500"><i class="fas fa-heart"></i> 68 BPM</p>
-                    </div>
-                </div>
-
-                <div class="air-ui-float absolute bottom-10 left-10 bg-black/80 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex items-center gap-3">
-                    <i class="fas fa-wind text-xl text-green-400"></i>
-                    <div>
-                        <p class="text-[8px] uppercase text-gray-400">Air Quality</p>
-                        <p class="text-sm font-bold text-green-400">AQI 12 - Pristine</p>
+                <div class="lux-glass p-10 rounded-3xl max-w-lg mx-auto shadow-2xl">
+                    <form onsubmit="event.preventDefault(); alert('Attendance Logged to Apple Health & Estate DB.');" class="flex flex-col gap-6">
+                        <input type="text" placeholder="Member ID / Face ID" class="bg-c-deep border border-c-light/20 rounded-xl p-4 text-c-cream outline-none focus:border-c-light text-center font-display text-xl transition-all">
+                        <button type="submit" class="bg-c-cream text-c-deep py-4 rounded-xl font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-c-light transition-colors">
+                            <i class="fas fa-fingerprint text-lg"></i> Authenticate
+                        </button>
+                    </form>
+                    <div class="mt-8 flex justify-between text-[10px] uppercase tracking-widest text-c-cream/50">
+                        <span><i class="fas fa-chart-bar mr-1"></i> Data Synced</span>
+                        <span class="text-green-400"><i class="fas fa-check-circle mr-1"></i> Secure</span>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div>
-                <h2 class="text-5xl md:text-7xl font-bold mb-6">Breathe. <br><span class="text-gray-500">Sync. Evolve.</span></h2>
-                <p class="text-xl text-gray-400 mb-8 leading-relaxed">The environment reacts to you. Clinical-grade HEPA filters maintain perfect air quality while your vitals stream directly to Apple Health.</p>
-                <div class="flex gap-4">
-                    <span class="bg-gray-900 px-4 py-2 rounded-full text-xs font-bold border border-white/5"><i class="fab fa-apple mr-1"></i> HealthKit Native</span>
-                    <span class="bg-gray-900 px-4 py-2 rounded-full text-xs font-bold border border-white/5"><i class="fas fa-leaf mr-1"></i> Pure Air</span>
+        <section class="py-40 overflow-hidden relative bg-c-deep border-t border-c-light/5">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="story-zig text-5xl md:text-8xl font-display font-bold text-c-mid mb-32 whitespace-nowrap">
+                    Ordinary gyms sell <span class="text-c-cream">access.</span>
+                </div>
+                <div class="story-zag text-5xl md:text-8xl font-display font-bold text-c-soft mb-32 text-right whitespace-nowrap">
+                    They crowd the <span class="text-c-cream">floor.</span>
+                </div>
+                <div class="story-zig text-5xl md:text-8xl font-display font-bold text-c-light mb-10 whitespace-nowrap">
+                    We engineer <span class="text-outline">perfection.</span>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="recovery" class="py-32 border-t border-white/5 bg-black">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-5xl md:text-7xl font-bold mb-4">Repair <span class="text-gold">Protocol.</span></h2>
-            <p class="text-gray-400 text-xl mb-20">Guided by master architects.</p>
+        <section id="floor" class="py-32 relative border-t border-c-light/10 bg-[radial-gradient(circle_at_center,_#2B124C_0%,_#190019_80%)] overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20 hover-grow">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold text-c-cream mb-4">The Floor.</h2>
+                    <p class="text-c-light text-sm uppercase tracking-[0.3em]">Pure brutalist strength.</p>
+                </div>
 
-            <div class="relative h-[300px] flex items-end justify-center gap-10 overflow-hidden border-b border-white/10 pb-4">
-                <div class="recovery-boy shadow-figure text-8xl opacity-0 transform -translate-x-10"><i class="fas fa-male"></i></div>
-                
-                <div class="recovery-trainer shadow-figure text-9xl text-gold-dim opacity-0 relative">
-                    <i class="fas fa-user-tie"></i>
-                    <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-48 bg-white text-black text-[10px] p-2 rounded-lg font-bold opacity-0 trainer-speech">
-                        "Ice bath for 3 mins, then infrared sauna. Perfect for hypertrophy recovery."
+                <div class="relative h-[400px] border-b border-c-light/20 flex items-end justify-center mb-20 overflow-hidden bg-gradient-to-t from-c-light/5 to-transparent rounded-3xl">
+                    <div class="baki-shadow shadow-figure absolute bottom-0 left-0 text-[200px] leading-none">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <div class="barbell-shadow absolute bottom-10 left-[50%] opacity-0 text-7xl shadow-figure">
+                        <i class="fas fa-dumbbell"></i>
                     </div>
                 </div>
+
+                <div class="relative overflow-hidden">
+                    <div class="equip-wrapper" id="eq-slide">
+                        <div class="equip-card"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800"></div>
+                        <div class="equip-card"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800"></div>
+                        <div class="equip-card"><img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?auto=format&fit=crop&w=800"></div>
+                        <div class="equip-card"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech" class="py-32 border-t border-c-light/10 bg-c-deep">
+            <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
                 
-                <div class="recovery-girl shadow-figure text-8xl opacity-0 transform translate-x-10"><i class="fas fa-female"></i></div>
-            </div>
-        </div>
-    </section>
+                <div class="relative h-[500px] lux-glass rounded-3xl flex items-center justify-center overflow-hidden hover-grow">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-72 h-72 border border-c-light/30 rounded-full animate-[ping_4s_linear_infinite]"></div>
+                        <div class="w-48 h-48 border border-c-cream/20 rounded-full absolute"></div>
+                    </div>
+                    
+                    <div class="yoga-shadow shadow-figure text-[200px] z-10 transform scale-150 opacity-0">
+                        <i class="fas fa-om text-c-deep drop-shadow-[0_0_30px_#DFB6B2]"></i>
+                    </div>
 
-    <section id="engineers" class="py-20 border-t border-white/5 spotlight-bg">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-bold mb-12 text-center">The Engineers</h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <div class="apple-glass rounded-3xl p-6 text-center group">
-                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-2 border-gold"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"></div>
-                    <h3 class="text-2xl font-bold text-white">Aryan</h3>
-                    <p class="text-xs text-gold uppercase tracking-widest mt-2">Head of Power</p>
-                </div>
-                <div class="apple-glass rounded-3xl p-6 text-center group">
-                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-2 border-gold"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=400" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"></div>
-                    <h3 class="text-2xl font-bold text-white">Rahul</h3>
-                    <p class="text-xs text-gold uppercase tracking-widest mt-2">Physique Architect</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 bg-[#050505]">
-        <div class="max-w-3xl mx-auto px-6 apple-glass p-12 rounded-3xl">
-            <h2 class="text-3xl font-bold mb-2">Member Services</h2>
-            <p class="text-gray-400 text-sm mb-8">Existing members, lodge your requests here.</p>
-            <form onsubmit="event.preventDefault(); alert('Query submitted to HQ.');" class="space-y-6">
-                <input type="text" placeholder="Membership ID" class="w-full bg-black border border-white/10 rounded-xl p-4 text-white outline-none focus:border-white">
-                <textarea placeholder="How can we assist you?" rows="3" class="w-full bg-black border border-white/10 rounded-xl p-4 text-white outline-none focus:border-white"></textarea>
-                <button class="w-full bg-white text-black py-4 rounded-xl font-bold hover:bg-gray-200 transition">Submit Query</button>
-            </form>
-        </div>
-    </section>
-
-    <section id="owner" class="py-32 overflow-hidden border-t-2 border-red-900/30 bg-[#020202] relative perspective-1000">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
-            <div class="w-full md:w-1/2">
-                <h4 class="text-red-500 text-xs tracking-widest uppercase font-bold mb-4">Proprietor Access</h4>
-                <h2 class="text-5xl md:text-6xl font-bold mb-6">The Brain.</h2>
-                <p class="text-gray-400 text-lg leading-relaxed mb-8">Estate Directors have total control. Monitor real-time telemetry, revenue flows, and AI churn predictors.</p>
-            </div>
-            
-            <div class="w-full md:w-1/2 flex justify-center">
-                <div class="owner-360-card w-[300px] h-[400px] relative preserve-3d">
-                    <div class="absolute inset-0 backface-hidden rounded-3xl overflow-hidden border-2 border-red-900/50 shadow-[0_0_50px_rgba(220,38,38,0.2)]">
-                        <img src="gym 1.jpeg" onerror="this.src='https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600'" class="w-full h-full object-cover grayscale brightness-75">
-                        <div class="absolute bottom-0 w-full bg-black/80 backdrop-blur-md p-4 text-center">
-                            <p class="font-bold text-white">Anshuman Singh</p>
-                            <p class="text-[10px] text-red-500 uppercase tracking-widest">Founder & Director</p>
+                    <div class="apple-ui-float absolute top-10 right-8 bg-c-deep/90 backdrop-blur-md p-4 rounded-2xl border border-c-light/20 flex items-center gap-4">
+                        <i class="fab fa-apple text-2xl text-c-cream"></i>
+                        <div>
+                            <p class="text-[8px] uppercase tracking-widest text-c-light">Apple Health Sync</p>
+                            <p class="text-sm font-bold text-red-400">68 BPM <i class="fas fa-heartbeat animate-pulse"></i></p>
                         </div>
                     </div>
-                    <div class="absolute inset-0 backface-hidden rounded-3xl border-2 border-red-900/50 bg-[#0a0a0a] p-8 flex flex-col justify-center text-center transform rotate-y-180 shadow-[0_0_50px_rgba(220,38,38,0.2)]">
-                        <i class="fas fa-chart-pie text-4xl text-red-500 mb-6"></i>
-                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Live Revenue</p>
-                        <p class="text-3xl font-bold text-white mb-6">₹18.4L</p>
-                        <button class="bg-red-900/30 text-red-500 py-3 rounded-lg text-xs font-bold border border-red-500/30">Enter Dashboard</button>
+
+                    <div class="air-ui-float absolute bottom-10 left-8 bg-c-deep/90 backdrop-blur-md p-4 rounded-2xl border border-c-light/20 flex items-center gap-4">
+                        <i class="fas fa-wind text-2xl text-green-400"></i>
+                        <div>
+                            <p class="text-[8px] uppercase tracking-widest text-c-light">Air Quality</p>
+                            <p class="text-sm font-bold text-green-400">AQI 12 - Pure</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hover-grow">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold mb-6 text-c-cream">Breathe. <br><span class="text-c-soft">Sync. Evolve.</span></h2>
+                    <p class="text-sm md:text-lg text-c-cream/70 mb-8 leading-relaxed font-sans">
+                        The environment reacts to you. Clinical-grade HEPA filters maintain perfect air quality while your vitals stream directly to your iOS devices in real-time.
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="bg-c-dark px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold border border-c-light/20 text-c-cream"><i class="fab fa-apple mr-2"></i> HealthKit Native</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="pt-20 pb-10 bg-black border-t border-white/10 relative z-20">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10">
-            <div class="text-center md:text-left">
-                <h2 class="text-3xl font-display font-bold text-white mb-2">ICEBUG<span class="text-gold">.</span></h2>
-                <p class="text-gray-500 text-xs uppercase tracking-[0.2em]">Physical Estate • Kanpur</p>
+        <section id="recovery" class="py-32 border-t border-c-light/10 bg-[radial-gradient(circle_at_center,_#2B124C_0%,_#190019_80%)]">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h2 class="text-5xl md:text-7xl font-display font-bold mb-4 text-c-cream">Repair <span class="italic text-c-light">Protocol.</span></h2>
+                <p class="text-c-cream/50 text-sm tracking-[0.3em] uppercase mb-20">Guided by master architects.</p>
+
+                <div class="relative h-[350px] flex items-end justify-center gap-12 overflow-hidden border-b border-c-light/20 pb-4">
+                    <div class="recovery-boy shadow-figure text-8xl opacity-0 transform -translate-x-20"><i class="fas fa-male text-c-deep drop-shadow-[0_0_20px_#854F6C]"></i></div>
+                    
+                    <div class="recovery-trainer shadow-figure text-[140px] text-c-deep drop-shadow-[0_0_40px_#DFB6B2] opacity-0 relative z-10">
+                        <i class="fas fa-user-tie"></i>
+                        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-56 bg-c-cream text-c-deep text-[10px] p-4 rounded-2xl font-bold opacity-0 trainer-speech shadow-2xl leading-relaxed uppercase tracking-widest">
+                            "Ice bath for 3 mins, then infrared sauna. Ideal for muscle repair."
+                        </div>
+                    </div>
+                    
+                    <div class="recovery-girl shadow-figure text-8xl opacity-0 transform translate-x-20"><i class="fas fa-female text-c-deep drop-shadow-[0_0_20px_#854F6C]"></i></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="engineers" class="py-32 border-t border-c-light/10 bg-c-deep">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="text-5xl font-display font-bold mb-16 text-center text-c-cream hover-grow">The Engineers</h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="lux-glass rounded-3xl p-10 text-center group hover-grow">
+                        <div class="w-40 h-40 mx-auto rounded-full overflow-hidden mb-6 border-2 border-c-light p-1"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=400" class="w-full h-full object-cover rounded-full grayscale group-hover:grayscale-0 transition-all duration-500"></div>
+                        <h3 class="text-3xl font-display font-bold text-c-cream">Coach Aryan</h3>
+                        <p class="text-[10px] text-c-light uppercase tracking-[0.3em] mt-3 font-bold">Head of Power</p>
+                    </div>
+                    <div class="lux-glass rounded-3xl p-10 text-center group hover-grow">
+                        <div class="w-40 h-40 mx-auto rounded-full overflow-hidden mb-6 border-2 border-c-light p-1"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=400" class="w-full h-full object-cover rounded-full grayscale group-hover:grayscale-0 transition-all duration-500"></div>
+                        <h3 class="text-3xl font-display font-bold text-c-cream">Coach Rahul</h3>
+                        <p class="text-[10px] text-c-light uppercase tracking-[0.3em] mt-3 font-bold">Physique Architect</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-32 bg-c-deep border-t border-c-light/5">
+            <div class="max-w-3xl mx-auto px-6 lux-glass p-12 md:p-16 rounded-[40px] hover-grow shadow-2xl">
+                <h2 class="text-4xl font-display font-bold mb-3 text-c-cream">Member Concierge</h2>
+                <p class="text-c-light/70 text-xs tracking-widest uppercase mb-10">Existing patrons, lodge your requests.</p>
+                <form onsubmit="event.preventDefault(); alert('Encrypted Query submitted to HQ.');" class="space-y-6">
+                    <input type="text" placeholder="Membership ID" class="w-full bg-c-deep border border-c-light/20 rounded-2xl p-5 text-c-cream outline-none focus:border-c-light font-display text-lg">
+                    <textarea placeholder="How can we elevate your experience?" rows="3" class="w-full bg-c-deep border border-c-light/20 rounded-2xl p-5 text-c-cream outline-none focus:border-c-light font-sans text-sm resize-none"></textarea>
+                    <button class="w-full bg-c-cream text-c-deep py-5 rounded-2xl font-bold uppercase tracking-[0.2em] text-xs hover:bg-c-light transition-all shadow-lg">Submit Securely</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="owner" class="py-40 overflow-hidden border-t-2 border-c-soft/50 bg-[#120012] relative preserve-3d">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-20">
+                <div class="w-full md:w-1/2 hover-grow">
+                    <h4 class="text-c-light text-[10px] tracking-[0.4em] uppercase font-bold mb-4 bg-c-light/10 inline-block px-4 py-2 rounded-full">Proprietor Access</h4>
+                    <h2 class="text-5xl md:text-7xl font-display font-bold mb-6 text-c-cream">The <span class="italic text-c-soft">Brain.</span></h2>
+                    <p class="text-c-cream/60 text-sm md:text-base leading-relaxed mb-8">Estate Directors maintain absolute control. Monitor real-time telemetry, revenue analytics, and AI-driven churn predictors via a secured nexus.</p>
+                </div>
+                
+                <div class="w-full md:w-1/2 flex justify-center hover-grow">
+                    <div class="owner-360-card w-[320px] h-[450px] relative preserve-3d shadow-[0_0_50px_rgba(133,79,108,0.3)] rounded-[30px]">
+                        <div class="absolute inset-0 backface-hidden rounded-[30px] overflow-hidden border border-c-light/30">
+                            <img src="gym 1.jpeg" onerror="this.src='https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600'" class="w-full h-full object-cover grayscale sepia-[.2] hue-rotate-[250deg]">
+                            <div class="absolute bottom-0 w-full bg-c-deep/80 backdrop-blur-xl p-6 text-center border-t border-c-light/20">
+                                <p class="font-display font-bold text-xl text-c-cream mb-1">Anshuman Singh</p>
+                                <p class="text-[9px] text-c-light uppercase tracking-widest font-bold">Founder & Director</p>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rounded-[30px] border border-c-light/30 bg-c-deep p-8 flex flex-col justify-center text-center transform rotate-y-180">
+                            <i class="fas fa-chart-pie text-5xl text-c-light mb-8"></i>
+                            <p class="text-[10px] text-c-cream/50 uppercase tracking-widest mb-2 font-bold">Live Monthly Revenue</p>
+                            <p class="text-5xl font-display font-bold text-c-cream mb-8">₹18.4L</p>
+                            <button class="bg-c-soft/20 text-c-cream py-4 rounded-xl text-xs uppercase tracking-widest font-bold border border-c-soft hover:bg-c-soft transition-colors">Enter Dashboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="pt-24 pb-12 bg-c-deep border-t border-c-light/20 relative z-20">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-12">
+                <div class="text-center md:text-left hover-grow">
+                    <h2 class="text-4xl font-display font-bold text-c-cream mb-2">ICEBUG<span class="text-c-light">.</span></h2>
+                    <p class="text-c-cream/40 text-[10px] uppercase tracking-[0.4em] font-bold">The Elite Physical Estate</p>
+                </div>
+                
+                <div class="flex gap-6">
+                    <a href="#" class="w-14 h-14 rounded-full border border-c-light/20 flex items-center justify-center text-c-cream hover:bg-c-cream hover:text-c-deep transition-all hover-grow"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="w-14 h-14 rounded-full border border-c-light/20 flex items-center justify-center text-c-cream hover:bg-c-cream hover:text-c-deep transition-all hover-grow"><i class="fab fa-whatsapp text-xl"></i></a>
+                    <a href="#" class="w-14 h-14 rounded-full border border-c-light/20 flex items-center justify-center text-c-cream hover:bg-c-cream hover:text-c-deep transition-all hover-grow"><i class="fas fa-map-marker-alt text-xl"></i></a>
+                </div>
             </div>
             
-            <div class="flex gap-6">
-                <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors"><i class="fab fa-instagram text-xl"></i></a>
-                <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors"><i class="fab fa-whatsapp text-xl"></i></a>
-                <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors"><i class="fas fa-map-marker-alt text-xl"></i></a>
+            <div class="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-c-light/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] text-c-cream/50 uppercase tracking-[0.2em] font-bold">
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-c-cream transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-cream transition">Terms of Service</a>
+                </div>
+                
+                <div class="bg-c-dark/50 px-5 py-3 rounded-xl border border-c-mid flex items-center gap-3 hover-grow">
+                    <i class="fas fa-code text-c-light text-lg"></i>
+                    <span>Digital Infrastructure by <a href="https://icebug.co" target="_blank" class="text-c-cream hover:text-white transition underline underline-offset-4">IceBug.co</a></span>
+                </div>
             </div>
-        </div>
-        
-        <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 uppercase tracking-widest font-bold">
-            <div class="flex gap-6">
-                <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                <a href="#" class="hover:text-white transition">Terms of Service</a>
-            </div>
-            
-            <div class="bg-gray-900 px-4 py-2 rounded-lg border border-gray-800 flex items-center gap-2">
-                <i class="fas fa-code text-gold"></i>
-                <span>Digital Infrastructure by <a href="https://icebug.co" target="_blank" class="text-white hover:text-gold transition">IceBug.co</a></span>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </main>
 
     <div id="chat-widget">
         <div id="chat-window">
-            <div class="bg-[#1d1d1f] p-4 border-b border-white/10 flex justify-between items-center">
+            <div class="bg-c-dark p-5 border-b border-c-light/20 flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <i class="fas fa-robot text-gold text-xl"></i>
-                    <span class="font-bold text-white text-sm">IceBot 2.0</span>
+                    <i class="fas fa-robot text-c-cream text-2xl"></i>
+                    <span class="font-bold text-c-cream text-sm tracking-widest uppercase">IceBot 2.0</span>
                 </div>
-                <button onclick="toggleChat()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+                <button onclick="toggleChat()" class="text-c-cream/50 hover:text-white text-lg"><i class="fas fa-times"></i></button>
             </div>
-            <div id="chat-messages">
-                <div class="msg-bot">Beep Boop. I am the IceBug AI. Do you need assistance with membership or estate rules?</div>
+            <div id="chat-messages" class="flex-grow p-5 overflow-y-auto flex flex-col gap-4 text-xs font-sans">
+                <div class="bg-c-mid text-c-cream p-4 rounded-tr-xl rounded-bl-xl rounded-br-xl max-w-[85%] leading-relaxed border border-c-light/10 shadow-lg">
+                    Beep Boop. I am the IceBug AI. Do you need assistance with membership or estate rules?
+                </div>
             </div>
-            <div class="p-4 bg-[#1d1d1f] border-t border-white/10 flex gap-2">
-                <input type="text" id="chat-input" placeholder="Ask me anything..." class="flex-grow bg-black border border-white/10 rounded-xl px-4 text-xs text-white outline-none focus:border-gold" onkeypress="handleChatPress(event)">
-                <button onclick="sendMsg()" class="w-10 h-10 rounded-xl bg-gold text-black flex items-center justify-center hover:bg-white transition"><i class="fas fa-paper-plane"></i></button>
+            <div class="p-4 bg-c-dark border-t border-c-light/20 flex gap-3">
+                <input type="text" id="chat-input" placeholder="Query AI..." class="flex-grow bg-c-deep border border-c-light/20 rounded-xl px-4 text-xs text-c-cream outline-none focus:border-c-light transition-all" onkeypress="handleChatPress(event)">
+                <button onclick="sendMsg()" class="w-12 h-12 rounded-xl bg-c-cream text-c-deep flex items-center justify-center hover:bg-white transition shadow-lg"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
-        <button onclick="toggleChat()" id="chat-toggle-btn">
-            <i class="fas fa-robot"></i>
+        <button onclick="toggleChat()" id="chat-toggle-btn" class="hover-grow group">
+            <i class="fas fa-robot group-hover:scale-110 transition-transform"></i>
         </button>
     </div>
 
@@ -322,65 +367,67 @@
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0, 0);
 
-        // --- 2. JUMPING ROBOT (On Load) ---
-        // Makes the chatbot jump from the top of the screen to the bottom right
-        gsap.from("#chat-toggle-btn", {
-            y: -window.innerHeight,
-            rotation: 360,
-            duration: 2.5,
-            ease: "bounce.out",
-            delay: 0.5
-        });
+        // --- 2. CUSTOM CURSOR & MIX-BLEND ---
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        if(window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+                gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.3 });
+            });
+            document.querySelectorAll('.hover-grow').forEach(el => {
+                el.addEventListener('mouseenter', () => { gsap.to(cursorRing, { width: 60, height: 60, backgroundColor: 'rgba(223,182,178,0.1)' }); });
+                el.addEventListener('mouseleave', () => { gsap.to(cursorRing, { width: 40, height: 40, backgroundColor: 'transparent' }); });
+            });
+        }
 
-        // --- 3. BACKGROUND TEXT PARALLAX ---
-        gsap.to("#bg-hero-text", {
-            yPercent: 50,
-            scrollTrigger: { trigger: "body", start: "top top", end: "1000px top", scrub: 1 }
+        // --- 3. MULTI-LANGUAGE PRELOADER ---
+        const words = ["Hello", "नमस्ते", "Bonjour", "Hola", "Ciao", "مرحبا", "Welcome", "IceBug"];
+        let i = 0;
+        const wordInt = setInterval(() => { 
+            i = (i + 1) % words.length;
+            document.getElementById('hello-text').innerText = words[i]; 
+        }, 300);
+
+        window.addEventListener('load', () => {
+            setTimeout(() => { 
+                clearInterval(wordInt);
+                document.getElementById('hello-text').innerText = "ICEBUG";
+                gsap.to("#loader", { y: "-100%", duration: 1.5, ease: "power4.inOut", delay: 0.5 });
+                
+                // ROBOT JUMP (After loader disappears)
+                gsap.from("#chat-toggle-btn", {
+                    y: -window.innerHeight,
+                    rotation: 360,
+                    duration: 2.5,
+                    ease: "bounce.out",
+                    delay: 2
+                });
+            }, 2500); 
         });
 
         // --- 4. ZIG-ZAG STORYTELLING ---
-        gsap.to(".story-zig", {
-            xPercent: 50,
-            scrollTrigger: { trigger: ".story-zig", start: "top bottom", end: "bottom top", scrub: 1 }
-        });
-        gsap.to(".story-zag", {
-            xPercent: -50,
-            scrollTrigger: { trigger: ".story-zag", start: "top bottom", end: "bottom top", scrub: 1 }
-        });
+        gsap.to(".story-zig", { xPercent: 20, scrollTrigger: { trigger: ".story-zig", start: "top bottom", end: "bottom top", scrub: 1 } });
+        gsap.to(".story-zag", { xPercent: -20, scrollTrigger: { trigger: ".story-zag", start: "top bottom", end: "bottom top", scrub: 1 } });
 
-        // --- 5. THE FLOOR (Baki Shadow & Deadlift Timeline) ---
-        let bakiTl = gsap.timeline({
-            scrollTrigger: { trigger: "#floor", start: "top 60%", end: "center center", scrub: 1 }
-        });
-        // Walks in from left
+        // --- 5. THE FLOOR (Baki Deadlift Shadow & Equipment) ---
+        let bakiTl = gsap.timeline({ scrollTrigger: { trigger: "#floor", start: "top 60%", end: "center center", scrub: 1 } });
         bakiTl.fromTo(".baki-shadow", { x: -300, opacity: 0 }, { x: 0, opacity: 1, duration: 1 })
-              // Bends down (scaleY changes to simulate bending)
               .to(".baki-shadow", { scaleY: 0.6, transformOrigin: "bottom", duration: 0.5 })
-              // Barbell appears
               .to(".barbell-shadow", { opacity: 1, duration: 0.2 }, "-=0.2")
-              // Lifts up
               .to(".baki-shadow", { scaleY: 1, duration: 0.8 })
               .to(".barbell-shadow", { y: -50, duration: 0.8 }, "-=0.8");
 
-        // Equipment Slideshow Auto-scroll
-        gsap.to("#eq-slide", {
-            xPercent: -50,
-            ease: "none",
-            scrollTrigger: { trigger: "#floor", start: "top bottom", end: "bottom top", scrub: 1 }
-        });
+        gsap.to("#eq-slide", { xPercent: -30, ease: "none", scrollTrigger: { trigger: "#floor", start: "top bottom", end: "bottom top", scrub: 1 } });
 
         // --- 6. THE TECH (Yoga Shadow & Apple Sync) ---
-        let yogaTl = gsap.timeline({
-            scrollTrigger: { trigger: "#tech", start: "top 60%", end: "center center", scrub: 1 }
-        });
+        let yogaTl = gsap.timeline({ scrollTrigger: { trigger: "#tech", start: "top 60%", end: "center center", scrub: 1 } });
         yogaTl.to(".yoga-shadow", { scale: 1, opacity: 1, duration: 1 })
               .from(".apple-ui-float", { y: 50, opacity: 0, duration: 0.5 }, "-=0.5")
               .from(".air-ui-float", { y: 50, opacity: 0, duration: 0.5 }, "-=0.3");
 
-        // --- 7. THE RECOVERY (Trainer talking to Boy/Girl) ---
-        let recTl = gsap.timeline({
-            scrollTrigger: { trigger: "#recovery", start: "top 70%", end: "center center", scrub: 1 }
-        });
+        // --- 7. THE RECOVERY (Trainer & Shadows Interaction) ---
+        let recTl = gsap.timeline({ scrollTrigger: { trigger: "#recovery", start: "top 70%", end: "center center", scrub: 1 } });
         recTl.to(".recovery-boy", { x: 0, opacity: 1, duration: 1 })
              .to(".recovery-girl", { x: 0, opacity: 1, duration: 1 }, "-=1")
              .to(".recovery-trainer", { opacity: 1, y: -20, duration: 1 })
@@ -388,41 +435,32 @@
 
         // --- 8. PROPRIETOR HQ (360 Owner Rotate on Scroll) ---
         gsap.to(".owner-360-card", {
-            rotationY: 180,
-            ease: "none",
+            rotationY: 180, ease: "none",
             scrollTrigger: { trigger: "#owner", start: "top 70%", end: "center center", scrub: 1 }
         });
 
-        // CSS Utility for 3D Card
-        document.head.insertAdjacentHTML("beforeend", `<style>
-            .preserve-3d { transform-style: preserve-3d; }
-            .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-            .rotate-y-180 { transform: rotateY(180deg); }
-            .perspective-1000 { perspective: 1000px; }
-        </style>`);
-
-        // --- 9. CHATBOT LOGIC ---
+        // --- 9. ROBOT CHATBOT LOGIC ---
         function toggleChat() {
             const win = document.getElementById('chat-window');
             win.style.display = win.style.display === "flex" ? "none" : "flex";
         }
         function handleChatPress(e) { if (e.key === 'Enter') sendMsg(); }
-        async function sendMsg() {
+        function sendMsg() {
             const input = document.getElementById('chat-input'); const text = input.value.trim();
             if (!text) return;
             const chatBox = document.getElementById('chat-messages');
-            chatBox.innerHTML += `<div class="msg-user">${text}</div>`;
+            chatBox.innerHTML += `<div class="bg-c-cream text-c-deep p-4 rounded-tl-xl rounded-bl-xl rounded-br-xl max-w-[85%] self-end font-bold shadow-lg">${text}</div>`;
             input.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
 
             const typingId = "typing-" + Date.now();
-            chatBox.innerHTML += `<div id="${typingId}" class="msg-bot text-gray-500 italic">Processing...</div>`;
+            chatBox.innerHTML += `<div id="${typingId}" class="text-c-light/50 italic text-[10px] mt-2">IceBot is computing...</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
 
             setTimeout(() => {
                 document.getElementById(typingId).remove();
-                chatBox.innerHTML += `<div class="msg-bot">Beep Boop. Demo mode active. I am tracking your biometrics.</div>`;
+                chatBox.innerHTML += `<div class="bg-c-mid text-c-cream p-4 rounded-tr-xl rounded-bl-xl rounded-br-xl max-w-[85%] leading-relaxed border border-c-light/10 shadow-lg">Beep Boop. This is a simulation. The AI integration will be activated upon deployment.</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 1000);
+            }, 1500);
         }
     </script>
 </body>

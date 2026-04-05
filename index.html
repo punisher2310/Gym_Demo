@@ -26,35 +26,41 @@
     
     <style>
         * { cursor: none !important; scroll-behavior: smooth; }
-        body { background: #11120D; color: #FFFBF4; overflow-x: hidden; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #11120D; color: #FFFBF4; overflow-x: hidden; font-family: 'Inter', sans-serif; }
         
-        /* Fixed Background Video Fix */
-        .v-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; overflow: hidden; }
-        #main-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.35) sepia(0.2); }
-
-        /* Content Wrapper Fix (Isse scroll chalu hoga) */
-        main { position: relative; z-index: 10; width: 100%; }
-        
-        /* Hero Section should be transparent to show video */
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: flex-start; background: transparent; position: relative; z-index: 11; }
-
+        /* Preloader & Cursor */
         #loader { position: fixed; inset: 0; background: #11120D; z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         #c-dot { width: 6px; height: 6px; background: #D8CFBC; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
-        #c-ring { width: 40px; height: 40px; border: 1px solid rgba(216, 207, 188, 0.4); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; }
+        #c-ring { width: 40px; height: 40px; border: 1px solid rgba(216, 207, 188, 0.4); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; transition: transform 0.15s ease-out; }
 
-        .b-glass { background: rgba(17, 18, 13, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(216, 207, 188, 0.1); }
+        /* Navigation */
+        nav { transition: all 0.4s ease; }
+        .nav-scrolled { background: rgba(17, 18, 13, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(216, 207, 188, 0.1); padding-top: 15px !important; padding-bottom: 15px !important; }
+
+        /* Video Background */
+        .v-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; }
+        #main-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.35) sepia(0.2); }
+
+        /* Bespoke Utilities */
+        .b-glass { background: rgba(86, 84, 73, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(216, 207, 188, 0.1); }
         .reveal { opacity: 0; transform: translateY(40px); }
-        
+        .luxury-line { width: 1px; height: 120px; background: linear-gradient(to bottom, #D8CFBC, transparent); margin: 0 auto; }
+
         /* Marquee Scroller */
-        .marquee-wrapper { overflow: hidden; white-space: nowrap; width: 100%; display: flex; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+        .marquee-wrapper { overflow: hidden; white-space: nowrap; width: 100%; display: flex; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
         .marquee-content { display: flex; width: max-content; }
-        
-        /* Chatbot UI */
+
+        /* Chatbot */
         #chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9000; }
-        #chat-window { display: none; width: 340px; height: 480px; background: #11120D; border: 1px solid #D8CFBC; border-radius: 12px; flex-direction: column; overflow: hidden; }
+        #chat-window { display: none; width: 340px; height: 480px; background: #11120D; border: 1px solid #D8CFBC; border-radius: 12px; flex-direction: column; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
         #chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
         .msg-bot { background: #565449; color: #FFFBF4; padding: 12px; border-radius: 10px 10px 10px 0; max-width: 85%; align-self: flex-start; }
         .msg-user { background: #D8CFBC; color: #11120D; padding: 12px; border-radius: 10px 10px 0 10px; max-width: 85%; align-self: flex-end; }
+        #chat-input-area { display: flex; border-top: 1px solid rgba(216, 207, 188, 0.2); }
+        #chat-input { flex-grow: 1; border: none; padding: 15px; color: #FFFBF4; background: transparent; outline: none; }
+        
+        /* FAQ Accordion */
+        .faq-ans { display: none; padding-top: 15px; color: rgba(216, 207, 188, 0.7); }
     </style>
 </head>
 <body>
@@ -66,117 +72,269 @@
 
     <div id="c-dot"></div><div id="c-ring"></div>
 
-    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 py-8 px-6 md:px-16 flex justify-between items-center bg-transparent transition-all duration-500">
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 py-8 px-6 md:px-16 flex justify-between items-center">
         <div class="font-serif text-2xl text-floral tracking-widest">ICEBUG<span class="text-bone italic">.</span></div>
         <div class="hidden md:flex space-x-10 text-[10px] font-sans uppercase tracking-[0.3em] text-bone">
             <a href="#estate" class="hover:text-floral transition">The Estate</a>
             <a href="#programs" class="hover:text-floral transition">Regimens</a>
+            <a href="#hub" class="hover:text-floral transition">Vital Hub</a>
             <a href="#plans" class="hover:text-floral transition">Tiers</a>
         </div>
-        <a href="#trial" class="border border-bone text-bone px-6 py-2 text-[10px] uppercase tracking-widest hover:bg-bone hover:text-smoky transition-all">Claim Pass</a>
+        <a href="#trial" class="hidden md:block border border-bone text-bone px-6 py-2 text-[10px] uppercase tracking-widest hover:bg-bone hover:text-smoky transition-all">Claim Pass</a>
     </nav>
 
     <div class="v-bg">
         <video autoplay muted loop playsinline id="main-video">
-            <source src="gym-video.mp4" type="video/mp4">
+            <source src="gym-hero.mp4" type="video/mp4">
         </video>
         <div class="absolute inset-0 bg-gradient-to-b from-smoky/70 via-smoky/30 to-smoky"></div>
     </div>
 
-    <main>
-        <section class="hero px-6 md:px-32">
-            <div class="max-w-5xl">
-                <div class="flex items-center space-x-4 mb-6 reveal">
-                    <div class="w-12 h-[1px] bg-bone"></div>
-                    <p class="font-sans text-bone text-xs tracking-[0.5em] uppercase">Private Estate • Kanpur</p>
-                </div>
-                <h1 class="font-serif text-6xl md:text-[110px] font-black leading-[0.9] mb-10 reveal text-floral">
-                    ENGINEERED <br><span class="italic text-bone">FOR THE</span> TOP 1%.
-                </h1>
-                <p class="font-sans text-bone/70 text-lg md:text-xl max-w-xl mb-12 reveal leading-relaxed">Exclusive institution for elite physical development. Privacy, bespoke coaching, and high-performance engineering.</p>
+    <section class="h-screen flex items-center px-6 md:px-32 relative z-20" id="hero">
+        <div class="max-w-5xl pt-20">
+            <div class="flex items-center space-x-4 mb-6 reveal">
+                <div class="w-12 h-[1px] bg-bone"></div>
+                <p class="font-sans text-bone text-xs tracking-[0.5em] uppercase">Private Estate • Kanpur</p>
+            </div>
+            <h1 class="font-serif text-6xl md:text-[130px] font-black leading-[0.9] mb-10 reveal text-floral">
+                ENGINEERED <br><span class="italic text-bone">FOR THE</span> TOP 1%.
+            </h1>
+            <p class="font-sans text-bone/70 text-lg md:text-xl max-w-xl mb-12 reveal leading-relaxed">Kanpur's most exclusive physical development institution. Privacy, elite machinery, and bespoke coaching.</p>
+            <div class="reveal flex space-x-6">
+                <a href="#trial" class="bg-bone text-smoky px-10 py-5 font-serif uppercase tracking-widest font-bold hover:bg-floral transition-all duration-300">Enter The Estate</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="relative z-30 bg-smoky">
+        <div class="luxury-line -translate-y-1/2"></div>
+
+        <section class="py-20 px-6 md:px-32 border-b border-olive/30">
+            <div class="grid md:grid-cols-3 gap-16 max-w-7xl mx-auto">
                 <div class="reveal">
-                    <a href="#estate" class="bg-bone text-smoky px-10 py-5 font-serif uppercase tracking-widest font-bold hover:bg-floral transition-all duration-300">Enter The Estate</a>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="w-3 h-3 bg-green-500 rounded-full animate-ping absolute"></span>
+                        <span class="w-3 h-3 bg-green-500 rounded-full relative"></span>
+                        <p class="text-[10px] uppercase tracking-widest text-olive font-bold ml-2">Live Floor Tracker</p>
+                    </div>
+                    <div class="text-7xl font-serif text-floral mb-2 italic">42<span class="text-4xl text-bone font-sans not-italic">/60</span></div>
+                    <div class="w-full h-[2px] bg-olive/30 mt-4"><div class="w-[70%] h-full bg-bone shadow-[0_0_10px_#D8CFBC]"></div></div>
+                </div>
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <p class="text-[10px] uppercase tracking-widest text-olive font-bold mb-4">Current Atmosphere</p>
+                    <div class="text-4xl font-serif text-floral mb-2">High Intensity</div>
+                    <p class="text-xs text-bone/60 mt-4">Peak Hours: 18:00 - 21:00</p>
+                </div>
+                <div class="reveal" style="transition-delay: 0.4s;">
+                    <p class="text-[10px] uppercase tracking-widest text-olive font-bold mb-4">Estate Size</p>
+                    <div class="text-6xl font-serif text-floral mb-2 italic">12k<span class="text-2xl text-bone font-sans not-italic"> sq.ft</span></div>
+                    <p class="text-xs text-bone/60 mt-4">Premium Training Surface</p>
                 </div>
             </div>
         </section>
 
-        <div class="bg-smoky relative z-20">
-            
-            <section class="py-32 px-6 md:px-32 border-b border-olive/30">
-                <div class="grid md:grid-cols-3 gap-16 max-w-7xl mx-auto">
-                    <div class="reveal">
-                        <p class="text-[10px] uppercase tracking-widest text-olive font-bold mb-4">Live Floor Tracker</p>
-                        <div class="text-7xl font-serif text-floral mb-2 italic">42<span class="text-4xl text-bone font-sans not-italic">/60</span></div>
-                        <div class="w-full h-[2px] bg-olive/30 mt-4"><div class="w-[70%] h-full bg-bone shadow-[0_0_10px_#D8CFBC]"></div></div>
+        <section id="estate" class="py-40 px-6 md:px-32">
+            <div class="text-center mb-24 reveal">
+                <h2 class="font-serif text-5xl text-floral mb-6">The <span class="italic text-bone">Estate</span></h2>
+                <p class="font-sans text-bone/60 tracking-widest uppercase text-xs">Curated for absolute performance.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-10 max-w-7xl mx-auto">
+                <div class="b-glass p-10 reveal group">
+                    <div class="h-64 bg-olive/20 mb-8 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
                     </div>
-                    <div class="reveal" style="transition-delay: 0.2s;">
-                        <p class="text-[10px] uppercase tracking-widest text-olive font-bold mb-4">Atmosphere</p>
-                        <div class="text-4xl font-serif text-floral">High Intensity</div>
-                        <p class="text-xs text-bone/60 mt-4 italic tracking-widest font-sans uppercase">Estate peak hours active</p>
-                    </div>
-                    <div class="reveal" style="transition-delay: 0.4s;">
-                        <p class="text-[10px] uppercase tracking-widest text-olive font-bold mb-4">Estate Size</p>
-                        <div class="text-6xl font-serif text-floral mb-2 italic">12k<span class="text-2xl text-bone font-sans not-italic"> sq.ft</span></div>
-                    </div>
+                    <h3 class="font-serif text-2xl text-floral mb-4">Strength Pavilion</h3>
+                    <p class="font-sans text-bone/70 text-sm leading-relaxed">Equipped with competition-grade plates, customized racks, and calibrated bars.</p>
                 </div>
-            </section>
+                <div class="b-glass p-10 reveal group" style="transition-delay: 0.2s;">
+                    <div class="h-64 bg-olive/20 mb-8 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <h3 class="font-serif text-2xl text-floral mb-4">Cardio & Turf Zone</h3>
+                    <p class="font-sans text-bone/70 text-sm leading-relaxed">Curved treadmills, concept rowers, and a 20-meter sprint turf for high-intensity athletic conditioning.</p>
+                </div>
+            </div>
+        </section>
 
-            <section id="estate" class="py-40 px-6 md:px-32">
-                <div class="text-center mb-24 reveal">
-                    <h2 class="font-serif text-5xl text-floral mb-6 italic">The Estate Gallery</h2>
-                    <p class="font-sans text-bone/60 tracking-widest uppercase text-xs">Curated for absolute performance.</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-10 max-w-7xl mx-auto">
-                    <div class="b-glass p-10 reveal group">
-                        <div class="h-64 bg-olive/20 mb-8 overflow-hidden"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div>
-                        <h3 class="font-serif text-2xl text-floral mb-4 uppercase">Strength Pavilion</h3>
-                        <p class="text-bone/60 text-sm leading-relaxed font-sans">Equipped with competition-grade Eleiko plates and calibrated Olympic bars.</p>
-                    </div>
-                    <div class="b-glass p-10 reveal group" style="transition-delay: 0.2s;">
-                        <div class="h-64 bg-olive/20 mb-8 overflow-hidden"><img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div>
-                        <h3 class="font-serif text-2xl text-floral mb-4 uppercase">Cardio Turf</h3>
-                        <p class="text-bone/60 text-sm leading-relaxed font-sans">Curved treadmills and a 20-meter sprint turf for high-intensity athletic conditioning.</p>
-                    </div>
-                </div>
-            </section>
+        <section class="py-32 bg-[#0e0f0b] border-y border-olive/20 px-6 md:px-32">
+            <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 text-center">
+                <div class="reveal"><i class="fas fa-car text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Valet Parking</h4><p class="text-xs text-olive">Seamless arrivals.</p></div>
+                <div class="reveal"><i class="fas fa-hot-tub text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Recovery Spa</h4><p class="text-xs text-olive">Sauna & Ice baths.</p></div>
+                <div class="reveal"><i class="fas fa-coffee text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Protein Bar</h4><p class="text-xs text-olive">Post-workout nutrition.</p></div>
+                <div class="reveal"><i class="fas fa-lock text-3xl text-bone mb-6"></i><h4 class="font-serif text-lg text-floral mb-2">Executive Lockers</h4><p class="text-xs text-olive">Private grooming suites.</p></div>
+            </div>
+        </section>
 
-            <section id="plans" class="py-40 px-6 md:px-32 bg-[#0e0f0b]">
-                <h3 class="font-serif text-center text-5xl mb-24 text-floral uppercase tracking-tighter">Private <span class="italic text-bone">Tiers</span></h3>
-                <div class="grid md:grid-cols-3 gap-0 border border-olive/30 max-w-7xl mx-auto">
-                    <div class="p-16 border-r border-olive/30 hover:bg-smoky transition-all reveal">
-                        <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-bone/60 mb-8">Standard</h4>
-                        <div class="text-6xl font-serif text-floral mb-10 italic">₹1.4k</div>
-                        <a href="#trial" class="block text-center w-full py-4 border border-olive text-bone font-serif uppercase tracking-widest text-xs hover:bg-bone hover:text-smoky transition-all">Select</a>
-                    </div>
-                    <div class="bg-bone text-smoky p-16 scale-105 shadow-2xl reveal z-20" style="transition-delay: 0.1s;">
-                        <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-smoky/60 mb-8 font-bold italic">Elite Bespoke</h4>
-                        <div class="text-6xl font-serif mb-10 italic font-bold">₹2.9k</div>
-                        <a href="#trial" class="block text-center w-full py-4 bg-smoky text-floral font-serif uppercase tracking-widest text-xs hover:bg-olive transition-all">Secure Spot</a>
-                    </div>
-                    <div class="p-16 hover:bg-smoky transition-all reveal" style="transition-delay: 0.2s;">
-                        <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-bone/60 mb-8 uppercase">Executive</h4>
-                        <div class="text-6xl font-serif text-floral mb-10 italic">₹4.9k</div>
-                        <a href="#trial" class="block text-center w-full py-4 border border-olive text-bone font-serif uppercase tracking-widest text-xs hover:bg-bone hover:text-smoky transition-all">Select</a>
+        <section id="programs" class="py-40 px-6 md:px-32">
+            <h2 class="font-serif text-center text-4xl mb-24 text-floral">The <span class="italic text-bone">Engineers</span></h2>
+            <div class="grid md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+                <div class="relative group overflow-hidden reveal">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" class="w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-smoky to-transparent opacity-90"></div>
+                    <div class="absolute bottom-10 left-10">
+                        <p class="font-sans text-bone text-[10px] tracking-widest uppercase mb-2">Head of Power</p>
+                        <h4 class="font-serif text-3xl text-floral">Coach Aryan</h4>
                     </div>
                 </div>
-            </section>
+                <div class="relative group overflow-hidden reveal" style="transition-delay: 0.2s;">
+                    <img src="gym 1.jpeg" class="w-full h-[500px] object-cover grayscale brightness-75 border border-olive">
+                    <div class="absolute inset-0 bg-gradient-to-t from-smoky to-transparent opacity-90"></div>
+                    <div class="absolute bottom-10 left-10">
+                        <p class="font-sans text-bone text-[10px] tracking-widest uppercase mb-2">The Founder</p>
+                        <h4 class="font-serif text-3xl text-floral">Anshuman Singh</h4>
+                    </div>
+                </div>
+                <div class="relative group overflow-hidden reveal" style="transition-delay: 0.4s;">
+                    <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800" class="w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-smoky to-transparent opacity-90"></div>
+                    <div class="absolute bottom-10 left-10">
+                        <p class="font-sans text-bone text-[10px] tracking-widest uppercase mb-2">Physique Architect</p>
+                        <h4 class="font-serif text-3xl text-floral">Coach Rahul</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <section id="trial" class="py-40 px-6 md:px-32 relative z-30">
-                <div class="max-w-4xl mx-auto b-glass p-16 reveal shadow-2xl">
-                    <h2 class="font-serif text-5xl mb-6 text-floral text-center">Request <span class="italic text-bone">Access</span></h2>
-                    <form onsubmit="event.preventDefault(); alert('Success! The Concierge will contact you.');" class="grid md:grid-cols-2 gap-10">
-                        <input type="text" placeholder="Identity Name" class="w-full bg-transparent border-b border-olive p-3 font-serif text-xl text-floral outline-none focus:border-bone" required>
-                        <input type="email" placeholder="Secure Email" class="w-full bg-transparent border-b border-olive p-3 font-serif text-xl text-floral outline-none focus:border-bone" required>
+        <section id="hub" class="py-40 px-6 md:px-32 border-y border-olive/30 bg-[#0e0f0b]">
+            <div class="b-glass p-16 max-w-6xl mx-auto rounded-none reveal">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="font-serif text-4xl text-floral mb-10">The Vitality <span class="italic text-bone">Engine</span></h2>
+                        <div class="space-y-8">
+                            <input id="bw" type="number" placeholder="Weight (kg)" class="w-full bg-transparent border-b border-olive p-4 font-serif text-2xl text-floral outline-none focus:border-bone transition-all">
+                            <input id="bh" type="number" placeholder="Height (cm)" class="w-full bg-transparent border-b border-olive p-4 font-serif text-2xl text-floral outline-none focus:border-bone transition-all">
+                            <button onclick="bCalc()" class="bg-bone text-smoky px-8 py-5 w-full font-serif font-bold uppercase tracking-[0.3em] mt-4 hover:bg-floral transition-all">Calculate Status</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center justify-center border-l border-olive/50 py-10">
+                        <div id="br" class="text-[120px] leading-none font-serif text-olive italic transition-all duration-500">0.0</div>
+                        <p class="text-[10px] uppercase tracking-[1em] text-bone/60 mt-8">Bespoke Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="plans" class="py-40 px-6 md:px-32">
+            <h3 class="font-serif text-center text-5xl mb-24 text-floral">Private <span class="italic text-bone">Tiers</span></h3>
+            <div class="grid md:grid-cols-3 gap-0 border border-olive/30 max-w-7xl mx-auto">
+                <div class="p-16 border-r border-olive/30 hover:bg-[#0e0f0b] transition-all reveal">
+                    <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-bone/60 mb-8">Standard</h4>
+                    <div class="text-6xl font-serif text-floral mb-10 italic">₹1.4k</div>
+                    <ul class="space-y-6 text-[10px] uppercase tracking-[0.2em] text-bone/80 mb-16">
+                        <li>/ Full Floor Access</li>
+                        <li>/ Standard Locker</li>
+                    </ul>
+                    <a href="#trial" class="block text-center w-full py-4 border border-olive text-bone font-serif uppercase tracking-widest text-xs hover:bg-bone hover:text-smoky transition-all">Select</a>
+                </div>
+                <div class="bg-bone text-smoky p-16 scale-105 shadow-2xl reveal z-20" style="transition-delay: 0.1s;">
+                    <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-smoky/60 mb-8 font-bold">Elite Bespoke</h4>
+                    <div class="text-6xl font-serif mb-10 italic font-bold">₹2.9k</div>
+                    <ul class="space-y-6 text-[10px] uppercase tracking-[0.2em] text-smoky mb-16 font-bold">
+                        <li>/ Personal Engineer</li>
+                        <li>/ AI Nutrition Hub</li>
+                        <li>/ Recovery Spa</li>
+                    </ul>
+                    <a href="#trial" class="block text-center w-full py-4 bg-smoky text-floral font-serif uppercase tracking-widest text-xs hover:bg-olive transition-all">Secure Spot</a>
+                </div>
+                <div class="p-16 hover:bg-[#0e0f0b] transition-all reveal" style="transition-delay: 0.2s;">
+                    <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-bone/60 mb-8">Executive</h4>
+                    <div class="text-6xl font-serif text-floral mb-10 italic">₹4.9k</div>
+                    <ul class="space-y-6 text-[10px] uppercase tracking-[0.2em] text-bone/80 mb-16">
+                        <li>/ Unlimited Access</li>
+                        <li>/ VIP Concierge</li>
+                    </ul>
+                    <a href="#trial" class="block text-center w-full py-4 border border-olive text-bone font-serif uppercase tracking-widest text-xs hover:bg-bone hover:text-smoky transition-all">Select</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-32 px-6 md:px-32 bg-[#0e0f0b] border-y border-olive/30">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="font-serif text-4xl text-floral mb-16 text-center">Concierge <span class="italic text-bone">Inquiries</span></h3>
+                <div class="space-y-6 reveal">
+                    <div class="border-b border-olive/50 pb-6">
+                        <button onclick="toggleFaq('f1')" class="w-full flex justify-between items-center text-left font-serif text-xl text-floral">What are the peak hours? <i class="fas fa-plus text-bone text-sm"></i></button>
+                        <div id="f1" class="faq-ans font-sans text-sm leading-relaxed mt-4">Our estate is open 24/7. Peak intensity is usually observed between 6:00 PM and 9:00 PM. Valet parking is always available.</div>
+                    </div>
+                    <div class="border-b border-olive/50 pb-6">
+                        <button onclick="toggleFaq('f2')" class="w-full flex justify-between items-center text-left font-serif text-xl text-floral">Does the 1-Day Pass include a diet chart? <i class="fas fa-plus text-bone text-sm"></i></button>
+                        <div id="f2" class="faq-ans font-sans text-sm leading-relaxed mt-4">Yes, the complimentary pass includes a full floor tour, one session, and a baseline bespoke diet chart from our AI hub.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trial" class="py-40 px-6 md:px-32 relative z-30">
+            <div class="max-w-4xl mx-auto b-glass p-16 reveal shadow-2xl">
+                <h2 class="font-serif text-5xl mb-6 text-floral text-center">Request <span class="italic text-bone">Access</span></h2>
+                <p class="text-center font-sans text-bone/60 uppercase tracking-[0.5em] text-[10px] mb-16">Complimentary 24-Hour Elite Pass</p>
+                
+                <form onsubmit="event.preventDefault(); alert('Invitation Requested. The IceBug Concierge will contact you.');" class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-olive">Identity Name</label>
+                        <input type="text" class="w-full bg-transparent border-b border-olive p-3 font-serif text-xl text-floral outline-none focus:border-bone" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-olive">Secure Email / WhatsApp</label>
+                        <input type="text" class="w-full bg-transparent border-b border-olive p-3 font-serif text-xl text-floral outline-none focus:border-bone" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-olive">Arrival Date</label>
                         <input type="date" class="w-full bg-transparent border-b border-olive p-3 font-sans text-bone/60 outline-none focus:border-bone" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-olive">Arrival Time</label>
                         <input type="time" class="w-full bg-transparent border-b border-olive p-3 font-sans text-bone/60 outline-none focus:border-bone" required>
-                        <button type="submit" class="md:col-span-2 bg-bone text-smoky py-6 mt-8 font-serif font-bold tracking-[0.5em] uppercase hover:bg-floral transition-all">Validate Invitation</button>
-                    </form>
-                </div>
-            </section>
-        </div>
+                    </div>
+                    <button type="submit" class="md:col-span-2 bg-bone text-smoky py-6 mt-8 font-serif font-bold tracking-[0.5em] uppercase hover:bg-floral transition-all">Validate Invitation</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="py-24 px-6 md:px-32 bg-[#0e0f0b] border-y border-olive/30">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <i class="fas fa-envelope-open-text text-3xl text-bone mb-6"></i>
+                <h3 class="font-serif text-3xl text-floral mb-4">Member <span class="italic text-bone">Relations</span></h3>
+                <p class="font-sans text-[10px] uppercase tracking-widest text-olive mb-8">Discreet grievance redressal for existing patrons.</p>
+                <form onsubmit="event.preventDefault(); alert('Feedback securely transmitted to Estate Management.');" class="space-y-6">
+                    <input type="text" placeholder="Member ID / Name" class="w-full bg-transparent border-b border-olive p-3 font-serif text-lg text-floral outline-none focus:border-bone text-center" required>
+                    <textarea placeholder="How can we improve your estate experience?" rows="3" class="w-full bg-transparent border-b border-olive p-3 font-sans text-sm text-floral outline-none focus:border-bone text-center resize-none" required></textarea>
+                    <button type="submit" class="border border-olive text-bone px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-bone hover:text-smoky transition-all">Submit Confidentially</button>
+                </form>
+            </div>
+        </section>
 
         <footer class="py-24 border-t border-olive px-6 md:px-32 bg-smoky relative z-30">
-            <div class="flex justify-between items-center text-[8px] font-sans uppercase tracking-[0.5em] text-olive">
+            <div class="grid md:grid-cols-4 gap-16 mb-16">
+                <div>
+                    <h1 class="font-serif text-3xl text-floral mb-6">ICEBUG<span class="text-bone italic">.</span></h1>
+                    <p class="font-sans text-[10px] text-bone/60 tracking-widest uppercase leading-loose">Swaroop Nagar, Kanpur<br>The Pinnacle of Private Fitness.</p>
+                </div>
+                <div>
+                    <h5 class="font-sans text-olive text-[10px] uppercase mb-6 tracking-[0.3em] font-bold">The Estate</h5>
+                    <ul class="text-[10px] font-sans uppercase tracking-widest space-y-4 text-bone/80">
+                        <li><a href="#estate" class="hover:text-floral transition">Facilities</a></li>
+                        <li><a href="#programs" class="hover:text-floral transition">Regimens</a></li>
+                        <li><a href="#plans" class="hover:text-floral transition">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-sans text-olive text-[10px] uppercase mb-6 tracking-[0.3em] font-bold">Concierge</h5>
+                    <ul class="text-[10px] font-sans uppercase tracking-widest space-y-4 text-bone/80">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span> 24/7 Support Desk</li>
+                        <li><a href="#trial" class="hover:text-floral transition">Membership Office</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-sans text-olive text-[10px] uppercase mb-6 tracking-[0.3em] font-bold">Network</h5>
+                    <div class="flex space-x-6 text-xl text-bone">
+                        <a href="https://instagram.com/icebug.co" class="hover:text-floral transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-floral transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-floral transition"><i class="fas fa-map-marker-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-olive/30 pt-8 flex justify-between items-center text-[8px] font-sans uppercase tracking-[0.5em] text-olive">
                 <p>&copy; 2026 IceBug Private Estate.</p>
                 <p>Engineered in Kanpur</p>
             </div>
@@ -185,17 +343,22 @@
 
     <div id="chat-widget">
         <div id="chat-window">
-            <div class="bg-bone text-smoky p-4 font-serif font-bold flex justify-between items-center">
-                <span>AI Concierge</span>
-                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            <div class="bg-bone text-smoky p-4 font-serif font-bold flex justify-between items-center border-b border-olive/20">
+                <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
+                    <span>AI Concierge</span>
+                </div>
+                <button onclick="toggleChat()" class="text-smoky hover:text-black"><i class="fas fa-times"></i></button>
             </div>
-            <div id="chat-messages"></div>
-            <div id="chat-input-area" class="flex border-t border-olive/20 p-2">
-                <input type="text" id="chat-input" class="flex-grow bg-transparent outline-none p-2 text-floral" placeholder="Ask anything...">
-                <button onclick="sendMsg()" class="bg-bone text-smoky px-4 py-2"><i class="fas fa-paper-plane"></i></button>
+            <div id="chat-messages">
+                <div class="msg-bot">Hello! I am your 24/7 AI health & estate concierge. How can I assist you today?</div>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about plans, diet, location..." onkeypress="handleChatPress(event)">
+                <button id="chat-btn" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
-        <button onclick="toggleChat()" id="chat-toggle-btn" class="bg-bone text-smoky w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-2xl">
+        <button onclick="toggleChat()" id="chat-toggle-btn" class="bg-bone text-smoky w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl hover:scale-110 transition-transform mt-4 ml-auto">
             <i class="fas fa-comment-dots"></i>
         </button>
     </div>
@@ -203,11 +366,28 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Preloader
-        const words = ["Hello", "नमस्ते", "IceBug"];
+        // --- ENHANCED PRELOADER LOGIC ---
+        const words = ["Hello", "नमस्ते", "Bonjour", "Hola", "Ciao", "مرحبا", "Welcome", "IceBug"];
         let i = 0;
-        const wordInt = setInterval(() => { document.getElementById('hello').innerText = words[i]; i = (i + 1) % words.length; }, 500);
-        window.onload = () => { setTimeout(() => { clearInterval(wordInt); gsap.to("#loader", { y: "-100%", duration: 1.2, ease: "power4.inOut" }); }, 2000); };
+        
+        // Ensure the first word appears immediately
+        document.getElementById('hello').innerText = words[i];
+        
+        const wordInt = setInterval(() => { 
+            i = (i + 1) % words.length;
+            document.getElementById('hello').innerText = words[i]; 
+        }, 450); // Word changes every 450ms
+
+        window.addEventListener('load', () => {
+            setTimeout(() => { 
+                gsap.to("#loader", { 
+                    y: "-100%", 
+                    duration: 1.2, 
+                    ease: "power4.inOut",
+                    onComplete: () => clearInterval(wordInt) // Stops the interval once screen goes up
+                }); 
+            }, 3000); // Gives enough time to show multiple languages
+        });
 
         // Cursor
         document.addEventListener('mousemove', (e) => {
@@ -215,10 +395,10 @@
             gsap.to("#c-ring", { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
         });
 
-        // Navbar Animation
+        // Navbar Scroll
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) document.getElementById('navbar').classList.add('nav-scrolled', 'bg-smoky/90');
-            else document.getElementById('navbar').classList.remove('nav-scrolled', 'bg-smoky/90');
+            if (window.scrollY > 50) document.getElementById('navbar').classList.add('nav-scrolled');
+            else document.getElementById('navbar').classList.remove('nav-scrolled');
         });
 
         // Reveals
@@ -226,31 +406,73 @@
             gsap.to(el, { scrollTrigger: { trigger: el, start: "top 85%" }, opacity: 1, y: 0, duration: 1.5, ease: "power4.out" });
         });
 
-        // Chatbot Functions
-        function toggleChat() {
-            const win = document.getElementById('chat-window');
-            win.style.display = win.style.display === "flex" ? "none" : "flex";
+        // Video Parallax
+        gsap.to("#main-video", {
+            scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: true },
+            scale: 2, filter: "brightness(0.2) sepia(0.5)"
+        });
+
+        // BMI
+        function bCalc() {
+            const w = document.getElementById('bw').value; const h = document.getElementById('bh').value;
+            if(w && h) {
+                const bmi = (w / ((h/100)**2)).toFixed(1);
+                const res = document.getElementById('br');
+                res.innerText = bmi; res.style.color = "#D8CFBC";
+                gsap.from(res, { opacity: 0, scale: 0.5, duration: 1, ease: "elastic.out" });
+            }
         }
 
+        // FAQ Toggle
+        function toggleFaq(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === "block" ? "none" : "block";
+        }
+
+        // Chatbot Logic
+        function toggleChat() {
+            const win = document.getElementById('chat-window'); const btn = document.getElementById('chat-toggle-btn');
+            if (win.style.display === "flex") { win.style.display = "none"; btn.style.display = "flex"; } 
+            else { win.style.display = "flex"; btn.style.display = "none"; }
+        }
+        
+        function handleChatPress(e) { if (e.key === 'Enter') sendMsg(); }
+        
         async function sendMsg() {
-            const input = document.getElementById('chat-input');
+            const input = document.getElementById('chat-input'); 
             const text = input.value.trim();
             if (!text) return;
+            
             const chatBox = document.getElementById('chat-messages');
             chatBox.innerHTML += `<div class="msg-user">${text}</div>`;
-            input.value = '';
-            
+            input.value = ''; 
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const typingId = "typing-" + Date.now();
+            chatBox.innerHTML += `<div id="${typingId}" class="msg-bot italic text-bone/50">Analyzing...</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
             try {
-                const res = await fetch('/api/chat', {
+                const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: text })
                 });
-                const data = await res.json();
-                chatBox.innerHTML += `<div class="msg-bot">${data.reply || "Thinking..."}</div>`;
+                
+                const data = await response.json();
+                document.getElementById(typingId).remove();
+                
+                if (data.reply) {
+                    chatBox.innerHTML += `<div class="msg-bot">${data.reply}</div>`;
+                } else {
+                    chatBox.innerHTML += `<div class="msg-bot">Network anomaly. Please try again.</div>`;
+                }
                 chatBox.scrollTop = chatBox.scrollHeight;
-            } catch (e) {
-                chatBox.innerHTML += `<div class="msg-bot italic opacity-50">Concierge currently busy. Please fill the form.</div>`;
+
+            } catch (error) {
+                document.getElementById(typingId).remove();
+                chatBox.innerHTML += `<div class="msg-bot">Connection error. Please try again later.</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
             }
         }
     </script>

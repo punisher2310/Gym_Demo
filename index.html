@@ -367,10 +367,35 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // Preloader
-        const words = ["Hello", "नमस्ते", "Welcome", "IceBug"];
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 🌟 FIXED PRELOADER LOGIC
+        const words = ["Hello", "नमस्ते", "Bonjour", "Hola","مرحبا", "IceBug"];
         let i = 0;
-        const wordInt = setInterval(() => { document.getElementById('hello').innerText = words[i]; i = (i + 1) % words.length; }, 400);
-        window.onload = () => { setTimeout(() => { clearInterval(wordInt); gsap.to("#loader", { y: "-100%", duration: 1.2, ease: "power4.inOut" }); }, 2000); };
+        
+        // Page khulte hi pehla word set karega
+        document.getElementById('hello').innerText = words[i];
+        
+        // Har 450ms mein word change karega
+        const wordInt = setInterval(() => { 
+            i = (i + 1) % words.length;
+            document.getElementById('hello').innerText = words[i]; 
+        }, 450);
+
+        // Page load hone ke baad animation
+        window.addEventListener('load', () => {
+            setTimeout(() => { 
+                gsap.to("#loader", { 
+                    y: "-100%", 
+                    duration: 1.2, 
+                    ease: "power4.inOut",
+                    onComplete: () => clearInterval(wordInt) // Screen upar jane ke baad background process rok dega
+                }); 
+            }, 2500); // Thoda time badha diya (2.5 sec) taaki saari languages acche se dikhein
+        });
+
+        // Cursor
+        document.addEventListener('mousemove', (e) => {
 
         // Cursor
         document.addEventListener('mousemove', (e) => {

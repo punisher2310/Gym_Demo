@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IceBug Elite | Private Fitness Estate</title>
+    <title>IceBug Elite | The ₹5L Premium Estate</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'smoky': '#11120D', 'olive': '#565449', 'bone': '#D8CFBC', 'floral': '#FFFBF4', 'obsidian': '#050505' },
+                    colors: { 'smoky': '#0a0a0a', 'olive': '#3d3a33', 'bone': '#e8e4d9', 'floral': '#ffffff', 'accent': '#c2a67a' },
                     fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
                 }
             }
@@ -23,214 +23,326 @@
     </script>
     
     <style>
-        * { cursor: none !important; scroll-behavior: smooth; }
-        body { background: #11120D; color: #FFFBF4; overflow-x: hidden; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        /* Base Resets */
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+        body { background: #0a0a0a; color: #ffffff; overflow-x: hidden; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
         
-        /* Cursor & Preloader */
-        #loader { position: fixed; inset: 0; background: #11120D; z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        #c-dot { width: 6px; height: 6px; background: #D8CFBC; border-radius: 50%; position: fixed; z-index: 9999; pointer-events: none; }
-        #c-ring { width: 40px; height: 40px; border: 1px solid rgba(216, 207, 188, 0.4); border-radius: 50%; position: fixed; z-index: 9998; pointer-events: none; transition: transform 0.15s ease-out; }
-
-        /* Background Video */
+        /* Preloader */
+        #loader { position: fixed; inset: 0; background: #0a0a0a; z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        
+        /* Video Background */
         .v-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; overflow: hidden; }
-        #main-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.3) sepia(0.3); }
+        #main-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.2) grayscale(0.5); transform: scale(1.05); }
 
-        main { position: relative; z-index: 10; width: 100%; }
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: flex-start; background: transparent; position: relative; z-index: 11; perspective: 1200px; }
-
-        .b-glass { background: rgba(17, 18, 13, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(216, 207, 188, 0.15); }
-        .reveal { opacity: 0; transform: translateY(40px); }
-
-        /* MODULE 1: 3D Interactive Logo Hover */
-        #hero-3d-logo { transform-style: preserve-3d; transition: transform 0.1s ease-out; text-shadow: 0 20px 40px rgba(0,0,0,0.9); }
+        /* Main Wrapper */
+        main { position: relative; z-index: 10; width: 100%; background: transparent; }
         
-        /* MODULE 4: Checkout Popup */
-        #checkout-modal { display: none; position: fixed; inset: 0; z-index: 9500; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); align-items: center; justify-content: center; }
+        /* UI Utilities */
+        .glass-panel { background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(232, 228, 217, 0.1); }
+        .luxury-gradient { background: linear-gradient(180deg, transparent 0%, #0a0a0a 100%); }
+        .reveal { opacity: 0; transform: translateY(50px); }
+        
+        /* 3D Dumbbell Physics */
+        .scene-3d { perspective: 1000px; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+        .object-3d { 
+            width: 250px; height: 250px; position: relative; transform-style: preserve-3d; transition: transform 0.1s; 
+            background: url('https://cdn-icons-png.flaticon.com/512/2936/2936886.png') no-repeat center;
+            background-size: contain; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9)) brightness(0) invert(0.8) sepia(1) hue-rotate(10deg) saturate(3);
+        }
+        @media (max-width: 768px) { .object-3d { width: 180px; height: 180px; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #3d3a33; border-radius: 10px; }
 
         /* Chatbot */
-        #chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9000; }
-        #chat-window { display: none; width: 340px; height: 480px; background: #11120D; border: 1px solid #D8CFBC; border-radius: 12px; flex-direction: column; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        #chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9000; }
+        #chat-window { display: none; width: 90vw; max-width: 350px; height: 70vh; max-height: 500px; background: #0a0a0a; border: 1px solid #c2a67a; border-radius: 16px; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
         #chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
-        .msg-bot { background: #565449; color: #FFFBF4; padding: 12px; border-radius: 10px 10px 10px 0; max-width: 85%; align-self: flex-start; }
-        .msg-user { background: #D8CFBC; color: #11120D; padding: 12px; border-radius: 10px 10px 0 10px; max-width: 85%; align-self: flex-end; }
+        .msg-bot { background: #3d3a33; color: #ffffff; padding: 12px 16px; border-radius: 14px 14px 14px 0; max-width: 85%; align-self: flex-start; }
+        .msg-user { background: #c2a67a; color: #0a0a0a; padding: 12px 16px; border-radius: 14px 14px 0 14px; max-width: 85%; align-self: flex-end; font-weight: 600;}
     </style>
 </head>
 <body>
 
     <div id="loader">
-        <div id="hello" class="font-serif text-5xl text-bone italic tracking-widest">IceBug</div>
-        <p class="text-[10px] tracking-[1em] uppercase text-olive mt-6">Initializing Ecosystem</p>
+        <div id="hello" class="font-serif text-4xl md:text-6xl text-bone italic tracking-widest">IceBug</div>
+        <div class="w-32 h-[1px] bg-olive mt-8 overflow-hidden relative">
+            <div class="absolute top-0 left-0 h-full bg-accent w-full origin-left animate-[scaleX_3s_ease-in-out]"></div>
+        </div>
+        <p class="text-[8px] md:text-[10px] tracking-[0.5em] uppercase text-bone/50 mt-6">Initializing Ecosystem</p>
     </div>
 
-    <div id="c-dot"></div><div id="c-ring"></div>
-
-    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 py-8 px-6 md:px-16 flex justify-between items-center transition-all duration-500">
-        <div class="font-serif text-2xl text-floral tracking-widest">ICEBUG<span class="text-bone italic">.</span></div>
-        <div class="hidden md:flex space-x-8 text-[10px] font-sans uppercase tracking-[0.3em] text-bone">
-            <a href="#intel" class="hover:text-floral transition">Live Intel</a>
-            <a href="#portal" class="hover:text-floral transition">Portal</a>
-            <a href="#boutique" class="hover:text-floral transition">Boutique</a>
-            <a href="#admin" class="hover:text-floral text-olive transition font-bold"><i class="fas fa-lock mr-1"></i> HQ</a>
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 py-6 px-6 md:px-16 flex justify-between items-center transition-all duration-500">
+        <div class="font-serif text-xl md:text-2xl text-floral tracking-widest">ICEBUG<span class="text-accent italic">.</span></div>
+        <div class="hidden lg:flex space-x-10 text-[10px] font-sans uppercase tracking-[0.3em] text-bone">
+            <a href="#estate" class="hover:text-accent transition">Estate</a>
+            <a href="#trainers" class="hover:text-accent transition">Engineers</a>
+            <a href="#health" class="hover:text-accent transition">Health Hub</a>
+            <a href="#admin" class="hover:text-accent transition text-accent font-bold"><i class="fas fa-fingerprint mr-1"></i> HQ</a>
         </div>
-        <a href="#trial" class="border border-bone text-bone px-6 py-2 text-[10px] uppercase tracking-widest hover:bg-bone hover:text-smoky transition-all">Claim Pass</a>
+        <a href="#trial" class="border border-accent text-accent px-5 py-2 md:px-8 md:py-3 text-[10px] uppercase tracking-widest hover:bg-accent hover:text-smoky transition-all font-bold">VIP Pass</a>
     </nav>
 
     <div class="v-bg">
         <video autoplay muted loop playsinline id="main-video">
             <source src="gym-video.mp4" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-smoky/70 via-smoky/40 to-smoky"></div>
+        <div class="absolute inset-0 bg-black/60"></div>
     </div>
 
     <main>
-        <section class="hero px-6 md:px-32 flex justify-between items-center">
-            <div class="max-w-4xl relative z-20">
-                <div class="flex items-center space-x-4 mb-6 reveal">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
-                    <p class="font-sans text-bone text-xs tracking-[0.5em] uppercase">Kanpur's 1% Estate</p>
+        
+        <section class="min-h-screen flex items-center justify-center px-6 md:px-16 lg:px-32 relative pt-20">
+            <div class="w-full max-w-7xl grid lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1 text-center lg:text-left">
+                    <div class="flex items-center justify-center lg:justify-start space-x-4 mb-6 reveal">
+                        <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+                        <p class="font-sans text-accent text-[10px] md:text-xs tracking-[0.5em] uppercase font-bold">Kanpur's 1% Estate</p>
+                    </div>
+                    <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-black leading-[1] mb-8 reveal text-floral drop-shadow-2xl">
+                        BEYOND <br><span class="italic text-bone">FITNESS.</span>
+                    </h1>
+                    <p class="font-sans text-bone/80 text-sm md:text-lg max-w-lg mx-auto lg:mx-0 mb-12 reveal leading-relaxed">
+                        Stop training. Start engineering. Enter a fully automated, high-performance physical development ecosystem designed for the elite.
+                    </p>
+                    <div class="reveal flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#trial" class="w-full sm:w-auto bg-accent text-smoky px-8 py-4 font-serif uppercase tracking-widest font-bold hover:bg-floral transition-all text-sm text-center">Claim 24H Pass</a>
+                        <a href="#health" class="w-full sm:w-auto border border-bone/30 text-bone px-8 py-4 font-serif uppercase tracking-widest text-sm hover:border-accent hover:text-accent transition-all text-center">View Tech</a>
+                    </div>
                 </div>
-                <h1 id="hero-3d-logo" class="font-serif text-6xl md:text-[120px] font-black leading-[0.9] mb-10 reveal text-floral">
-                    BEYOND <br><span class="italic text-bone">FITNESS.</span>
-                </h1>
-                <p class="font-sans text-bone/70 text-lg md:text-xl max-w-xl mb-12 reveal leading-relaxed">Stop training. Start engineering. Enter a fully automated, high-performance physical development ecosystem.</p>
-                <div class="reveal">
-                    <a href="#trial" class="bg-bone text-smoky px-10 py-5 font-serif uppercase tracking-widest font-bold hover:bg-floral transition-all shadow-[0_0_30px_rgba(216,207,188,0.3)]">Book Your Private Tour</a>
+                
+                <div class="order-1 lg:order-2 h-[40vh] lg:h-[70vh] w-full reveal flex justify-center items-center" id="3d-container">
+                    <div class="scene-3d">
+                        <div class="object-3d" id="floating-dumbbell"></div>
+                    </div>
+                    <p class="absolute bottom-10 text-[8px] text-bone/40 tracking-[0.5em] uppercase hidden lg:block animate-pulse">Interact & Rotate</p>
                 </div>
             </div>
         </section>
 
-        <div class="bg-smoky relative z-20">
-            
-            <section id="intel" class="py-24 px-6 md:px-32 border-t border-olive/30 bg-obsidian">
-                <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
-                    <div class="reveal">
-                        <h4 class="text-[10px] uppercase tracking-[0.3em] text-olive font-bold mb-6">Attendance Heatmap</h4>
-                        <div class="flex items-end space-x-2 h-24 mb-4 border-b border-olive/30 pb-2">
-                            <div class="w-1/6 bg-olive/30 h-[20%] hover:bg-bone transition-all"></div>
-                            <div class="w-1/6 bg-olive/50 h-[40%] hover:bg-bone transition-all"></div>
-                            <div class="w-1/6 bg-olive h-[70%] hover:bg-bone transition-all relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[8px] text-bone opacity-0 group-hover:opacity-100 transition-opacity">Now</span></div>
-                            <div class="w-1/6 bg-bone h-[90%] shadow-[0_0_10px_#D8CFBC] transition-all"></div>
-                            <div class="w-1/6 bg-olive/60 h-[50%] hover:bg-bone transition-all"></div>
-                            <div class="w-1/6 bg-olive/20 h-[10%] hover:bg-bone transition-all"></div>
-                        </div>
-                        <div class="flex justify-between text-[8px] text-bone/50 uppercase tracking-widest"><p>6 AM</p><p>Peak 7 PM</p><p>12 AM</p></div>
-                    </div>
+        <div class="bg-smoky relative z-20 border-t border-olive/30 shadow-[0_-20px_50px_rgba(0,0,0,1)]">
 
-                    <div class="reveal b-glass p-6 rounded-xl flex items-center justify-between" style="transition-delay: 0.2s;">
-                        <div>
-                            <h4 class="text-[10px] uppercase tracking-[0.3em] text-olive font-bold mb-2">Air Quality (AQI)</h4>
-                            <p class="font-serif text-4xl text-green-400 italic">24 <span class="text-xs text-bone font-sans not-italic">Pristine</span></p>
-                            <p class="text-[9px] text-bone/60 mt-2 tracking-widest uppercase">HEPA Filtration Active</p>
-                        </div>
-                        <i class="fas fa-wind text-4xl text-olive/50"></i>
+            <section class="py-20 md:py-32 px-6 md:px-16 lg:px-32 border-b border-olive/20">
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+                    <div class="glass-panel p-8 rounded-2xl reveal">
+                        <h4 class="text-[10px] uppercase tracking-[0.3em] text-accent font-bold mb-6">Live Floor Traffic</h4>
+                        <div class="text-5xl md:text-6xl font-serif text-floral mb-2 italic">28<span class="text-2xl text-bone/50 font-sans not-italic">/100</span></div>
+                        <div class="w-full h-[3px] bg-olive/30 mt-6 rounded-full overflow-hidden"><div class="w-[28%] h-full bg-accent shadow-[0_0_10px_#c2a67a]"></div></div>
+                        <p class="text-[10px] text-bone/50 uppercase tracking-widest mt-4">Optimal Privacy Mode</p>
                     </div>
-
-                    <div class="reveal b-glass p-6 rounded-xl flex items-center justify-between" style="transition-delay: 0.4s;">
+                    <div class="glass-panel p-8 rounded-2xl reveal flex flex-col justify-between" style="transition-delay: 0.1s;">
+                        <h4 class="text-[10px] uppercase tracking-[0.3em] text-accent font-bold mb-4">Environment</h4>
                         <div>
-                            <h4 class="text-[10px] uppercase tracking-[0.3em] text-olive font-bold mb-2">Estate Temp</h4>
-                            <p class="font-serif text-4xl text-floral italic">19°<span class="text-xs text-bone font-sans not-italic">C</span></p>
-                            <p class="text-[9px] text-bone/60 mt-2 tracking-widest uppercase">Climate Controlled</p>
+                            <p class="font-serif text-4xl text-floral italic">19.5°C</p>
+                            <p class="text-[10px] text-bone/50 uppercase tracking-widest mt-2">Climate Control Active</p>
                         </div>
-                        <i class="fas fa-thermometer-half text-4xl text-olive/50"></i>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl reveal flex flex-col justify-between" style="transition-delay: 0.2s;">
+                        <h4 class="text-[10px] uppercase tracking-[0.3em] text-accent font-bold mb-4">Air Quality Index</h4>
+                        <div>
+                            <p class="font-serif text-4xl text-green-400 italic">012 AQI</p>
+                            <p class="text-[10px] text-bone/50 uppercase tracking-widest mt-2">Hospital-Grade HEPA Filtered</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="portal" class="py-40 px-6 md:px-32 border-y border-olive/30">
-                <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-                    <div class="reveal">
-                        <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-olive font-bold mb-4">Member Portal</h4>
-                        <h2 class="font-serif text-5xl text-floral mb-8">AI Workout <br><span class="italic text-bone">Builder</span></h2>
-                        <p class="font-sans text-bone/70 leading-relaxed mb-8">Select your target protocol. Our intelligence engine instantly generates a bespoke, science-backed micro-cycle right in your dashboard.</p>
-                        
-                        <div class="flex space-x-4 mb-8">
-                            <button onclick="buildWorkout('bulk')" class="px-6 py-2 border border-bone text-bone text-xs uppercase tracking-widest hover:bg-bone hover:text-smoky transition-all">Bulk (Hypertrophy)</button>
-                            <button onclick="buildWorkout('cut')" class="px-6 py-2 border border-olive text-olive text-xs uppercase tracking-widest hover:bg-bone hover:text-smoky transition-all">Cut (Shred)</button>
+            <section id="trainers" class="py-24 md:py-40 px-6 md:px-16 lg:px-32">
+                <div class="text-center mb-16 md:mb-24 reveal">
+                    <h2 class="font-serif text-4xl md:text-5xl text-floral mb-4">The <span class="italic text-accent">Engineers</span></h2>
+                    <p class="font-sans text-bone/60 tracking-widest uppercase text-xs">Architects of Human Performance.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    <div class="relative group overflow-hidden rounded-2xl reveal aspect-[3/4] md:aspect-[4/5]">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-smoky via-smoky/40 to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                            <p class="font-sans text-accent text-[10px] tracking-[0.3em] uppercase mb-2 font-bold">Head of Power</p>
+                            <h4 class="font-serif text-3xl text-floral mb-2">Coach Aryan</h4>
+                            <p class="text-xs text-bone/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Biomechanics & Strength specialist.</p>
                         </div>
-                        
-                        <div class="border-t border-olive/30 pt-6">
-                            <h4 class="text-[10px] uppercase tracking-[0.3em] text-floral font-bold mb-4"><i class="fas fa-lock text-olive mr-2"></i> Nutrition Vault</h4>
-                            <p class="text-xs text-bone/60 mb-2">Access premium locked recipes & supplementation guides.</p>
-                            <a href="#" class="text-[10px] text-olive hover:text-bone underline uppercase tracking-widest">Login to Unlock</a>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl reveal aspect-[3/4] md:aspect-[4/5]" style="transition-delay: 0.1s;">
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-smoky via-smoky/40 to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                            <p class="font-sans text-accent text-[10px] tracking-[0.3em] uppercase mb-2 font-bold">The Founder</p>
+                            <h4 class="font-serif text-3xl text-floral mb-2">Anshuman Singh</h4>
+                            <p class="text-xs text-bone/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Architect of the IceBug methodology.</p>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl reveal aspect-[3/4] md:aspect-[4/5]" style="transition-delay: 0.2s;">
+                        <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-smoky via-smoky/40 to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                            <p class="font-sans text-accent text-[10px] tracking-[0.3em] uppercase mb-2 font-bold">Physique Architect</p>
+                            <h4 class="font-serif text-3xl text-floral mb-2">Coach Rahul</h4>
+                            <p class="text-xs text-bone/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Nutrition and hypertrophy expert.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="health" class="py-24 md:py-40 px-6 md:px-16 lg:px-32 bg-[#050505] border-y border-olive/20">
+                <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="reveal order-2 lg:order-1">
+                        <div class="glass-panel p-6 md:p-10 rounded-2xl border border-accent/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                            <div class="flex justify-between items-center mb-8 border-b border-olive/30 pb-4">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-floral">Bio-Metric Engine</h3>
+                                    <p class="text-[10px] uppercase tracking-widest text-bone/50">AI Assessment Tool</p>
+                                </div>
+                                <i class="fas fa-microchip text-3xl text-accent"></i>
+                            </div>
+                            
+                            <div class="space-y-6 mb-8">
+                                <div>
+                                    <label class="text-[10px] uppercase tracking-widest text-bone mb-2 block">Body Weight (KG)</label>
+                                    <input type="range" id="weight-slider" min="40" max="150" value="75" class="w-full accent-[#c2a67a] bg-olive h-1 rounded-lg appearance-none cursor-pointer" oninput="updateHealth()">
+                                    <p id="weight-val" class="text-right font-serif text-xl text-accent mt-1">75 kg</p>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] uppercase tracking-widest text-bone mb-2 block">Height (CM)</label>
+                                    <input type="range" id="height-slider" min="140" max="220" value="175" class="w-full accent-[#c2a67a] bg-olive h-1 rounded-lg appearance-none cursor-pointer" oninput="updateHealth()">
+                                    <p id="height-val" class="text-right font-serif text-xl text-accent mt-1">175 cm</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-smoky p-6 rounded-xl border border-olive/30 flex justify-between items-center">
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-widest text-bone/50 mb-1">Calculated BMI</p>
+                                    <p id="bmi-val" class="font-serif text-4xl text-floral">24.5</p>
+                                    <p id="bmi-status" class="text-xs text-green-400 mt-1 font-bold">Optimal Range</p>
+                                </div>
+                                <button class="bg-accent text-smoky px-6 py-3 font-serif uppercase tracking-widest text-xs font-bold hover:bg-floral transition-all rounded">Sync to App</button>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="b-glass p-8 rounded-xl border border-olive/40 shadow-2xl reveal">
-                        <div class="flex justify-between items-center mb-6 pb-4 border-b border-olive/30">
-                            <h3 class="font-serif text-2xl text-floral italic" id="wk-title">Hypertrophy Phase</h3>
-                            <span class="text-[8px] bg-bone text-smoky px-2 py-1 uppercase tracking-widest font-bold">Auto-Generated</span>
+                    <div class="reveal order-1 lg:order-2">
+                        <h4 class="font-sans text-[10px] uppercase tracking-[0.4em] text-accent font-bold mb-4">The Digital Twin</h4>
+                        <h2 class="font-serif text-4xl md:text-5xl text-floral mb-6">Data-Driven <br><span class="italic text-bone">Evolution.</span></h2>
+                        <p class="font-sans text-bone/70 leading-relaxed mb-8 text-sm md:text-base">
+                            Guesswork is for amateurs. Members get access to the IceBug digital portal. Track macros, sync your Apple Watch, and let our AI adjust your weekly protocol based on real-time bio-feedback.
+                        </p>
+                        <div class="flex flex-col gap-4">
+                            <div class="glass-panel p-4 rounded-xl flex items-center border-l-4 border-l-accent">
+                                <i class="fas fa-sync-alt text-xl text-bone w-10 text-center"></i>
+                                <div>
+                                    <p class="font-serif text-floral text-sm">Automated Diet Adjustments</p>
+                                    <p class="text-[10px] text-bone/60">Calories tweak weekly based on weigh-ins.</p>
+                                </div>
+                            </div>
+                            <div class="glass-panel p-4 rounded-xl flex items-center border-l-4 border-l-olive">
+                                <i class="fas fa-dumbbell text-xl text-bone w-10 text-center"></i>
+                                <div>
+                                    <p class="font-serif text-floral text-sm">Progressive Overload Tracker</p>
+                                    <p class="text-[10px] text-bone/60">Log reps. Beat the algorithm.</p>
+                                </div>
+                            </div>
                         </div>
-                        <table class="w-full text-left text-xs font-sans text-bone/80">
-                            <thead>
-                                <tr class="text-olive uppercase tracking-widest border-b border-olive/20">
-                                    <th class="pb-3">Day</th><th class="pb-3">Focus</th><th class="pb-3">Volume</th>
-                                </tr>
-                            </thead>
-                            <tbody id="wk-table">
-                                <tr class="border-b border-olive/10"><td class="py-3">Mon</td><td class="text-floral">Push (Chest/Triceps)</td><td>4 Sets x 8-10 Reps</td></tr>
-                                <tr class="border-b border-olive/10"><td class="py-3">Tue</td><td class="text-floral">Pull (Back/Biceps)</td><td>4 Sets x 8-10 Reps</td></tr>
-                                <tr class="border-b border-olive/10"><td class="py-3">Wed</td><td class="text-floral opacity-50">Active Recovery</td><td>Yoga / Mobility</td></tr>
-                                <tr><td class="py-3">Thu</td><td class="text-floral">Lower Body Power</td><td>5 Sets x 5 Reps</td></tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </section>
 
-            <section id="boutique" class="py-40 px-6 md:px-32 bg-obsidian">
-                <div class="text-center mb-24 reveal">
-                    <h2 class="font-serif text-5xl text-floral mb-4">The <span class="italic text-bone">Boutique</span></h2>
-                    <p class="font-sans text-bone/60 tracking-widest uppercase text-xs">Minimalist gear & bespoke nutrition.</p>
+            <section class="py-24 md:py-40 px-6 md:px-16 lg:px-32">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-24 reveal">
+                    <div class="mb-6 md:mb-0">
+                        <h2 class="font-serif text-4xl md:text-5xl text-floral mb-4">The <span class="italic text-bone">Boutique</span></h2>
+                        <p class="font-sans text-bone/60 tracking-widest uppercase text-xs">Proprietary gear & supplements.</p>
+                    </div>
                 </div>
                 
-                <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                    <div class="b-glass p-8 reveal group border border-transparent hover:border-bone/50 transition-all">
-                        <div class="h-48 flex items-center justify-center mb-8"><i class="fas fa-prescription-bottle-alt text-5xl text-olive group-hover:text-bone group-hover:-translate-y-2 transition-all duration-300"></i></div>
-                        <div class="border-t border-olive/30 pt-6">
-                            <h3 class="font-serif text-xl text-floral">IceBug Isolate Pro</h3>
-                            <p class="font-serif italic text-bone text-lg mb-1">₹5,499</p>
-                            <p class="font-sans text-[10px] text-bone/50 uppercase tracking-widest mb-6">100% Grass-Fed Whey</p>
-                            <button onclick="openCheckout('IceBug Isolate Pro', '₹5,499')" class="w-full bg-bone text-smoky py-3 font-serif font-bold uppercase tracking-widest hover:bg-floral transition-all shadow-lg">Buy Now</button>
-                        </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
+                    <div class="glass-panel p-6 md:p-8 rounded-2xl reveal group hover:border-accent transition-all duration-300">
+                        <div class="h-48 md:h-64 flex items-center justify-center mb-6 bg-[#050505] rounded-xl"><i class="fas fa-prescription-bottle-alt text-6xl text-olive group-hover:text-accent group-hover:scale-110 transition-all duration-500"></i></div>
+                        <h3 class="font-serif text-xl md:text-2xl text-floral mb-1">Isolate Pro</h3>
+                        <p class="font-serif italic text-accent text-lg mb-4">₹5,499</p>
+                        <button onclick="alert('Added to Vault')" class="w-full bg-transparent border border-olive text-bone py-3 text-[10px] uppercase tracking-widest hover:bg-accent hover:border-accent hover:text-smoky transition-all rounded">Add to Vault</button>
                     </div>
-                    <div class="b-glass p-8 reveal group border border-transparent hover:border-bone/50 transition-all" style="transition-delay: 0.2s;">
-                        <div class="h-48 flex items-center justify-center mb-8"><i class="fas fa-tshirt text-5xl text-olive group-hover:text-bone group-hover:-translate-y-2 transition-all duration-300"></i></div>
-                        <div class="border-t border-olive/30 pt-6">
-                            <h3 class="font-serif text-xl text-floral">Signature Oversized</h3>
-                            <p class="font-serif italic text-bone text-lg mb-1">₹2,199</p>
-                            <p class="font-sans text-[10px] text-bone/50 uppercase tracking-widest mb-6">Heavyweight Cotton</p>
-                            <button onclick="openCheckout('Signature Oversized', '₹2,199')" class="w-full bg-bone text-smoky py-3 font-serif font-bold uppercase tracking-widest hover:bg-floral transition-all shadow-lg">Buy Now</button>
-                        </div>
+                    <div class="glass-panel p-6 md:p-8 rounded-2xl reveal group hover:border-accent transition-all duration-300" style="transition-delay: 0.1s;">
+                        <div class="h-48 md:h-64 flex items-center justify-center mb-6 bg-[#050505] rounded-xl"><i class="fas fa-tshirt text-6xl text-olive group-hover:text-accent group-hover:scale-110 transition-all duration-500"></i></div>
+                        <h3 class="font-serif text-xl md:text-2xl text-floral mb-1">Oversized Pump Cover</h3>
+                        <p class="font-serif italic text-accent text-lg mb-4">₹2,199</p>
+                        <button onclick="alert('Added to Vault')" class="w-full bg-transparent border border-olive text-bone py-3 text-[10px] uppercase tracking-widest hover:bg-accent hover:border-accent hover:text-smoky transition-all rounded">Add to Vault</button>
                     </div>
-                    <div class="b-glass p-8 reveal group border border-transparent hover:border-bone/50 transition-all" style="transition-delay: 0.4s;">
-                        <div class="h-48 flex items-center justify-center mb-8"><i class="fas fa-bolt text-5xl text-olive group-hover:text-bone group-hover:-translate-y-2 transition-all duration-300"></i></div>
-                        <div class="border-t border-olive/30 pt-6">
-                            <h3 class="font-serif text-xl text-floral">Pre-Ignition Formula</h3>
-                            <p class="font-serif italic text-bone text-lg mb-1">₹3,299</p>
-                            <p class="font-sans text-[10px] text-bone/50 uppercase tracking-widest mb-6">Nootropic Energy</p>
-                            <button onclick="openCheckout('Pre-Ignition Formula', '₹3,299')" class="w-full bg-bone text-smoky py-3 font-serif font-bold uppercase tracking-widest hover:bg-floral transition-all shadow-lg">Buy Now</button>
-                        </div>
+                    <div class="glass-panel p-6 md:p-8 rounded-2xl reveal group hover:border-accent transition-all duration-300 hidden md:block" style="transition-delay: 0.2s;">
+                        <div class="h-64 flex items-center justify-center mb-6 bg-[#050505] rounded-xl"><i class="fas fa-bolt text-6xl text-olive group-hover:text-accent group-hover:scale-110 transition-all duration-500"></i></div>
+                        <h3 class="font-serif text-2xl text-floral mb-1">Nootropic Pre-Workout</h3>
+                        <p class="font-serif italic text-accent text-lg mb-4">₹3,299</p>
+                        <button onclick="alert('Added to Vault')" class="w-full bg-transparent border border-olive text-bone py-3 text-[10px] uppercase tracking-widest hover:bg-accent hover:border-accent hover:text-smoky transition-all rounded">Add to Vault</button>
                     </div>
                 </div>
             </section>
 
-            <section id="admin" class="py-32 px-6 md:px-32 border-y border-red-900/30 bg-[#020202]">
-                <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-                    <div class="mb-10 md:mb-0 reveal">
-                        <h4 class="text-[10px] uppercase tracking-[0.4em] text-red-500 font-bold mb-4"><i class="fas fa-eye"></i> Owner's Demo View</h4>
-                        <h2 class="font-serif text-4xl text-floral mb-4">Command <span class="italic text-bone">Center</span></h2>
-                        <p class="font-sans text-bone/60 max-w-sm text-sm">This module is strictly visible to Estate Directors. Real-time revenue analytics and predictive AI churn alerts.</p>
-                    </div>
-                    <div class="flex gap-6 reveal" style="transition-delay: 0.2s;">
-                        <div class="b-glass p-6 border-red-900/50 rounded-lg min-w-[200px]">
-                            <p class="text-[10px] uppercase tracking-widest text-olive mb-2">Monthly MRR</p>
-                            <p class="font-serif text-3xl text-floral">₹14.5<span class="text-sm font-sans text-bone/50">L</span></p>
-                            <p class="text-xs text-green-400 mt-2"><i class="fas fa-arrow-up"></i> 12% vs last month</p>
+            <section id="trial" class="py-24 md:py-40 px-6 md:px-16 lg:px-32 relative z-30">
+                <div class="max-w-5xl mx-auto glass-panel p-8 md:p-16 rounded-3xl reveal shadow-[0_30px_60px_rgba(0,0,0,0.8)] border border-accent/30 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -z-10"></div>
+                    
+                    <h2 class="font-serif text-4xl md:text-6xl mb-4 text-floral text-center md:text-left">Experience <span class="italic text-accent">Perfection.</span></h2>
+                    <p class="text-center md:text-left font-sans text-bone/60 uppercase tracking-[0.3em] text-[10px] md:text-xs mb-12">Claim Your Complimentary 24-Hour VIP Access</p>
+                    
+                    <form onsubmit="event.preventDefault(); alert('VIP Pass Requested. Check your email or WhatsApp.');" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-accent font-bold">Identity Name</label>
+                            <input type="text" class="w-full bg-[#050505] border border-olive rounded-lg p-4 font-serif text-lg text-floral outline-none focus:border-accent transition-colors" required>
                         </div>
-                        <div class="b-glass p-6 border-red-900/50 rounded-lg min-w-[200px]">
-                            <p class="text-[10px] uppercase tracking-widest text-olive mb-2">Churn Risk Alert</p>
-                            <p class="font-serif text-3xl text-red-400">3 <span class="text-sm font-sans text-bone/50">Members</span></p>
-                            <p class="text-xs text-bone/60 mt-2">AI Auto-SMS Dispatched</p>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-accent font-bold">Secure WhatsApp No.</label>
+                            <input type="tel" class="w-full bg-[#050505] border border-olive rounded-lg p-4 font-serif text-lg text-floral outline-none focus:border-accent transition-colors" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-accent font-bold">Preferred Date</label>
+                            <input type="date" class="w-full bg-[#050505] border border-olive rounded-lg p-4 font-sans text-sm text-bone/80 outline-none focus:border-accent transition-colors" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-accent font-bold">Primary Goal</label>
+                            <select class="w-full bg-[#050505] border border-olive rounded-lg p-4 font-sans text-sm text-bone/80 outline-none focus:border-accent transition-colors">
+                                <option>Muscle Hypertrophy</option>
+                                <option>Fat Loss & Shredding</option>
+                                <option>Athletic Conditioning</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="md:col-span-2 bg-accent text-smoky py-5 mt-4 font-serif font-bold tracking-[0.3em] text-sm uppercase hover:bg-floral transition-all rounded-lg shadow-xl hover:shadow-accent/20">Validate VIP Invitation</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="admin" class="py-24 md:py-32 px-6 md:px-16 lg:px-32 bg-[#020202] border-t-2 border-red-900/50 relative">
+                <div class="absolute top-0 left-0 w-full bg-red-900/20 text-red-500 py-1 text-[8px] uppercase tracking-[1em] text-center font-bold overflow-hidden whitespace-nowrap">
+                    Restricted Access • Proprietor Level Clearance Required • Restricted Access
+                </div>
+                
+                <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 pt-8">
+                    <div class="w-full lg:w-1/2 text-center lg:text-left reveal">
+                        <div class="inline-block p-3 bg-red-950/30 rounded-xl mb-6 border border-red-900/50">
+                            <i class="fas fa-fingerprint text-3xl text-red-500"></i>
+                        </div>
+                        <h2 class="font-serif text-4xl md:text-5xl text-floral mb-4">Command <span class="italic text-red-500">Center</span></h2>
+                        <p class="font-sans text-bone/60 text-sm leading-relaxed mb-8">
+                            A completely separate, encrypted dashboard for the gym owner. View real-time revenue, track trainer performance, and use AI to predict which members are likely to cancel their subscriptions.
+                        </p>
+                        <button class="border border-red-500 text-red-500 px-6 py-3 text-xs uppercase tracking-widest hover:bg-red-500 hover:text-white transition-colors rounded">Simulate Login</button>
+                    </div>
+                    
+                    <div class="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4 reveal" style="transition-delay: 0.2s;">
+                        <div class="bg-[#0a0a0a] border border-red-900/30 p-6 rounded-2xl shadow-2xl">
+                            <div class="flex justify-between items-center mb-4">
+                                <p class="text-[10px] uppercase tracking-widest text-bone/50">Net Revenue</p>
+                                <i class="fas fa-chart-line text-green-500"></i>
+                            </div>
+                            <p class="font-serif text-3xl text-floral">₹14.2<span class="text-sm font-sans text-bone/50">L</span></p>
+                            <p class="text-[10px] text-green-500 mt-2">+12.5% this month</p>
+                        </div>
+                        <div class="bg-[#0a0a0a] border border-red-900/30 p-6 rounded-2xl shadow-2xl">
+                            <div class="flex justify-between items-center mb-4">
+                                <p class="text-[10px] uppercase tracking-widest text-bone/50">AI Churn Risk</p>
+                                <i class="fas fa-exclamation-triangle text-red-500 animate-pulse"></i>
+                            </div>
+                            <p class="font-serif text-3xl text-floral">4 <span class="text-sm font-sans text-bone/50">Members</span></p>
+                            <p class="text-[10px] text-red-400 mt-2">Retention SMS Dispatched</p>
                         </div>
                     </div>
                 </div>
@@ -238,48 +350,38 @@
 
         </div>
 
-        <footer class="py-24 px-6 md:px-32 bg-smoky relative z-30">
-            <div class="border-t border-olive/30 pt-8 flex justify-between items-center text-[8px] font-sans uppercase tracking-[0.5em] text-olive">
-                <p>&copy; 2026 IceBug Private Estate. All rights reserved.</p>
-                <p>Engineered in Kanpur</p>
+        <footer class="py-16 md:py-24 px-6 md:px-16 lg:px-32 bg-smoky relative z-30 border-t border-olive/30">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+                <div>
+                    <h1 class="font-serif text-2xl text-floral mb-2">ICEBUG<span class="text-accent italic">.</span></h1>
+                    <p class="font-sans text-[10px] text-bone/50 tracking-widest uppercase">The Pinnacle of Private Fitness.</p>
+                </div>
+                <div class="text-[8px] font-sans uppercase tracking-[0.5em] text-olive text-center">
+                    <p>&copy; 2026 IceBug Private Estate.</p>
+                    <p class="mt-2">Engineered in Kanpur</p>
+                </div>
             </div>
         </footer>
     </main>
 
-    <div id="checkout-modal">
-        <div class="b-glass p-10 max-w-md w-full relative rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-bone/20">
-            <button onclick="closeCheckout()" class="absolute top-4 right-6 text-bone hover:text-white text-xl"><i class="fas fa-times"></i></button>
-            <h3 class="font-serif text-2xl text-floral mb-2">Secure Checkout</h3>
-            <p id="checkout-item" class="text-[10px] uppercase tracking-widest text-olive mb-8">Item Name</p>
-            
-            <div class="flex justify-between items-center border-b border-olive/30 pb-4 mb-8">
-                <span class="font-sans text-sm text-bone">Total Due:</span>
-                <span id="checkout-price" class="font-serif text-2xl text-floral italic">₹0</span>
-            </div>
-            
-            <button onclick="alert('Payment Gateway Integration Pending in Demo.')" class="w-full bg-bone text-smoky py-4 font-serif font-bold uppercase tracking-widest hover:bg-floral transition-all">Pay via Razorpay</button>
-            <p class="text-center text-[8px] text-bone/40 uppercase tracking-widest mt-4"><i class="fas fa-lock"></i> SSL Encrypted Connection</p>
-        </div>
-    </div>
-
     <div id="chat-widget">
         <div id="chat-window">
-            <div class="bg-bone text-smoky p-4 font-serif font-bold flex justify-between items-center border-b border-olive/20">
+            <div class="bg-accent text-smoky p-4 font-serif font-bold flex justify-between items-center">
                 <div class="flex items-center space-x-2">
-                    <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
-                    <span>AI Concierge</span>
+                    <span class="w-2 h-2 bg-smoky rounded-full animate-pulse"></span>
+                    <span class="text-sm">AI Concierge</span>
                 </div>
-                <button onclick="toggleChat()" class="text-smoky hover:text-black"><i class="fas fa-times"></i></button>
+                <button onclick="toggleChat()" class="text-smoky hover:text-white text-lg"><i class="fas fa-times"></i></button>
             </div>
             <div id="chat-messages">
-                <div class="msg-bot">Welcome to IceBug. How may I assist your engineering today?</div>
+                <div class="msg-bot">Welcome. I am your 24/7 AI concierge. How can I assist you with your fitness journey today?</div>
             </div>
-            <div id="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Ask about plans, diet, location..." onkeypress="handleChatPress(event)">
-                <button id="chat-btn" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+            <div id="chat-input-area" class="flex p-3 bg-[#050505] border-t border-olive/50">
+                <input type="text" id="chat-input" placeholder="Type a message..." class="flex-grow bg-transparent outline-none text-floral text-sm" onkeypress="handleChatPress(event)">
+                <button id="chat-btn" onclick="sendMsg()" class="text-accent text-xl ml-3"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
-        <button onclick="toggleChat()" id="chat-toggle-btn" class="bg-bone text-smoky w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl hover:scale-110 transition-transform mt-4 ml-auto">
+        <button onclick="toggleChat()" id="chat-toggle-btn" class="bg-accent text-smoky w-14 h-14 md:w-16 md:h-16 rounded-full shadow-[0_10px_20px_rgba(194,166,122,0.4)] flex items-center justify-center text-2xl hover:scale-105 transition-transform ml-auto">
             <i class="fas fa-comment-dots"></i>
         </button>
     </div>
@@ -287,14 +389,14 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Enhanced Preloader
+        // Preloader Multi-Language
         const words = ["Hello", "नमस्ते", "Bonjour", "Hola", "Ciao", "مرحبا", "Welcome", "IceBug"];
         let i = 0;
         document.getElementById('hello').innerText = words[i];
         const wordInt = setInterval(() => { 
             i = (i + 1) % words.length;
             document.getElementById('hello').innerText = words[i]; 
-        }, 450);
+        }, 350);
 
         window.addEventListener('load', () => {
             setTimeout(() => { 
@@ -302,64 +404,63 @@
             }, 3000); 
         });
 
-        // Interactive 3D Hero Element
-        const logo = document.getElementById('hero-3d-logo');
-        document.addEventListener('mousemove', (e) => {
-            // Custom Cursor
-            gsap.to("#c-dot", { x: e.clientX, y: e.clientY, duration: 0 });
-            gsap.to("#c-ring", { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
-            
-            // 3D Text Rotation Math
-            if(logo) {
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-                logo.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+        // --- THE 3D DUMBBELL LOGIC (PC + MOBILE) ---
+        const dumbbell = document.getElementById('floating-dumbbell');
+        const scene = document.querySelector('.scene-3d');
+        
+        // PC Mouse Interaction
+        scene.addEventListener('mousemove', (e) => {
+            if(window.innerWidth > 768) { // Only on desktop
+                const rect = scene.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;
+                
+                // Calculate rotation based on cursor position relative to center
+                const xRot = ((y - rect.height / 2) / rect.height) * -60; // Max 30 deg up/down
+                const yRot = ((x - rect.width / 2) / rect.width) * 60;  // Max 30 deg left/right
+                
+                dumbbell.style.transform = `rotateX(${xRot}deg) rotateY(${yRot}deg) translateZ(50px)`;
             }
         });
+        scene.addEventListener('mouseleave', () => {
+            dumbbell.style.transform = `rotateX(0deg) rotateY(0deg) translateZ(0px)`;
+        });
 
-        // Navbar Scroll Logic
+        // Mobile Scroll Interaction (Gyroscopic fake)
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) document.getElementById('navbar').classList.add('nav-scrolled', 'bg-smoky/95');
-            else document.getElementById('navbar').classList.remove('nav-scrolled', 'bg-smoky/95');
-        });
-
-        // GSAP Scroll Reveals
-        gsap.utils.toArray(".reveal").forEach(el => {
-            gsap.to(el, { scrollTrigger: { trigger: el, start: "top 85%" }, opacity: 1, y: 0, duration: 1.5, ease: "power4.out" });
-        });
-
-        // MODULE 3: Workout Builder Function
-        function buildWorkout(type) {
-            const title = document.getElementById('wk-title');
-            const table = document.getElementById('wk-table');
-            
-            if(type === 'bulk') {
-                title.innerText = "Hypertrophy Phase";
-                table.innerHTML = `
-                    <tr class="border-b border-olive/10"><td class="py-3">Mon</td><td class="text-floral">Push (Chest/Triceps)</td><td>4 Sets x 8-10 Reps</td></tr>
-                    <tr class="border-b border-olive/10"><td class="py-3">Tue</td><td class="text-floral">Pull (Back/Biceps)</td><td>4 Sets x 8-10 Reps</td></tr>
-                    <tr class="border-b border-olive/10"><td class="py-3">Wed</td><td class="text-floral opacity-50">Active Recovery</td><td>Yoga / Mobility</td></tr>
-                    <tr><td class="py-3">Thu</td><td class="text-floral">Lower Body Power</td><td>5 Sets x 5 Reps</td></tr>
-                `;
-            } else {
-                title.innerText = "Shredding Protocol";
-                table.innerHTML = `
-                    <tr class="border-b border-olive/10"><td class="py-3">Mon</td><td class="text-floral">HIIT + Core</td><td>45 Min Total</td></tr>
-                    <tr class="border-b border-olive/10"><td class="py-3">Tue</td><td class="text-floral">Upper Body Circuit</td><td>5 Rounds x 15 Reps</td></tr>
-                    <tr class="border-b border-olive/10"><td class="py-3">Wed</td><td class="text-floral opacity-50">LISS Cardio</td><td>40 Min Zone 2</td></tr>
-                    <tr><td class="py-3">Thu</td><td class="text-floral">Lower Body Endurance</td><td>4 Sets x 15-20 Reps</td></tr>
-                `;
+            if(window.innerWidth <= 768 && dumbbell) {
+                const scrolled = window.scrollY;
+                // Rotate based on scroll position for mobile users
+                dumbbell.style.transform = `rotateY(${scrolled * 0.2}deg) rotateX(${scrolled * 0.1}deg)`;
             }
-        }
+        });
 
-        // MODULE 4: E-Commerce Modal Functions
-        function openCheckout(item, price) {
-            document.getElementById('checkout-item').innerText = item;
-            document.getElementById('checkout-price').innerText = price;
-            document.getElementById('checkout-modal').style.display = 'flex';
-        }
-        function closeCheckout() {
-            document.getElementById('checkout-modal').style.display = 'none';
+        // Navbar Styling on Scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) document.getElementById('navbar').classList.add('bg-[#050505]/95', 'border-b', 'border-olive/30');
+            else document.getElementById('navbar').classList.remove('bg-[#050505]/95', 'border-b', 'border-olive/30');
+        });
+
+        // Scroll Reveals
+        gsap.utils.toArray(".reveal").forEach(el => {
+            gsap.to(el, { scrollTrigger: { trigger: el, start: "top 85%" }, opacity: 1, y: 0, duration: 1.2, ease: "power3.out" });
+        });
+
+        // Health Tracker Logic
+        function updateHealth() {
+            const w = document.getElementById('weight-slider').value;
+            const h = document.getElementById('height-slider').value;
+            
+            document.getElementById('weight-val').innerText = w + ' kg';
+            document.getElementById('height-val').innerText = h + ' cm';
+            
+            const bmi = (w / Math.pow(h/100, 2)).toFixed(1);
+            document.getElementById('bmi-val').innerText = bmi;
+            
+            const status = document.getElementById('bmi-status');
+            if(bmi < 18.5) { status.innerText = "Underweight"; status.style.color = "#c2a67a"; }
+            else if(bmi >= 18.5 && bmi < 25) { status.innerText = "Optimal Range"; status.style.color = "#4ade80"; }
+            else { status.innerText = "Bulking Phase"; status.style.color = "#f87171"; }
         }
 
         // Chatbot Functions
@@ -368,43 +469,31 @@
             if (win.style.display === "flex") { win.style.display = "none"; btn.style.display = "flex"; } 
             else { win.style.display = "flex"; btn.style.display = "none"; }
         }
-        
         function handleChatPress(e) { if (e.key === 'Enter') sendMsg(); }
-        
         async function sendMsg() {
-            const input = document.getElementById('chat-input'); 
-            const text = input.value.trim();
+            const input = document.getElementById('chat-input'); const text = input.value.trim();
             if (!text) return;
             
             const chatBox = document.getElementById('chat-messages');
             chatBox.innerHTML += `<div class="msg-user">${text}</div>`;
-            input.value = ''; 
-            chatBox.scrollTop = chatBox.scrollHeight;
+            input.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
 
             const typingId = "typing-" + Date.now();
-            chatBox.innerHTML += `<div id="${typingId}" class="msg-bot italic text-bone/50">Analyzing...</div>`;
+            chatBox.innerHTML += `<div id="${typingId}" class="msg-bot italic text-bone/50 text-xs">Analyzing biometrics...</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
 
             try {
                 const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text })
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text })
                 });
-                
                 const data = await response.json();
                 document.getElementById(typingId).remove();
-                
-                if (data.reply) {
-                    chatBox.innerHTML += `<div class="msg-bot">${data.reply}</div>`;
-                } else {
-                    chatBox.innerHTML += `<div class="msg-bot">Network anomaly. Please try again.</div>`;
-                }
+                if (data.reply) chatBox.innerHTML += `<div class="msg-bot">${data.reply}</div>`;
+                else chatBox.innerHTML += `<div class="msg-bot">Network anomaly. Retrying...</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
-
             } catch (error) {
                 document.getElementById(typingId).remove();
-                chatBox.innerHTML += `<div class="msg-bot">Connection error. Please try again later.</div>`;
+                chatBox.innerHTML += `<div class="msg-bot">Connection secured. AI temporarily offline.</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
         }

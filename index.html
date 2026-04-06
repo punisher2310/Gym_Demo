@@ -525,22 +525,11 @@
         <div class="text-center border-t border-white/5 pt-12">
             <p class="text-[10px] text-white/20 uppercase tracking-[0.5em] font-bold">© 2026 IceBug Estate • Built for the 1%</p>
         </div>
-    </footer>
-
-    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" 
-       class="fixed bottom-8 right-8 z-[999] bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300">
-        <i class="fab fa-whatsapp text-3xl"></i>
-        <span class="absolute -top-1 -right-1 flex h-4 w-4">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-4 w-4 bg-gold"></span>
-        </span>
-    </a>
-
     <script>
-        // A. Plugins Register
+        // 1. Plugins Register
         gsap.registerPlugin(ScrollTrigger);
 
-        // B. Loader Kill Logic
+        // 2. Loader Kill Logic (Fail-Safe)
         function revealIceBug() {
             const loader = document.getElementById('loader');
             if (loader && loader.style.display !== 'none') {
@@ -560,12 +549,10 @@
         window.addEventListener('load', revealIceBug);
         setTimeout(revealIceBug, 3500); 
 
-        // C. All Animations in One Function
+        // 3. All Animations
         function startMainAnimations() {
-            // Hero Reveal
             gsap.from(".hero-fade", { y: 100, opacity: 0, stagger: 0.2, duration: 1.5, ease: "power4.out" });
             
-            // Scroll Reveal
             gsap.utils.toArray(".gsap-reveal").forEach(el => {
                 gsap.from(el, { 
                     scrollTrigger: { trigger: el, start: "top 85%" }, 
@@ -573,15 +560,14 @@
                 });
             });
 
-            // Lenis Smooth Scroll
             try {
                 const lenis = new Lenis();
                 function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
                 requestAnimationFrame(raf);
-            } catch(e) { console.log("Lenis initialization skipped."); }
+            } catch(e) { console.log("Lenis skipped."); }
         }
 
-        // D. Counters Logic
+        // 4. Counters Logic
         const counters = document.querySelectorAll('.counter');
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -602,16 +588,24 @@
         }, { threshold: 0.5 });
         counters.forEach(c => counterObserver.observe(c));
 
-        // E. Form & Menu Logic
-        function openMenu() { document.getElementById('menu-overlay').classList.remove('hidden'); gsap.to("#menu-overlay", { opacity: 1, duration: 0.5 }); }
-        function closeMenu() { gsap.to("#menu-overlay", { opacity: 0, duration: 0.4, onComplete: () => document.getElementById('menu-overlay').classList.add('hidden') }); }
+        // 5. Menu & Form Logic
+        function openMenu() { 
+            const menu = document.getElementById('menu-overlay');
+            if(menu) { menu.classList.remove('hidden'); gsap.to(menu, { opacity: 1, duration: 0.5 }); }
+        }
+        function closeMenu() { 
+            const menu = document.getElementById('menu-overlay');
+            if(menu) { gsap.to(menu, { opacity: 0, duration: 0.4, onComplete: () => menu.classList.add('hidden') }); }
+        }
 
+        // Form Submit Fix
         document.querySelector('form')?.addEventListener('submit', function(e) {
+            e.preventDefault(); // <-- Ye line sabse zaroori hai refresh rokne ke liye
             const name = this.querySelector('input[type="text"]')?.value;
             const phone = this.querySelector('input[type="tel"]')?.value;
             if(name && phone) {
                 const waUrl = `https://wa.me/91XXXXXXXXXX?text=Hello! I am *${name}*. I applied via IceBug website. My Contact: ${phone}`;
-                setTimeout(() => { window.open(waUrl, '_blank'); }, 500);
+                window.open(waUrl, '_blank');
             }
         });
 

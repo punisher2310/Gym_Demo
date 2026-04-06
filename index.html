@@ -527,46 +527,90 @@
     </footer>
 
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-        const lenis = new Lenis();
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    // 1. Plugins Register
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 2. Initialize Lenis (Safely)
+    let lenis;
+    try {
+        lenis = new Lenis();
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
+    } catch (e) {
+        console.log("Lenis error, but site will still work.");
+    }
 
-        // Entrance & Reveal Animations
-        window.addEventListener('load', () => {
-            gsap.to("#loader", { opacity: 0, duration: 1, ease: "power4.inOut", delay: 1.5, onComplete: () => document.getElementById('loader').style.display = 'none' });
-            gsap.from(".hero-fade", { y: 100, opacity: 0, stagger: 0.2, duration: 1.5, ease: "power4.out", delay: 1.8 });
-        });
-
-        gsap.utils.toArray(".gsap-reveal").forEach(el => {
-            gsap.from(el, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 60, opacity: 0, duration: 1.2, ease: "power3.out" });
-        });
-
-        // Live Counter Logic
-        const counters = document.querySelectorAll('.counter');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = +entry.target.getAttribute('data-target');
-                    const update = () => {
-                        const current = +entry.target.innerText.replace(/,/g, '');
-                        const speed = target / 100;
-                        if (current < target) {
-                            entry.target.innerText = Math.ceil(current + speed).toLocaleString();
-                            setTimeout(update, 25);
-                        } else { entry.target.innerText = target.toLocaleString(); }
-                    };
-                    update();
-                    counterObserver.unobserve(entry.target);
+    // 3. THE REVEAL FUNCTION
+    function revealSite() {
+        const loader = document.getElementById('loader');
+        if (loader && loader.style.display !== 'none') {
+            // Parda hatao
+            gsap.to("#loader", { 
+                opacity: 0, 
+                duration: 1, 
+                ease: "power4.inOut", 
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    // Hero animations shuru karo
+                    gsap.from(".hero-fade", { 
+                        y: 100, 
+                        opacity: 0, 
+                        stagger: 0.2, 
+                        duration: 1.5, 
+                        ease: "power4.out" 
+                    });
                 }
             });
-        }, { threshold: 0.5 });
-        counters.forEach(c => counterObserver.observe(c));
+        }
+    }
 
-        // Menu Logic
-        function openMenu() { document.getElementById('menu-overlay').classList.remove('hidden'); gsap.to("#menu-overlay", { opacity: 1, duration: 0.5 }); }
-        function closeMenu() { gsap.to("#menu-overlay", { opacity: 0, duration: 0.4, onComplete: () => document.getElementById('menu-overlay').classList.add('hidden') }); }
-    </script>
+    // A: Agar site jaldi load ho jaye (Normal way)
+    window.addEventListener('load', revealSite);
+
+    // B: SAFETY NET (Agar koi image stuck ho jaye, toh 3 sec baad reveal kar do)
+    setTimeout(revealSite, 3000); 
+
+    // 4. Scroll Reveal Animations
+    gsap.utils.toArray(".gsap-reveal").forEach(el => {
+        gsap.from(el, { 
+            scrollTrigger: { 
+                trigger: el, 
+                start: "top 85%" 
+            }, 
+            y: 60, 
+            opacity: 0, 
+            duration: 1.2, 
+            ease: "power3.out" 
+        });
+    });
+
+    // 5. Counters, Menu etc. (Aapka baki code waise hi rahega)
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = +entry.target.getAttribute('data-target');
+                const update = () => {
+                    const current = +entry.target.innerText.replace(/,/g, '');
+                    const speed = target / 100;
+                    if (current < target) {
+                        entry.target.innerText = Math.ceil(current + speed).toLocaleString();
+                        setTimeout(update, 25);
+                    } else { entry.target.innerText = target.toLocaleString(); }
+                };
+                update();
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    counters.forEach(c => counterObserver.observe(c));
+
+    function openMenu() { document.getElementById('menu-overlay').classList.remove('hidden'); gsap.to("#menu-overlay", { opacity: 1, duration: 0.5 }); }
+    function closeMenu() { gsap.to("#menu-overlay", { opacity: 0, duration: 0.4, onComplete: () => document.getElementById('menu-overlay').classList.add('hidden') }); }
+</script>
 <a href="https://wa.me/91XXXXXXXXXX" target="_blank" 
    class="fixed bottom-8 right-8 z-[999] bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(37,211,102,0.3)] hover:scale-110 transition-transform duration-300">
     <i class="fab fa-whatsapp text-3xl"></i>

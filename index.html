@@ -59,11 +59,40 @@
         .img-zoom { overflow: hidden; }
         .img-zoom img { transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .img-zoom:hover img { transform: scale(1.08); }
-    </style>
-</head>
+    /* 1. Subtle Film Grain Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3%3FfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3%3F/filter%3%3F%3Frect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3F/svg%3%3F");
+            opacity: 0.03; /* Very faint noise */
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* 2. Custom Magnetic Cursor */
+        #custom-cursor {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: #D4AF37;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2000;
+            transition: width 0.3s, height 0.3s, background 0.3s, transform 0.1s ease-out;
+            box-shadow: 0 0 15px rgba(212,175,55,0.5);
+            transform: translate(-50%, -50%);
+        }
+
+        /* 3. Global Spacing Hilton Style (Bigger whitespace) */
+        section { padding-top: 140px; padding-bottom: 140px; }
 <body class="antialiased">
 
-    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-2xl z-[100] hover:scale-110 transition"><i class="fab fa-whatsapp"></i></a>
+    <div id="custom-cursor"></div>
+
+    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-2xl z-[100] hover:scale-110 transition">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <div id="menu-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[60] hidden opacity-0 transition-opacity duration-300" onclick="closeMenu()"></div>
 
@@ -72,6 +101,7 @@
             <div class="font-display font-bold text-2xl tracking-tighter text-gold-prime">ICEBUG<span class="text-white">.</span></div>
             <button onclick="closeMenu()" class="text-off-white text-4xl hover:text-gold-prime transition"><i class="fas fa-times"></i></button>
         </div>
+        
         <div class="flex flex-col gap-8 text-4xl md:text-5xl font-display font-bold">
             <a href="#services" onclick="closeMenu()" class="menu-link text-off-white hover:text-gold-prime transition w-fit">Services</a>
             <a href="#gallery" onclick="closeMenu()" class="menu-link text-off-white hover:text-gold-prime transition w-fit">The Estate</a>
@@ -79,12 +109,36 @@
             <a href="#fees" onclick="closeMenu()" class="menu-link text-off-white hover:text-gold-prime transition w-fit">Memberships</a>
             <a href="#contact" onclick="closeMenu()" class="menu-link text-off-white hover:text-gold-prime transition w-fit">Contact</a>
         </div>
+
         <div class="mt-auto pt-10 border-t border-gold-prime/10">
             <p class="text-gold-prime text-sm uppercase tracking-widest mb-4">Inquiries</p>
             <a href="mailto:icebug.co@gmail.com" class="text-xl text-off-white/70 hover:text-white">icebug.co@gmail.com</a>
         </div>
-    </div>
-
+    </div> <section id="science" class="py-32 px-6 md:px-12 bg-black-surface border-y border-gold-prime/10">
+        <div class="max-w-7xl mx-auto gsap-up">
+            <div class="max-w-3xl mb-16">
+                <h2 class="font-display text-4xl md:text-7xl font-bold text-off-white leading-[0.9]">THE <span class="text-gold-prime">SCIENCE</span> <br> OF STRENGTH.</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="lux-card p-10">
+                    <div class="text-gold-prime text-5xl font-display font-light mb-6">01/</div>
+                    <h3 class="text-xl font-bold text-off-white uppercase mb-3">Optimize Movement</h3>
+                    <p class="text-sm text-off-white/50 leading-relaxed">Protocols engineered around personal biomechanics to enhance kinetic chain efficiency. Reduced injury risk, optimized output.</p>
+                </div>
+                <div class="lux-card p-10" style="transition-delay: 0.1s;">
+                    <div class="text-gold-prime text-5xl font-display font-light mb-6">02/</div>
+                    <h3 class="text-xl font-bold text-off-white uppercase mb-3">Metabolic Tracking</h3>
+                    <p class="text-sm text-off-white/50 leading-relaxed">Real-time data analysis of energy expenditure and performance metrics. We don't guess; we quantify. Data-driven conditioning.</p>
+                </div>
+                <div class="lux-card p-10" style="transition-delay: 0.2s;">
+                    <div class="text-gold-prime text-5xl font-display font-light mb-6">03/</div>
+                    <h3 class="text-xl font-bold text-off-white uppercase mb-3">Recovery Science</h3>
+                    <p class="text-sm text-off-white/50 leading-relaxed">Integrating post-training infrared therapy, HEPA air quality, and individualized nutritional strategies for maximum regeneration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
     <nav class="fixed top-0 w-full z-50 lux-nav px-6 md:px-12 py-6 flex items-center justify-between">
         <div class="flex items-center gap-8">
             <button onclick="openMenu()" class="text-gold-prime text-2xl hover:text-white transition flex items-center gap-3">
@@ -415,6 +469,79 @@
                 { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1, ease: "power3.out" }
             );
         });
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <script>
+        // 1. Menu Logic
+        const sideMenu = document.getElementById('side-menu');
+        const overlay = document.getElementById('menu-overlay');
+
+        function openMenu() {
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                sideMenu.style.transform = 'translateX(0)';
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            sideMenu.style.transform = 'translateX(-100%)';
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 500);
+        }
+
+        // 2. Swiper Initialization
+        new Swiper('.testimonialSwiper', {
+            loop: true,
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            spaceBetween: 30,
+            slidesPerView: 1
+        });
+
+        // 3. GSAP Reveals
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray(".gsap-up").forEach(el => {
+            gsap.fromTo(el, 
+                { y: 50, opacity: 0 }, 
+                { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1, ease: "power3.out" }
+            );
+        });
+
+        // 4. Custom & Magnetic Cursor Logic
+        const cursor = document.getElementById('custom-cursor');
+        const magneticElements = document.querySelectorAll('a, button, .lux-card, select, .menu-link');
+
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1,
+                ease: 'power2.out'
+            });
+        });
+
+        magneticElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '70px';
+                cursor.style.height = '70px';
+                cursor.style.background = 'rgba(212, 175, 55, 0.1)';
+                cursor.style.border = '1px solid #D4AF37';
+                cursor.style.backdropFilter = 'blur(4px)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '15px';
+                cursor.style.height = '15px';
+                cursor.style.background = '#D4AF37';
+                cursor.style.border = 'none';
+                cursor.style.backdropFilter = 'none';
+            });
+        });
     </script>
-</body>
+
+</body> 
 </html>

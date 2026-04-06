@@ -32,60 +32,144 @@
     </script>
     
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-        body { background-color: #050505; color: #F5F5F0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+    /* 1. Base & Hilton-Style Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+    
+    body { 
+        background-color: #050505; 
+        color: #F5F5F0; 
+        font-family: 'Inter', sans-serif; 
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
 
-        /* Hilton-Style Glass */
-        .lux-nav { background: rgba(5, 5, 5, 0.95); border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
-        .lux-card { background: #0a0a0a; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.4s ease; }
-        .lux-card:hover { border-color: #D4AF37; transform: translateY(-5px); }
+    /* 2. Selection Color (Text highlight gold hota hai premium sites par) */
+    ::selection { background-color: #D4AF37; color: #050505; }
 
-        /* Sidebar Menu Animation */
-        #side-menu { transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); }
-        .menu-link { position: relative; overflow: hidden; }
-        .menu-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0%; height: 1px; background: #D4AF37; transition: width 0.3s; }
-        .menu-link:hover::after { width: 100%; }
+    /* 3. Custom Gold Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
 
-        /* Infinite Review Marquee */
-        .marquee { overflow: hidden; white-space: nowrap; background: #000; padding: 20px 0; border-y: 1px solid rgba(212,175,55,0.1); }
-        .marquee-content { display: inline-flex; animation: scroll 25s linear infinite; }
-        .review-card { background: #0a0a0a; border: 1px solid rgba(212,175,55,0.2); padding: 12px 24px; border-radius: 100px; margin: 0 15px; font-size: 14px; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    /* 4. Subtle Film Grain Overlay (Luxury Matte Finish) */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3%3FfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3%3F/filter%3%3F%3Frect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3F/svg%3%3F");
+        opacity: 0.03;
+        pointer-events: none;
+        z-index: 1000;
+    }
 
-        .img-zoom { overflow: hidden; }
-        .img-zoom img { transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .img-zoom:hover img { transform: scale(1.08); }
-    /* 1. Subtle Film Grain Overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3%3FfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3%3F/filter%3%3F%3Frect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3F/svg%3%3F");
-            opacity: 0.03; /* Very faint noise */
-            pointer-events: none;
-            z-index: 1000;
-        }
+    /* 5. Custom Magnetic Cursor Styling */
+    #custom-cursor {
+        position: fixed;
+        width: 15px;
+        height: 15px;
+        background: #D4AF37;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s, transform 0.1s ease-out;
+        box-shadow: 0 0 15px rgba(212,175,55,0.5);
+        transform: translate(-50%, -50%);
+    }
 
-        /* 2. Custom Magnetic Cursor */
-        #custom-cursor {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background: #D4AF37;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 2000;
-            transition: width 0.3s, height 0.3s, background 0.3s, transform 0.1s ease-out;
-            box-shadow: 0 0 15px rgba(212,175,55,0.5);
-            transform: translate(-50%, -50%);
-        }
+    /* 6. Hilton Spacing & Navigation */
+    section { padding-top: 140px; padding-bottom: 140px; }
 
-        /* 3. Global Spacing Hilton Style (Bigger whitespace) */
-        section { padding-top: 140px; padding-bottom: 140px; }
+    .lux-nav { 
+        background: rgba(5, 5, 5, 0.95); 
+        border-bottom: 1px solid rgba(212, 175, 55, 0.15); 
+        backdrop-filter: blur(20px);
+        transition: all 0.4s ease;
+    }
+
+    /* 7. Elite Cards Styling */
+    .lux-card { 
+        background: #0a0a0a; 
+        border: 1px solid rgba(212, 175, 55, 0.1); 
+        transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        border-radius: 4px; /* Hilton uses sharp/slight radius for professional look */
+    }
+    .lux-card:hover { 
+        border-color: #D4AF37; 
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    /* 8. Off-Canvas Menu Logic */
+    #side-menu { 
+        transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1); 
+    }
+    .menu-link { 
+        position: relative; 
+        width: fit-content;
+        transition: color 0.3s;
+    }
+    .menu-link::after { 
+        content: ''; 
+        position: absolute; 
+        bottom: -5px; 
+        left: 0; 
+        width: 0%; 
+        height: 2px; 
+        background: #D4AF37; 
+        transition: width 0.4s; 
+    }
+    .menu-link:hover::after { width: 100%; }
+
+    /* 9. Infinite Marquee */
+    .marquee { 
+        overflow: hidden; 
+        white-space: nowrap; 
+        background: #000; 
+        padding: 30px 0; 
+        border-top: 1px solid rgba(212,175,55,0.1);
+        border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .marquee-content { 
+        display: inline-flex; 
+        animation: scrollMarquee 35s linear infinite; 
+    }
+    .review-card { 
+        background: #0a0a0a; 
+        border: 1px solid rgba(212,175,55,0.2); 
+        padding: 16px 32px; 
+        border-radius: 100px; 
+        margin: 0 25px; 
+        font-size: 15px; 
+        color: #F5F5F0;
+        letter-spacing: 0.05em;
+    }
+    @keyframes scrollMarquee { 
+        0% { transform: translateX(0); } 
+        100% { transform: translateX(-50%); } 
+    }
+
+    /* 10. Zoom & Reveal Utilities */
+    .img-zoom { overflow: hidden; }
+    .img-zoom img { transition: transform 1.5s cubic-bezier(0.165, 0.84, 0.44, 1); }
+    .img-zoom:hover img { transform: scale(1.1); }
+
+    /* GSAP reveal initial state */
+    .gsap-up { opacity: 0; }
+
+    /* Hilton Form Inputs */
+    .lux-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        color: #F5F5F0;
+        padding: 20px 0;
+        font-size: 18px;
+        outline: none;
+        transition: border-color 0.4s;
+    }
+    .lux-input:focus { border-bottom-color: #D4AF37; }
+</style>
 <body class="antialiased">
 
     <div id="custom-cursor"></div>

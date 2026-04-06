@@ -169,42 +169,88 @@
         transition: border-color 0.4s;
     }
     .lux-input:focus { border-bottom-color: #D4AF37; }
-        /* 3D Flip Card Styles */
-.results-grid { perspective: 1500px; }
-.flip-card { 
-    height: 500px; cursor: pointer; position: relative; 
-    transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.flip-card:hover { transform: rotateY(180deg); }
+        /* 11. 3D Flip Card System (Hilton Style) */
+        .results-grid { 
+            perspective: 1500px; 
+            display: grid !important; 
+            grid-template-columns: repeat(1, minmax(0, 1fr)); /* Mobile: 1 Column */
+            gap: 2rem;
+        }
 
-.flip-front, .flip-back {
-    position: absolute; width: 100%; height: 100%; 
-    backface-visibility: hidden; border-radius: 4px; overflow: hidden;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-}
-.flip-back { transform: rotateY(180deg); background: #0a0a0a; }
+        /* Desktop: 4 Columns like Hilton Fitness */
+        @media (min-width: 768px) {
+            .results-grid { 
+                grid-template-columns: repeat(4, minmax(0, 1fr)); 
+            }
+        }
 
-/* Review Marquee (New Elite Version) */
-.review-marquee { 
-    overflow: hidden; width: 100%; background: #000; padding: 40px 0;
-    border-top: 1px solid rgba(212,175,55,0.1);
-}
-.marquee-track { 
-    display: flex; gap: 40px; width: max-content; 
-    animation: marqueeScroll 40s linear infinite; 
-}
-.marquee-track:hover { animation-play-state: paused; }
+        .flip-card { 
+            height: 500px; 
+            cursor: pointer; 
+            position: relative; 
+            transform-style: preserve-3d; 
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.review-item {
-    background: #0a0a0a; border: 1px solid rgba(212,175,55,0.1); 
-    padding: 30px; border-radius: 2px; width: 350px;
-}
+        .flip-card:hover { transform: rotateY(180deg); }
 
-@keyframes marqueeScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-</style>
+        .flip-front, .flip-back {
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            backface-visibility: hidden; 
+            border-radius: 4px; 
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .flip-back { 
+            transform: rotateY(180deg); 
+            background: #0a0a0a; 
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 12. Review Marquee (Elite Speed) */
+        .review-marquee { 
+            overflow: hidden; 
+            width: 100%; 
+            background: #000; 
+            padding: 60px 0;
+            border-top: 1px solid rgba(212,175,55,0.1);
+        }
+
+        .marquee-track { 
+            display: flex; 
+            gap: 40px; 
+            width: max-content; 
+            animation: marqueeScroll 40s linear infinite; 
+        }
+
+        .marquee-track:hover { animation-play-state: paused; }
+
+        .review-item {
+            background: #0a0a0a; 
+            border: 1px solid rgba(212,175,55,0.1); 
+            padding: 30px; 
+            border-radius: 2px; 
+            width: 350px;
+        }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 13. GSAP Global Reveal Fix */
+        .gsap-up { 
+            opacity: 1 !important; /* Visible by default to prevent blank screen */
+            transform: translateY(0);
+        }
+    </style>
 <body class="antialiased">
 
     <div id="custom-cursor"></div>
@@ -290,20 +336,7 @@
             <a href="#contact" class="border border-gold-prime text-gold-prime px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-gold-prime hover:text-black-pure transition-all text-sm shadow-[0_0_40px_rgba(212,175,55,0.2)]">Book Your Consultation</a>
         </div>
     </header>
-
-    <section class="marquee">
-        <div class="marquee-content">
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "Best machinery in Kanpur. - Aman S."</div>
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "Clean, professional & elite. - Rahul K."</div>
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "Result oriented training. - Priya V."</div>
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "The best in Swaroop Nagar. - Vikram T."</div>
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "Best machinery in Kanpur. - Aman S."</div>
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "Clean, professional & elite. - Rahul K."</div>
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "Result oriented training. - Priya V."</div>
-            <div class="review-card"><span class="text-gold-prime mr-2">★★★★★</span> "The best in Swaroop Nagar. - Vikram T."</div>
-        </div>
-    </section>
-
+    
     <section id="services" class="py-32 px-6 md:px-12 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gsap-up">
             <div class="max-w-2xl">
@@ -535,33 +568,55 @@
         </div>
     </section>
 
-    <section id="contact" class="py-32 px-6 md:px-12 border-t border-gold-prime/10">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
-            <div class="gsap-up">
-                <h2 class="font-display text-4xl md:text-6xl font-bold text-off-white mb-6 uppercase">Begin Your <br><span class="text-gold-prime italic font-medium">Evolution.</span></h2>
-                <p class="text-off-white/40 text-lg mb-10">Lodge your query or claim your 1-day free trial. Our consultants will contact you within 2 hours.</p>
-                <form onsubmit="event.preventDefault(); alert('Success: Representative will call you shortly.');" class="space-y-6">
-                    <input type="text" placeholder="Full Name" class="lux-input" required>
-                    <input type="tel" placeholder="WhatsApp Number" class="lux-input" required>
-                    <select class="lux-input appearance-none">
-                        <option>Goal: Elite Physique</option>
-                        <option>Goal: Athletic Conditioning</option>
-                        <option>Goal: Longevity & Health</option>
-                    </select>
-                    <button type="submit" class="w-full bg-gold-prime text-black-pure py-5 font-bold uppercase tracking-widest hover:bg-off-white transition shadow-xl">Apply for Access</button>
-                </form>
+    <section id="contact" class="max-w-7xl mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-32 border-t border-gold-prime/10">
+    <div class="gsap-up">
+        <h2 class="font-display text-6xl md:text-9xl font-bold text-off-white leading-[0.8] uppercase tracking-tighter mb-16">
+            Evolve <br> <span class="text-gold-prime italic font-medium">Now.</span>
+        </h2>
+        <p class="text-off-white/40 text-xl mb-16 font-light leading-relaxed">
+            Existing patrons can lodge support tickets. <br>New applicants, apply for your private consultation below.
+        </p>
+        
+        <form onsubmit="event.preventDefault(); alert('Inquiry Sent: Our elite consultant will reach out via WhatsApp.');" class="space-y-12">
+            <div>
+                <input type="text" placeholder="Full Identity" class="lux-input" required>
             </div>
-            <div class="gsap-up lux-card p-10 md:p-16 border-gold-prime/20" id="query">
-                <h3 class="font-display text-3xl font-bold mb-4 text-off-white uppercase">Patron Support</h3>
-                <p class="text-off-white/50 mb-10 text-sm">Existing members can lodge grievances or requests here.</p>
-                <form onsubmit="event.preventDefault(); alert('Support ticket generated.');" class="space-y-6">
-                    <input type="text" placeholder="Membership ID" class="lux-input" required>
-                    <textarea placeholder="Describe your request..." rows="4" class="lux-input resize-none" required></textarea>
-                    <button type="submit" class="w-full border border-gold-prime text-gold-prime py-5 font-bold uppercase tracking-widest hover:bg-gold-prime hover:text-black-pure transition">Submit Ticket</button>
-                </form>
+            <div>
+                <input type="tel" placeholder="WhatsApp Connectivity" class="lux-input" required>
             </div>
-        </div>
-    </section>
+            <div class="relative">
+                <select class="lux-input appearance-none cursor-pointer">
+                    <option disabled selected>Target Protocol</option>
+                    <option>Elite Physique Architecture</option>
+                    <option>Athletic Conditioning</option>
+                    <option>Longevity & Metabolic Health</option>
+                </select>
+                <i class="fas fa-chevron-down absolute right-0 bottom-6 text-gold-prime/50 text-xs pointer-events-none"></i>
+            </div>
+            <button type="submit" class="bg-gold-prime text-black-pure px-16 py-6 font-bold uppercase tracking-[0.5em] text-[10px] hover:bg-off-white transition shadow-[0_20px_50px_rgba(212,175,55,0.2)]">
+                Apply for Access
+            </button>
+        </form>
+    </div>
+
+    <div class="gsap-up bg-black-surface p-12 md:p-20 border border-gold-prime/10 h-fit self-center shadow-2xl" id="query">
+        <h3 class="font-display text-3xl font-bold mb-6 text-off-white uppercase tracking-widest">Patron Support</h3>
+        <p class="text-off-white/40 mb-12 text-sm leading-relaxed">
+            For existing estate members only. Lodge your logistical requirements or grievances here.
+        </p>
+        <form onsubmit="event.preventDefault(); alert('Ticket Generated: Identity Verified.');" class="space-y-12">
+            <div>
+                <input type="text" placeholder="Patron Membership ID" class="lux-input" required>
+            </div>
+            <div>
+                <textarea placeholder="Describe Requirement" rows="4" class="lux-input resize-none" required></textarea>
+            </div>
+            <button type="submit" class="text-gold-prime font-bold uppercase tracking-[0.4em] text-[10px] border border-gold-prime/30 px-10 py-5 hover:bg-gold-prime hover:text-black-pure transition w-full">
+                Submit Ticket
+            </button>
+        </form>
+    </div>
+</section>
 
     <footer class="pt-24 pb-12 bg-black-pure border-t border-gold-prime/20 px-6 md:px-12">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">

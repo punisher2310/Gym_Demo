@@ -169,6 +169,41 @@
         transition: border-color 0.4s;
     }
     .lux-input:focus { border-bottom-color: #D4AF37; }
+        /* 3D Flip Card Styles */
+.results-grid { perspective: 1500px; }
+.flip-card { 
+    height: 500px; cursor: pointer; position: relative; 
+    transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flip-card:hover { transform: rotateY(180deg); }
+
+.flip-front, .flip-back {
+    position: absolute; width: 100%; height: 100%; 
+    backface-visibility: hidden; border-radius: 4px; overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+.flip-back { transform: rotateY(180deg); background: #0a0a0a; }
+
+/* Review Marquee (New Elite Version) */
+.review-marquee { 
+    overflow: hidden; width: 100%; background: #000; padding: 40px 0;
+    border-top: 1px solid rgba(212,175,55,0.1);
+}
+.marquee-track { 
+    display: flex; gap: 40px; width: max-content; 
+    animation: marqueeScroll 40s linear infinite; 
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+.review-item {
+    background: #0a0a0a; border: 1px solid rgba(212,175,55,0.1); 
+    padding: 30px; border-radius: 2px; width: 350px;
+}
+
+@keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 </style>
 <body class="antialiased">
 
@@ -326,53 +361,117 @@
                 <h2 class="font-display text-5xl md:text-7xl font-bold text-off-white">RESULTS <br><span class="text-gold-prime italic font-medium">ENGINEERED.</span></h2>
             </div>
             
-            <div class="swiper testimonialSwiper pb-16">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="lux-card p-6 md:p-12 flex flex-col md:flex-row gap-12 items-center">
-                            <div class="w-full md:w-1/2 flex gap-4">
-                                <div class="w-1/2 relative overflow-hidden border border-white/10">
-                                    <span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] px-2 py-1 font-bold z-10">BEFORE</span>
-                                    <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover grayscale">
-                                </div>
-                                <div class="w-1/2 relative overflow-hidden border border-gold-prime/40">
-                                    <span class="absolute top-2 right-2 bg-green-600 text-white text-[10px] px-2 py-1 font-bold z-10">AFTER</span>
-                                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover">
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/2">
-                                <i class="fas fa-quote-left text-5xl text-gold-prime/30 mb-6"></i>
-                                <p class="text-xl md:text-2xl font-light text-off-white italic mb-8">"Coach Rahul corrected my biomechanics. I dropped 14kgs in 3 months. The standard at IceBug is just different."</p>
-                                <p class="font-bold text-gold-prime text-xl">Vivek T.</p>
-                                <p class="text-xs text-off-white/40 uppercase tracking-widest mt-1">Fat Loss Protocol</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="lux-card p-6 md:p-12 flex flex-col md:flex-row gap-12 items-center">
-                            <div class="w-full md:w-1/2 flex gap-4">
-                                <div class="w-1/2 relative overflow-hidden border border-white/10">
-                                    <span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] px-2 py-1 font-bold z-10">BEFORE</span>
-                                    <img src="https://images.unsplash.com/photo-1434596922112-19c563067271?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover grayscale">
-                                </div>
-                                <div class="w-1/2 relative overflow-hidden border border-gold-prime/40">
-                                    <span class="absolute top-2 right-2 bg-green-600 text-white text-[10px] px-2 py-1 font-bold z-10">AFTER</span>
-                                    <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=400" class="w-full aspect-[4/5] object-cover">
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/2">
-                                <i class="fas fa-quote-left text-5xl text-gold-prime/30 mb-6"></i>
-                                <p class="text-xl md:text-2xl font-light text-off-white italic mb-8">"The strength training zone is competition-grade. My back pain vanished and I've built serious muscle mass."</p>
-                                <p class="font-bold text-gold-prime text-xl">Rohan M.</p>
-                                <p class="text-xs text-off-white/40 uppercase tracking-widest mt-1">Hypertrophy Program</p>
-                            </div>
-                        </div>
-                    </div>
+            <section id="results" class="py-32 px-6 md:px-12 bg-black-pure border-y border-gold-prime/10">
+    <div class="max-w-7xl mx-auto mb-24 text-center gsap-up">
+        <h2 class="font-display text-5xl md:text-8xl font-bold text-off-white uppercase tracking-tighter">
+            THE <span class="text-gold-prime italic font-medium">EVOLUTION.</span>
+        </h2>
+        <p class="text-gold-prime/40 mt-6 uppercase tracking-[0.4em] text-[10px] font-bold">Interact to Reveal • Before & After</p>
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 results-grid mb-32">
+        
+        <div class="flip-card gsap-up">
+            <div class="flip-front">
+                <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=600" class="w-full h-full object-cover grayscale brightness-75">
+                <div class="absolute bottom-6 left-6 bg-red-600/90 backdrop-blur-md text-white text-[10px] px-3 py-1 font-bold tracking-widest">PRE-ENGINEERING</div>
+            </div>
+            <div class="flip-back flex flex-col justify-center p-8 text-center relative">
+                <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale-0">
+                <div class="relative z-10">
+                    <h4 class="text-gold-prime text-2xl font-bold mb-4 uppercase tracking-tighter">12 WEEKS</h4>
+                    <p class="text-off-white/80 text-sm italic leading-relaxed">"Dropped 14kg of pure fat. The metabolic protocol at IceBug is unmatched."</p>
+                    <p class="mt-4 text-xs font-bold text-gold-prime uppercase">— Vivek T.</p>
                 </div>
-                <div class="swiper-pagination mt-10"></div>
             </div>
         </div>
-    </section>
+
+        <div class="flip-card gsap-up" style="transition-delay: 0.1s;">
+            <div class="flip-front">
+                <img src="https://images.unsplash.com/photo-1434596922112-19c563067271?auto=format&fit=crop&w=600" class="w-full h-full object-cover grayscale brightness-75">
+                <div class="absolute bottom-6 left-6 bg-red-600/90 backdrop-blur-md text-white text-[10px] px-3 py-1 font-bold tracking-widest">PRE-ENGINEERING</div>
+            </div>
+            <div class="flip-back flex flex-col justify-center p-8 text-center relative">
+                <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale-0">
+                <div class="relative z-10">
+                    <h4 class="text-gold-prime text-2xl font-bold mb-4 uppercase tracking-tighter">6 MONTHS</h4>
+                    <p class="text-off-white/80 text-sm italic leading-relaxed">"Gained 8kg of lean mass. Science-based hypertrophy works when done right."</p>
+                    <p class="mt-4 text-xs font-bold text-gold-prime uppercase">— Rohan M.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card gsap-up" style="transition-delay: 0.2s;">
+            <div class="flip-front">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600" class="w-full h-full object-cover grayscale brightness-75">
+                <div class="absolute bottom-6 left-6 bg-red-600/90 backdrop-blur-md text-white text-[10px] px-3 py-1 font-bold tracking-widest">PRE-ENGINEERING</div>
+            </div>
+            <div class="flip-back flex flex-col justify-center p-8 text-center relative">
+                <img src="https://images.unsplash.com/photo-1574673001865-4d905336bd14?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale-0">
+                <div class="relative z-10">
+                    <h4 class="text-gold-prime text-2xl font-bold mb-4 uppercase tracking-tighter">8 MONTHS</h4>
+                    <p class="text-off-white/80 text-sm italic leading-relaxed">"Strength isn't just about weight; it's about biomechanics. Deadlift PR: 220kg."</p>
+                    <p class="mt-4 text-xs font-bold text-gold-prime uppercase">— Karan S.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card gsap-up" style="transition-delay: 0.3s;">
+            <div class="flip-front">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600" class="w-full h-full object-cover grayscale brightness-75">
+                <div class="absolute bottom-6 left-6 bg-red-600/90 backdrop-blur-md text-white text-[10px] px-3 py-1 font-bold tracking-widest">PRE-ENGINEERING</div>
+            </div>
+            <div class="flip-back flex flex-col justify-center p-8 text-center relative">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale-0">
+                <div class="relative z-10">
+                    <h4 class="text-gold-prime text-2xl font-bold mb-4 uppercase tracking-tighter">24 WEEKS</h4>
+                    <p class="text-off-white/80 text-sm italic leading-relaxed">"From lower back pain to 100kg squats. The recovery protocols saved me."</p>
+                    <p class="mt-4 text-xs font-bold text-gold-prime uppercase">— Sanya D.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="review-marquee py-12 border-t border-gold-prime/5">
+        <div class="marquee-track">
+            <div class="review-item">
+                <div class="text-gold-prime mb-4 flex gap-1">
+                    <i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i>
+                </div>
+                <p class="text-off-white/70 text-sm italic leading-relaxed">"Kanpur's most clinical environment. The machinery is competition-grade. Worth every rupee."</p>
+                <p class="mt-6 font-bold text-[10px] uppercase tracking-[0.3em] text-gold-prime">— Aman Singh</p>
+            </div>
+            <div class="review-item">
+                <div class="text-gold-prime mb-4 flex gap-1">
+                    <i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i>
+                </div>
+                <p class="text-off-white/70 text-sm italic leading-relaxed">"The PT protocols at IceBug are on par with international clubs. Absolutely elite."</p>
+                <p class="mt-6 font-bold text-[10px] uppercase tracking-[0.3em] text-gold-prime">— Rahul Kapoor</p>
+            </div>
+            <div class="review-item">
+                <div class="text-gold-prime mb-4 flex gap-1">
+                    <i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i>
+                </div>
+                <p class="text-off-white/70 text-sm italic leading-relaxed">"Unmatched hygiene. HEPA filters actually make a difference during peak cardio."</p>
+                <p class="mt-6 font-bold text-[10px] uppercase tracking-[0.3em] text-gold-prime">— Priya V.</p>
+            </div>
+            <div class="review-item">
+                <div class="text-gold-prime mb-4 flex gap-1">
+                    <i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i>
+                </div>
+                <p class="text-off-white/70 text-sm italic leading-relaxed">"The proprietor personally ensures every member reaches their targeted data points."</p>
+                <p class="mt-6 font-bold text-[10px] uppercase tracking-[0.3em] text-gold-prime">— Vikram T.</p>
+            </div>
+            <div class="review-item">
+                <div class="text-gold-prime mb-4 flex gap-1">
+                    <i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i>
+                </div>
+                <p class="text-off-white/70 text-sm italic leading-relaxed">"Finally a gym in Swaroop Nagar that doesn't feel crowded. Pure class."</p>
+                <p class="mt-6 font-bold text-[10px] uppercase tracking-[0.3em] text-gold-prime">— Sanya D.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
     <section id="fees" class="py-32 px-6 md:px-12 max-w-7xl mx-auto">
         <h2 class="font-display text-4xl font-bold mb-16 text-off-white uppercase">Membership Tiers</h2>

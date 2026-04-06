@@ -215,6 +215,7 @@
             </div>
         </div>
     </section>
+    
     <section id="science" class="bg-surface relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 md:px-20 relative z-10">
             <h2 class="font-display text-5xl md:text-8xl font-bold mb-32 uppercase tracking-tighter gsap-reveal">
@@ -526,125 +527,98 @@
         </div>
     </footer>
 
+    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" 
+       class="fixed bottom-8 right-8 z-[999] bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300">
+        <i class="fab fa-whatsapp text-3xl"></i>
+        <span class="absolute -top-1 -right-1 flex h-4 w-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-gold"></span>
+        </span>
+    </a>
+
     <script>
-    // 1. Plugins Register
-    gsap.registerPlugin(ScrollTrigger);
+        // A. Plugins Register
+        gsap.registerPlugin(ScrollTrigger);
 
-    // 2. Initialize Lenis (Safely)
-    let lenis;
-    try {
-        lenis = new Lenis();
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
+        // B. Loader Kill Logic
+        function revealIceBug() {
+            const loader = document.getElementById('loader');
+            if (loader && loader.style.display !== 'none') {
+                gsap.to("#loader", { 
+                    opacity: 0, 
+                    duration: 1, 
+                    ease: "power4.inOut", 
+                    onComplete: () => {
+                        loader.style.display = 'none';
+                        startMainAnimations();
+                    }
+                });
+            }
         }
-        requestAnimationFrame(raf);
-    } catch (e) {
-        console.log("Lenis error, but site will still work.");
-    }
 
-    // 3. THE REVEAL FUNCTION
-    function revealSite() {
-        const loader = document.getElementById('loader');
-        if (loader && loader.style.display !== 'none') {
-            // Parda hatao
-            gsap.to("#loader", { 
-                opacity: 0, 
-                duration: 1, 
-                ease: "power4.inOut", 
-                onComplete: () => {
-                    loader.style.display = 'none';
-                    // Hero animations shuru karo
-                    gsap.from(".hero-fade", { 
-                        y: 100, 
-                        opacity: 0, 
-                        stagger: 0.2, 
-                        duration: 1.5, 
-                        ease: "power4.out" 
-                    });
+        // Kab hatana hai? (Jab load ho ya 3.5 sec baad)
+        window.addEventListener('load', revealIceBug);
+        setTimeout(revealIceBug, 3500); 
+
+        // C. All Animations in One Function
+        function startMainAnimations() {
+            // Hero Reveal
+            gsap.from(".hero-fade", { y: 100, opacity: 0, stagger: 0.2, duration: 1.5, ease: "power4.out" });
+            
+            // Scroll Reveal
+            gsap.utils.toArray(".gsap-reveal").forEach(el => {
+                gsap.from(el, { 
+                    scrollTrigger: { trigger: el, start: "top 85%" }, 
+                    y: 60, opacity: 0, duration: 1.2, ease: "power3.out" 
+                });
+            });
+
+            // Lenis Smooth Scroll
+            try {
+                const lenis = new Lenis();
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+            } catch(e) { console.log("Lenis initialization skipped."); }
+        }
+
+        // D. Counters Logic
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = +entry.target.getAttribute('data-target');
+                    const update = () => {
+                        const current = +entry.target.innerText.replace(/,/g, '');
+                        const speed = target / 100;
+                        if (current < target) {
+                            entry.target.innerText = Math.ceil(current + speed).toLocaleString();
+                            setTimeout(update, 25);
+                        } else { entry.target.innerText = target.toLocaleString(); }
+                    };
+                    update();
+                    counterObserver.unobserve(entry.target);
                 }
             });
-        }
-    }
+        }, { threshold: 0.5 });
+        counters.forEach(c => counterObserver.observe(c));
 
-    // A: Agar site jaldi load ho jaye (Normal way)
-    window.addEventListener('load', revealSite);
+        // E. Form & Menu Logic
+        function openMenu() { document.getElementById('menu-overlay').classList.remove('hidden'); gsap.to("#menu-overlay", { opacity: 1, duration: 0.5 }); }
+        function closeMenu() { gsap.to("#menu-overlay", { opacity: 0, duration: 0.4, onComplete: () => document.getElementById('menu-overlay').classList.add('hidden') }); }
 
-    // B: SAFETY NET (Agar koi image stuck ho jaye, toh 3 sec baad reveal kar do)
-    setTimeout(revealSite, 3000); 
-
-    // 4. Scroll Reveal Animations
-    gsap.utils.toArray(".gsap-reveal").forEach(el => {
-        gsap.from(el, { 
-            scrollTrigger: { 
-                trigger: el, 
-                start: "top 85%" 
-            }, 
-            y: 60, 
-            opacity: 0, 
-            duration: 1.2, 
-            ease: "power3.out" 
-        });
-    });
-
-    // 5. Counters, Menu etc. (Aapka baki code waise hi rahega)
-    const counters = document.querySelectorAll('.counter');
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = +entry.target.getAttribute('data-target');
-                const update = () => {
-                    const current = +entry.target.innerText.replace(/,/g, '');
-                    const speed = target / 100;
-                    if (current < target) {
-                        entry.target.innerText = Math.ceil(current + speed).toLocaleString();
-                        setTimeout(update, 25);
-                    } else { entry.target.innerText = target.toLocaleString(); }
-                };
-                update();
-                counterObserver.unobserve(entry.target);
+        document.querySelector('form')?.addEventListener('submit', function(e) {
+            const name = this.querySelector('input[type="text"]')?.value;
+            const phone = this.querySelector('input[type="tel"]')?.value;
+            if(name && phone) {
+                const waUrl = `https://wa.me/91XXXXXXXXXX?text=Hello! I am *${name}*. I applied via IceBug website. My Contact: ${phone}`;
+                setTimeout(() => { window.open(waUrl, '_blank'); }, 500);
             }
         });
-    }, { threshold: 0.5 });
-    counters.forEach(c => counterObserver.observe(c));
 
-    function openMenu() { document.getElementById('menu-overlay').classList.remove('hidden'); gsap.to("#menu-overlay", { opacity: 1, duration: 0.5 }); }
-    function closeMenu() { gsap.to("#menu-overlay", { opacity: 0, duration: 0.4, onComplete: () => document.getElementById('menu-overlay').classList.add('hidden') }); }
-</script>
-<a href="https://wa.me/91XXXXXXXXXX" target="_blank" 
-   class="fixed bottom-8 right-8 z-[999] bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(37,211,102,0.3)] hover:scale-110 transition-transform duration-300">
-    <i class="fab fa-whatsapp text-3xl"></i>
-    <span class="absolute -top-1 -right-1 flex h-4 w-4">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-4 w-4 bg-gold"></span>
-    </span>
-</a>
-
-<script>
-    // Ye script bina kisi ID ke aapke pehle 'Form' ko detect kar legi
-    document.querySelector('form')?.addEventListener('submit', function(e) {
-        const nameInput = this.querySelector('input[type="text"]');
-        const phoneInput = this.querySelector('input[type="tel"]');
-        
-        if(nameInput && phoneInput) {
-            const name = nameInput.value;
-            const phone = phoneInput.value;
-            const adminNumber = "91XXXXXXXXXX"; // <-- Apna number yahan dalo
-            
-            const text = `Hello IceBug Estate! %0A%0AI am *${name}*. I have just applied for access via the website.%0A%0A*My Connectivity:* ${phone}`;
-            const waUrl = `https://wa.me/${adminNumber}?text=${text}`;
-
-            setTimeout(() => {
-                window.open(waUrl, '_blank');
-            }, 1000);
-        }
-    });
-
-    // Tab Title Change Logic (Engagement)
-    let docTitle = document.title;
-    window.addEventListener("blur", () => { document.title = "Evolution Awaits... | IceBug"; });
-    window.addEventListener("focus", () => { document.title = docTitle; });
-</script>
-
+        // Tab Title Change
+        let docTitle = document.title;
+        window.addEventListener("blur", () => { document.title = "Evolution Awaits... | IceBug"; });
+        window.addEventListener("focus", () => { document.title = docTitle; });
+    </script>
 </body>
 </html>

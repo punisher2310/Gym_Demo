@@ -525,32 +525,36 @@
         <div class="text-center border-t border-white/5 pt-12">
             <p class="text-[10px] text-white/20 uppercase tracking-[0.5em] font-bold">© 2026 IceBug Estate • Built for the 1%</p>
         </div>
+    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" 
+       class="fixed bottom-8 right-8 z-[999] bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
     <script>
-        // 1. Plugins Register
+           console.log("ICEBUG VERSION 3.0 LIVE");
+        // A. Plugins Register
         gsap.registerPlugin(ScrollTrigger);
 
-        // 2. Loader Kill Logic (Fail-Safe)
+        // B. Loader Control
         function revealIceBug() {
             const loader = document.getElementById('loader');
-            if (loader && loader.style.display !== 'none') {
-                gsap.to("#loader", { 
-                    opacity: 0, 
-                    duration: 1, 
-                    ease: "power4.inOut", 
-                    onComplete: () => {
-                        loader.style.display = 'none';
-                        startMainAnimations();
-                    }
-                });
+            if (loader) {
+                console.log("Revealing site..."); // Debugging ke liye
+                loader.style.transition = "opacity 1s ease";
+                loader.style.opacity = "0";
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    startAnimations();
+                }, 1000);
             }
         }
 
-        // Kab hatana hai? (Jab load ho ya 3.5 sec baad)
+        // Safety: Jab site load ho ya 4 sec baad
         window.addEventListener('load', revealIceBug);
-        setTimeout(revealIceBug, 3500); 
+        setTimeout(revealIceBug, 4000); 
 
-        // 3. All Animations
-        function startMainAnimations() {
+        // C. Animations Logic
+        function startAnimations() {
             gsap.from(".hero-fade", { y: 100, opacity: 0, stagger: 0.2, duration: 1.5, ease: "power4.out" });
             
             gsap.utils.toArray(".gsap-reveal").forEach(el => {
@@ -560,14 +564,15 @@
                 });
             });
 
+            // Lenis Smooth Scroll
             try {
                 const lenis = new Lenis();
                 function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
                 requestAnimationFrame(raf);
-            } catch(e) { console.log("Lenis skipped."); }
+            } catch(e) { console.log("Lenis skip"); }
         }
 
-        // 4. Counters Logic
+        // D. Counters Logic
         const counters = document.querySelectorAll('.counter');
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -588,19 +593,9 @@
         }, { threshold: 0.5 });
         counters.forEach(c => counterObserver.observe(c));
 
-        // 5. Menu & Form Logic
-        function openMenu() { 
-            const menu = document.getElementById('menu-overlay');
-            if(menu) { menu.classList.remove('hidden'); gsap.to(menu, { opacity: 1, duration: 0.5 }); }
-        }
-        function closeMenu() { 
-            const menu = document.getElementById('menu-overlay');
-            if(menu) { gsap.to(menu, { opacity: 0, duration: 0.4, onComplete: () => menu.classList.add('hidden') }); }
-        }
-
-        // Form Submit Fix
+        // E. Form Submit & Tab Logic
         document.querySelector('form')?.addEventListener('submit', function(e) {
-            e.preventDefault(); // <-- Ye line sabse zaroori hai refresh rokne ke liye
+            e.preventDefault();
             const name = this.querySelector('input[type="text"]')?.value;
             const phone = this.querySelector('input[type="tel"]')?.value;
             if(name && phone) {
@@ -609,10 +604,12 @@
             }
         });
 
-        // Tab Title Change
         let docTitle = document.title;
         window.addEventListener("blur", () => { document.title = "Evolution Awaits... | IceBug"; });
         window.addEventListener("focus", () => { document.title = docTitle; });
+
+        function openMenu() { document.getElementById('menu-overlay')?.classList.remove('hidden'); }
+        function closeMenu() { document.getElementById('menu-overlay')?.classList.add('hidden'); }
     </script>
 </body>
 </html>

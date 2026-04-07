@@ -19,10 +19,10 @@
         .text-gold { color: var(--gold); }
         .bg-gold { background-color: var(--gold); }
         #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .gsap-reveal { opacity: 0; }
+        .gsap-reveal { opacity: 0; transform: translateY(30px); }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
-        .animate-marquee { display: flex; width: 200%; animation: marquee 20s linear infinite; }
+        .animate-marquee { display: flex; width: 200%; animation: marquee 25s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 </head>
@@ -34,20 +34,14 @@
 
     <div id="side-menu" class="fixed inset-0 z-[1000] bg-black/98 backdrop-blur-2xl translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] flex flex-col p-10 md:p-24">
         <button onclick="toggleMenu()" class="absolute top-10 right-10 text-gold text-[10px] font-bold uppercase tracking-[0.5em] hover:text-white transition-colors">Close // X</button>
-        <div class="grid md:grid-cols-2 gap-20 h-full items-center">
-            <nav class="flex flex-col gap-6 md:gap-10">
-                <a href="#gallery" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4">01 Interior</a>
-                <a href="#mentors" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4">02 Mentors</a>
-                <a href="#arsenal" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4">03 Arsenal</a>
-                <a href="#fuel" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4">04 Bio-Fuel</a>
-                <a href="#fees" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4">05 Membership</a>
-                <a href="#vision" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4">06 Vision</a>
-            </nav>
-            <div class="hidden md:flex flex-col border-l border-white/5 pl-24 text-white">
-                <h4 class="text-gold font-bold uppercase tracking-[0.6em] text-[10px] mb-8 italic text-nowrap">Status: Elite Entry Only</h4>
-                <p class="text-white/30 text-[11px] uppercase tracking-[0.4em] leading-loose">Swaroop Nagar, Kanpur<br>Private Strength Estate<br>Built for the 1%</p>
-            </div>
-        </div>
+        <nav class="flex flex-col gap-6 md:gap-10 mt-20">
+            <a href="#gallery" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">01 Interior</a>
+            <a href="#mentors" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">02 Mentors</a>
+            <a href="#arsenal" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">03 Arsenal</a>
+            <a href="#fuel" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">04 Bio-Fuel</a>
+            <a href="#fees" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">05 Membership</a>
+            <a href="#vision" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">06 Vision</a>
+        </nav>
     </div>
 
     <nav class="fixed top-0 w-full z-50 flex justify-between items-center p-8 mix-blend-difference">
@@ -69,9 +63,9 @@
             <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"></div>
         </div>
         <div class="max-w-7xl relative z-10">
-            <p class="hero-fade text-gold font-bold text-[10px] uppercase tracking-[0.5em] mb-10">Swaroop Nagar // Establishment 2026</p>
+            <p class="hero-fade text-gold font-bold text-[10px] uppercase tracking-[0.5em] mb-10">Swaroop Nagar // Estate 2026</p>
             <h1 class="hero-fade font-display text-7xl md:text-[11rem] font-bold uppercase tracking-tighter leading-[0.85] text-white">OWN YOUR <br> <span class="text-gold italic font-medium">POWER.</span></h1>
-            <p class="hero-fade text-white/50 max-w-sm uppercase tracking-widest text-[11px] mt-10 leading-relaxed font-medium">Kanpur's most exclusive private gym facility. High-performance training for the elite patrons who settle for nothing but the best.</p>
+            <p class="hero-fade text-white/50 max-w-sm uppercase tracking-widest text-[11px] mt-10 leading-relaxed font-medium font-bold">Kanpur's most exclusive private strength estate. Built for the 1% who settle for nothing but excellence.</p>
         </div>
     </section>
 
@@ -79,7 +73,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="mb-24 gsap-reveal">
                 <h2 class="font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter text-white">The <span class="text-gold italic font-medium">Estate.</span></h2>
-                <p class="text-gold/40 mt-4 uppercase tracking-[0.4em] text-[10px] font-bold">World-Class Equipment // Elite Interior</p>
+                <p class="text-gold/40 mt-4 uppercase tracking-[0.4em] text-[10px] font-bold">Private Ambience // Elite Gear</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
                 <div class="md:col-span-8 overflow-hidden h-[500px] relative group gsap-reveal">
@@ -87,8 +81,8 @@
                     <div class="absolute bottom-8 left-8 text-white font-display text-2xl font-bold opacity-0 group-hover:opacity-100 transition-all uppercase tracking-tighter">The Main Forge</div>
                 </div>
                 <div class="md:col-span-4 overflow-hidden h-[500px] relative group gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale transition-transform duration-1000 group-hover:scale-110 group-hover:grayscale-0">
-                    <div class="absolute bottom-8 left-8 text-white font-display text-2xl font-bold opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-tighter">Elite Gear</div>
+                    <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale transition-transform duration-1000 group-hover:scale-110 group-hover:grayscale-0">
+                    <div class="absolute bottom-8 left-8 text-white font-display text-2xl font-bold opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-tighter">Recovery Zone</div>
                 </div>
             </div>
         </div>
@@ -96,64 +90,47 @@
 
     <section id="mentors" class="py-32 px-6 md:px-20 bg-[#050505]">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-24 gsap-reveal">
-                <h2 class="font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter text-white">The <span class="text-gold italic font-medium">Mentors.</span></h2>
-            </div>
+            <h2 class="gsap-reveal font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter mb-24 text-white">The <span class="text-gold italic font-medium">Mentors.</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
                 <div class="group gsap-reveal">
                     <div class="aspect-[4/5] bg-white/5 overflow-hidden mb-8 border border-white/10 group-hover:border-gold/30 transition-all duration-700">
                         <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fe?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
-                    <h4 class="text-white font-display text-3xl font-bold uppercase mb-2">Lead Mentor</h4>
-                    <p class="text-gold font-bold text-[10px] uppercase tracking-[0.4em]">Strength & Performance</p>
+                    <h4 class="text-white font-display text-3xl font-bold uppercase mb-2">Strength Lead</h4>
+                    <p class="text-gold font-bold text-[10px] uppercase tracking-[0.4em]">Mastering Resistance Protocols</p>
                 </div>
                 <div class="group gsap-reveal">
                     <div class="aspect-[4/5] bg-white/5 overflow-hidden mb-8 border border-white/10 group-hover:border-gold/30 transition-all duration-700">
                         <img src="https://images.unsplash.com/photo-1534367507873-ee2f79da9326?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
                     <h4 class="text-white font-display text-3xl font-bold uppercase mb-2">Technical Director</h4>
-                    <p class="text-gold font-bold text-[10px] uppercase tracking-[0.4em]">Nutrition & Recovery</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="fuel" class="py-32 px-6 md:px-20 bg-black border-t border-white/5">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
-            <div class="md:w-1/2 gsap-reveal">
-                <h2 class="font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-none mb-10 text-white">
-                    Bio-Fuel <br><span class="text-gold italic font-medium text-nowrap">Station.</span>
-                </h2>
-                <p class="text-white/40 text-[11px] uppercase tracking-[0.4em] leading-relaxed mb-12">
-                    Personalized metabolic protocols. 100% performance, zero filler. Engineered by biological intelligence for the elite recovery of Kanpur's patrons.
-                </p>
-                <div class="flex gap-12">
-                    <div>
-                        <h4 class="text-gold font-bold text-3xl font-display italic mb-1">98%</h4>
-                        <p class="text-white/20 text-[8px] uppercase tracking-widest font-bold">Absorption Rate</p>
-                    </div>
-                    <div>
-                        <h4 class="text-gold font-bold text-3xl font-display italic mb-1">0%</h4>
-                        <p class="text-white/20 text-[8px] uppercase tracking-widest font-bold">Processed Sugars</p>
-                    </div>
-                </div>
-            </div>
-            <div class="md:w-1/2 w-full aspect-video bg-white/5 border border-white/10 relative overflow-hidden group gsap-reveal">
-                <img src="https://images.unsplash.com/photo-1579722820308-d74e571900a9?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-opacity duration-700">
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <span class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] border border-gold/30 px-6 py-3 bg-black/50">View Protocol</span>
+                    <p class="text-gold font-bold text-[10px] uppercase tracking-[0.4em]">Anatomical Alignment & Bio-Fuel</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <section id="fuel" class="py-32 px-6 md:px-20 bg-black">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
+            <div class="md:w-1/2 gsap-reveal">
+                <h2 class="font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter mb-10 text-white leading-none">Bio-Fuel <br><span class="text-gold italic font-medium">Station.</span></h2>
+                <p class="text-white/40 text-[11px] uppercase tracking-[0.4em] leading-relaxed mb-12">Personalized metabolic protocols. 100% absorption, zero filler. Engineered for the elite recovery of Swaroop Nagar's patrons.</p>
+                <div class="flex gap-12">
+                    <div><h4 class="text-gold font-bold text-3xl italic">98%</h4><p class="text-white/20 text-[8px] uppercase tracking-widest font-bold">Performance</p></div>
+                    <div><h4 class="text-gold font-bold text-3xl italic">0%</h4><p class="text-white/20 text-[8px] uppercase tracking-widest font-bold">Compromise</p></div>
+                </div>
+            </div>
+            <div class="md:w-1/2 w-full aspect-square bg-white/5 border border-white/10 relative overflow-hidden group gsap-reveal">
+                <img src="https://images.unsplash.com/photo-1579722820308-d74e571900a9?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-all duration-700">
+                <div class="absolute inset-0 flex items-center justify-center"><span class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] border border-gold/30 px-6 py-3">Nutrition Protocol</span></div>
+            </div>
+        </div>
+    </section>
+
     <section id="arsenal" class="py-32 bg-[#050505] overflow-hidden border-y border-white/5">
-        <div class="animate-marquee whitespace-nowrap flex gap-12 md:gap-24 items-center">
-            <span class="font-display text-6xl md:text-9xl font-bold opacity-10 uppercase text-white">Hammer Strength //</span>
-            <span class="font-display text-6xl md:text-9xl font-bold opacity-10 uppercase text-gold italic">Life Fitness //</span>
-            <span class="font-display text-6xl md:text-9xl font-bold opacity-10 uppercase text-white">Rogue Fitness //</span>
-            <span class="font-display text-6xl md:text-9xl font-bold opacity-10 uppercase text-gold italic">Eleiko //</span>
-            <span class="font-display text-6xl md:text-9xl font-bold opacity-10 uppercase text-white">Hammer Strength //</span>
-            <span class="font-display text-6xl md:text-9xl font-bold opacity-10 uppercase text-gold italic">Life Fitness //</span>
+        <div class="animate-marquee whitespace-nowrap flex gap-12 md:gap-24 items-center uppercase font-display text-6xl md:text-9xl font-bold opacity-10">
+            <span>Hammer Strength //</span><span class="text-gold italic">Life Fitness //</span><span>Rogue //</span><span class="text-gold italic">Eleiko //</span>
+            <span>Hammer Strength //</span><span class="text-gold italic">Life Fitness //</span><span>Rogue //</span><span class="text-gold italic">Eleiko //</span>
         </div>
     </section>
 
@@ -161,94 +138,46 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-24 gsap-reveal">
                 <h2 class="font-display text-5xl md:text-9xl font-bold uppercase tracking-tighter text-white">Membership</h2>
-                <p class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mt-6 italic">Investment in Evolution</p>
+                <p class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mt-6 italic">Access to the Private Circle</p>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="gsap-reveal border border-white/5 p-12 hover:bg-gold/5 transition-all duration-500 flex flex-col justify-between">
-                    <div>
-                        <p class="text-gold font-bold uppercase tracking-[0.4em] text-[9px] mb-12">03 Months Access</p>
-                        <h3 class="font-display text-5xl font-bold mb-10 text-white">₹35,000</h3>
-                        <ul class="text-white/30 text-[10px] uppercase space-y-4 tracking-widest mb-12">
-                            <li>Private Locker</li>
-                            <li>Standard Support</li>
-                            <li>Arsenal Access</li>
-                        </ul>
-                    </div>
-                    <button class="w-full border border-gold/30 py-4 text-gold font-bold uppercase tracking-[0.4em] text-[9px] hover:bg-gold hover:text-black transition-all">Select Protocol</button>
+                <div class="gsap-reveal border border-white/5 p-12 hover:bg-gold/5 transition-all">
+                    <p class="text-gold font-bold uppercase tracking-[0.4em] text-[9px] mb-12">03 Months Access</p>
+                    <h3 class="font-display text-5xl font-bold mb-10 text-white">₹35,000</h3>
+                    <ul class="text-white/30 text-[10px] uppercase space-y-4 tracking-widest mb-12"><li>Private Locker</li><li>Mentor Support</li><li>Standard Protocol</li></ul>
+                    <button class="w-full border border-gold/30 py-4 text-gold font-bold uppercase tracking-[0.4em] text-[9px] hover:bg-gold hover:text-black transition-all">Select</button>
                 </div>
-
-                <div class="gsap-reveal border-2 border-gold/50 p-12 bg-gold/5 scale-105 relative z-10 flex flex-col justify-between">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold text-black px-4 py-1 text-[8px] font-bold uppercase tracking-[0.3em]">Estate Preferred</div>
-                    <div>
-                        <p class="text-gold font-bold uppercase tracking-[0.4em] text-[9px] mb-12">12 Months Access</p>
-                        <h3 class="font-display text-6xl font-bold mb-10 text-white">₹1,10,000</h3>
-                        <ul class="text-white/50 text-[10px] uppercase space-y-4 tracking-widest mb-12 font-bold">
-                            <li class="text-gold">✓ Personal Concierge</li>
-                            <li class="text-gold">✓ Priority Arsenal</li>
-                            <li class="text-gold">✓ Bio-Fuel Protocol</li>
-                            <li>Recovery Lounge</li>
-                        </ul>
-                    </div>
-                    <button class="w-full bg-gold text-black font-bold py-4 text-[10px] uppercase tracking-[0.4em]">Apply for Access</button>
+                <div class="gsap-reveal border-2 border-gold/50 p-12 bg-gold/5 scale-105 relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold text-black px-4 py-1 text-[8px] font-bold uppercase tracking-[0.3em]">Preferred Access</div>
+                    <p class="text-gold font-bold uppercase tracking-[0.4em] text-[9px] mb-12">12 Months Access</p>
+                    <h3 class="font-display text-6xl font-bold mb-10 text-white">₹1,10,000</h3>
+                    <ul class="text-white/50 text-[10px] uppercase space-y-4 tracking-widest mb-12 font-bold"><li class="text-gold italic">Concierge Protocol</li><li class="text-gold italic">Bio-Fuel Direct</li><li>Priority Arsenal</li></ul>
+                    <button class="w-full bg-gold text-black font-bold py-4 text-[10px] uppercase tracking-[0.4em]">Apply for Entry</button>
                 </div>
-
-                <div class="gsap-reveal border border-white/5 p-12 hover:bg-gold/5 transition-all duration-500 flex flex-col justify-between">
-                    <div>
-                        <p class="text-gold font-bold uppercase tracking-[0.4em] text-[9px] mb-12">01 Month Access</p>
-                        <h3 class="font-display text-5xl font-bold mb-10 text-white">₹12,500</h3>
-                        <ul class="text-white/30 text-[10px] uppercase space-y-4 tracking-widest mb-12">
-                            <li>Limited Support</li>
-                            <li>Arsenal Access</li>
-                        </ul>
-                    </div>
-                    <button class="w-full border border-gold/30 py-4 text-gold font-bold uppercase tracking-[0.4em] text-[9px] hover:bg-gold hover:text-black transition-all">Select Protocol</button>
+                <div class="gsap-reveal border border-white/5 p-12 hover:bg-gold/5 transition-all">
+                    <p class="text-gold font-bold uppercase tracking-[0.4em] text-[9px] mb-12">01 Month Access</p>
+                    <h3 class="font-display text-5xl font-bold mb-10 text-white">₹12,500</h3>
+                    <ul class="text-white/30 text-[10px] uppercase space-y-4 tracking-widest mb-12"><li>Arsenal Access</li><li>Standard Protocol</li></ul>
+                    <button class="w-full border border-gold/30 py-4 text-gold font-bold uppercase tracking-[0.4em] text-[9px] hover:bg-gold hover:text-black transition-all">Select</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="vision" class="py-40 bg-black text-center border-t border-white/5 relative overflow-hidden">
-        <div class="font-display font-bold text-6xl md:text-[15vw] text-white/[0.03] uppercase select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">ICEBUG</div>
-        
+    <footer id="vision" class="py-40 bg-black text-center border-t border-white/5 relative">
+        <div class="font-display font-bold text-6xl md:text-[15vw] text-white/[0.03] uppercase select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">ICEBUG</div>
         <div class="relative z-10 max-w-4xl mx-auto px-6 gsap-reveal">
-            <h2 class="font-display text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-10 text-white">
-                Kanpur's <span class="text-gold italic font-medium">Private Strength Circle.</span>
-            </h2>
-            <p class="text-white/20 uppercase tracking-[0.5em] text-[9px] leading-loose mb-20 font-bold">
-                IceBug Estate is a curated facility. Membership is an identity, not just a pass.
-            </p>
-            
-            <div class="flex flex-col md:flex-row justify-between items-center gap-10 pt-20 border-t border-white/5">
-                <div class="text-left">
-                    <p class="text-[9px] text-white/20 uppercase tracking-[0.5em] mb-2 font-bold">Developed By</p>
-                    <p class="text-gold font-bold uppercase tracking-[0.3em] text-xs">IceBug Studios</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-[9px] text-white/20 uppercase tracking-[0.5em] mb-2 font-bold">Location</p>
-                    <p class="text-white font-bold uppercase tracking-[0.3em] text-xs">Swaroop Nagar, Kanpur</p>
-                </div>
-                <div class="text-right">
-                    <p class="text-[9px] text-white/20 uppercase tracking-[0.5em] mb-2 font-bold">Director</p>
-                    <p class="text-white font-bold uppercase tracking-[0.3em] text-xs">Utkarsh Tiwari</p>
-                </div>
-            </div>
+            <h2 class="font-display text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-10 text-white">Kanpur's <span class="text-gold italic font-medium">Private Strength Circle.</span></h2>
+            <p class="text-white/20 uppercase tracking-[0.4em] text-[9px] leading-loose mb-20 font-bold italic">Membership is an identity, not just a pass. Built by IceBug Studios // Directed by Utkarsh Tiwari</p>
         </div>
     </footer>
 
     <script>
-        // 1. REGISTER PLUGINS
         gsap.registerPlugin(ScrollTrigger);
-
-        // 2. SMOOTH SCROLL (LENIS)
         const lenis = new Lenis();
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 3. MENU TOGGLE ENGINE
         function toggleMenu() {
             const menu = document.getElementById('side-menu');
             const isHidden = menu.classList.contains('translate-x-full');
@@ -262,53 +191,24 @@
             }
         }
 
-        // 4. LOADER & HERO REVEAL SYNC
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
-            if (loader) {
-                setTimeout(() => {
-                    gsap.to(loader, { 
-                        opacity: 0, 
-                        duration: 1.2, 
-                        onComplete: () => {
-                            loader.style.display = 'none';
-                            // Reveal Hero smoothly
-                            gsap.from(".hero-fade", { 
-                                y: 80, 
-                                opacity: 0, 
-                                stagger: 0.15, 
-                                duration: 1.5, 
-                                ease: "power4.out" 
-                            });
-                        }
-                    });
-                }, 600);
-            }
+            gsap.to(loader, { opacity: 0, duration: 1, onComplete: () => {
+                loader.style.display = 'none';
+                gsap.from(".hero-fade", { y: 80, opacity: 0, stagger: 0.15, duration: 1.5, ease: "power4.out" });
+            }});
         });
 
-        // 5. GLOBAL SCROLL REVEAL (The Smooth Fade-In)
         gsap.utils.toArray(".gsap-reveal").forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 90%",
-                    toggleActions: "play none none none"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1.2,
-                ease: "power3.out"
-            });
+            gsap.from(el, { scrollTrigger: { trigger: el, start: "top 90%" }, y: 50, opacity: 0, duration: 1.2, ease: "power3.out" });
         });
 
-        // 6. DYNAMIC TAB TITLE
         let siteTitle = document.title;
-        window.onblur = () => { document.title = "Your Evolution Awaits..."; };
+        window.onblur = () => { document.title = "Your Evolution Awaits... | IceBug"; };
         window.onfocus = () => { document.title = siteTitle; };
 
-        // 7. CONSOLE SIGNATURE
-        console.log("%c ICEBUG ESTATE | PROJECT STATUS: FULLY DEPLOYED ", "background: #c5a059; color: #000; font-weight: bold; padding: 10px; border-radius: 4px;");
-        console.log("%c Engineered by Utkarsh Tiwari | IceBug Studios ", "color: #ffffff; background: #333; padding: 5px;");
+        console.log("%c ICEBUG ESTATE | V20.0 FULL DEPLOYMENT SUCCESSFUL ", "background: #c5a059; color: #000; font-weight: bold; padding: 10px; border-radius: 4px;");
+        console.log("%c Designed & Engineered by IceBug Studios // Utkarsh Tiwari ", "color: #ffffff; background: #333; padding: 5px;");
     </script>
 </body>
 </html>

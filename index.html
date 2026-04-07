@@ -3,44 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IceBug Estate | Kanpur's Best Gym</title>
+    <title>IceBug Estate | Kanpur's Private Strength Circle</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <style>
         :root { --gold: #c5a059; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .font-display { font-family: 'Clash Display', sans-serif; }
         .text-gold { color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        
         #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .gsap-reveal { opacity: 0; }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        
+        /* Smooth Scroll Helper */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        
+        .gsap-reveal { opacity: 0; transform: translateY(30px); }
+        
+        /* Marquee Animation for Arsenal */
+        .animate-marquee { display: flex; width: 200%; animation: marquee 25s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 </head>
 <body>
 
     <div id="loader">
-        <h1 class="font-display text-4xl font-bold animate-pulse text-white uppercase">ICEBUG<span class="text-gold">.</span></h1>
+        <h1 class="font-display text-4xl font-bold tracking-tighter animate-pulse text-white uppercase">
+            ICEBUG ESTATE<span class="text-gold">.</span>
+        </h1>
     </div>
 
-    <div id="side-menu" class="fixed inset-0 z-[1000] bg-black/98 translate-x-full transition-transform duration-700 flex flex-col p-10 md:p-24">
-        <button onclick="toggleMenu()" class="absolute top-10 right-10 text-gold font-bold uppercase tracking-[0.3em]">BACK // X</button>
-        <nav class="flex flex-col gap-8 mt-20">
-            <a href="#gallery" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">Interior Photos</a>
-            <a href="#mentors" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">Trainers Intro</a>
-            <a href="#diet" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">Diet Plan</a>
-            <a href="#arsenal" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">Gym Machines</a>
-            <a href="#fees" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">Offers & Fees</a>
-            <a href="#trust" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all">Why Trust Us?</a>
-        </nav>
+    <div id="side-menu" class="fixed inset-0 z-[1000] bg-black/98 backdrop-blur-2xl translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] flex flex-col p-10 md:p-24">
+        <button onclick="toggleMenu()" class="absolute top-10 right-10 text-gold text-[10px] font-bold uppercase tracking-[0.5em] hover:text-white transition-colors">
+            Close // X
+        </button>
+        <div class="grid md:grid-cols-2 gap-20 h-full items-center">
+            <nav class="flex flex-col gap-6 md:gap-10">
+                <a href="#gallery" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4 italic">01. Interior</a>
+                <a href="#mentors" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4 italic">02. Mentors</a>
+                <a href="#diet" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4 italic">03. Diet Plan</a>
+                <a href="#arsenal" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4 italic">04. Gym Machines</a>
+                <a href="#fees" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4 italic">05. Membership</a>
+                <a href="#trust" onclick="toggleMenu()" class="font-display text-4xl md:text-7xl font-bold uppercase hover:text-gold transition-all hover:translate-x-4 italic">06. Why Us?</a>
+            </nav>
+            <div class="hidden md:flex flex-col border-l border-white/5 pl-20">
+                <h4 class="text-gold font-bold uppercase tracking-[0.5em] text-xs mb-6 italic">Status: Elite Entry Only</h4>
+                <p class="text-white/20 text-[11px] uppercase tracking-[0.3em] leading-loose">
+                    Swaroop Nagar, Kanpur<br>Private Strength Estate<br>Built for the 1%
+                </p>
+            </div>
+        </div>
     </div>
 
     <nav class="fixed top-0 w-full z-50 flex justify-between items-center p-8 mix-blend-difference">
-        <div class="font-display font-bold text-2xl">ICEBUG<span class="text-gold">.</span></div>
-        <button onclick="toggleMenu()" class="text-gold font-bold uppercase tracking-[0.2em] border border-gold/30 px-6 py-2 hover:bg-gold hover:text-black transition-all">Menu</button>
+        <div class="font-display font-bold text-2xl tracking-tighter text-white uppercase">
+            ICEBUG<span class="text-gold">.</span>
+        </div>
+        <button onclick="toggleMenu()" class="group flex items-center gap-4 text-gold text-[10px] font-bold uppercase tracking-[0.3em] border border-gold/30 px-6 py-2 hover:bg-gold hover:text-black transition-all duration-500">
+            <span>Menu Access</span>
+            <div class="flex flex-col gap-1">
+                <span class="w-4 h-[1px] bg-gold group-hover:bg-black transition-colors"></span>
+                <span class="w-2 h-[1px] bg-gold group-hover:bg-black transition-colors self-end"></span>
+            </div>
+        </button>
     </nav>
 
     <section class="h-screen flex items-center px-6 md:px-20 relative overflow-hidden">
@@ -48,155 +83,19 @@
             <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-40">
                 <source src="gym-hero.mp4" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"></div>
         </div>
         <div class="max-w-7xl relative z-10">
-            <h1 class="hero-fade font-display text-7xl md:text-[10rem] font-bold uppercase tracking-tighter leading-none">OWN YOUR <br> <span class="text-gold italic">POWER.</span></h1>
-            <p class="hero-fade text-white/50 mt-10 uppercase tracking-widest text-xs font-bold">Kanpur ka sabse exclusive private gym. High-performance training sirf unke liye jo best chahte hain.</p>
-        </div>
-    </section>
-
-    <section id="gallery" class="py-32 px-6 md:px-20 bg-black">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="gsap-reveal font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter mb-20 text-white">The <span class="text-gold">Estate.</span></h2>
-            <div class="grid md:grid-cols-12 gap-6">
-                <div class="md:col-span-8 h-[450px] overflow-hidden group gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
-                    <div class="absolute bottom-6 left-6 text-white font-display text-xl font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">Main Workout Area</div>
-                </div>
-                <div class="md:col-span-4 h-[450px] overflow-hidden group gsap-reveal">
-                    <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
-                    <div class="absolute bottom-6 left-6 text-white font-display text-xl font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">Elite Equipment</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="mentors" class="py-32 px-6 md:px-20 bg-[#080808]">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="gsap-reveal font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter mb-20">The <span class="text-gold">Mentors.</span></h2>
-            <div class="grid md:grid-cols-2 gap-16">
-                <div class="gsap-reveal">
-                    <h3 class="text-gold font-display text-3xl font-bold uppercase mb-4">Lead Coach</h3>
-                    <p class="text-white/40 uppercase tracking-widest text-[10px] leading-loose">Inhe Strength aur Performance training mein master level ka experience hai. Kanpur ke best athletes ko guide karte hain.</p>
-                </div>
-                <div class="gsap-reveal">
-                    <h3 class="text-gold font-display text-3xl font-bold uppercase mb-4">Technical Head</h3>
-                    <p class="text-white/40 uppercase tracking-widest text-[10px] leading-loose">Biology aur Body Alignment ke expert. Inka kaam hai aapki recovery aur posture ko perfect rakhna.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="diet" class="py-32 px-6 md:px-20 bg-black border-t border-white/5">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
-            <div class="md:w-1/2 gsap-reveal">
-                <h2 class="font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-none mb-10 text-white">
-                    Diet <br><span class="text-gold italic">Protocols.</span>
-                </h2>
-                <p class="text-white/40 text-[11px] uppercase tracking-[0.4em] leading-relaxed mb-12">
-                    Sirf workout se kuch nahi hoga. Hum aapko batayenge ki kya khana hai aur kab khana hai taaki results fast milein. No crash diets, sirf science-based nutrition.
+            <p class="hero-fade text-gold font-bold text-[10px] uppercase tracking-[0.5em] mb-10 italic">
+                Kanpur // Establishment 2026
+            </p>
+            <h1 class="hero-fade font-display text-7xl md:text-[11rem] font-bold uppercase tracking-tighter leading-[0.85] text-white">
+                OWN YOUR <br> <span class="text-gold italic font-medium text-nowrap">POWER.</span>
+            </h1>
+            <div class="hero-fade mt-16 flex flex-col md:flex-row gap-16 items-start md:items-center">
+                <p class="text-white/50 max-w-sm uppercase tracking-widest text-[11px] leading-relaxed font-bold">
+                    Kanpur ka sabse exclusive private gym. Hum bheed nahi, sirf quality results aur elite mahool dete hain.
                 </p>
-                <div class="flex gap-10">
-                    <div class="border-l border-gold/50 pl-6">
-                        <h4 class="text-gold font-bold text-2xl font-display">100%</h4>
-                        <p class="text-white/20 text-[8px] uppercase tracking-widest font-bold">Natural Results</p>
-                    </div>
-                </div>
-            </div>
-            <div class="md:w-1/2 w-full aspect-video bg-white/5 border border-white/10 gsap-reveal overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale opacity-50">
             </div>
         </div>
     </section>
-
-    <section id="arsenal" class="py-24 bg-[#050505] overflow-hidden border-y border-white/5">
-        <div class="flex gap-20 whitespace-nowrap animate-marquee">
-            <span class="font-display text-6xl md:text-8xl font-bold opacity-10 uppercase text-white">Hammer Strength // </span>
-            <span class="font-display text-6xl md:text-8xl font-bold opacity-10 uppercase text-gold italic text-nowrap">Life Fitness // </span>
-            <span class="font-display text-6xl md:text-8xl font-bold opacity-10 uppercase text-white">Rogue // </span>
-            <span class="font-display text-6xl md:text-8xl font-bold opacity-10 uppercase text-gold italic text-nowrap">Eleiko // </span>
-            <span class="font-display text-6xl md:text-8xl font-bold opacity-10 uppercase text-white">Hammer Strength // </span>
-            <span class="font-display text-6xl md:text-8xl font-bold opacity-10 uppercase text-gold italic text-nowrap">Life Fitness // </span>
-        </div>
-    </section>
-
-    <section id="fees" class="py-32 px-6 md:px-20 bg-black">
-        <div class="max-w-7xl mx-auto text-center mb-24 gsap-reveal">
-            <h2 class="font-display text-5xl md:text-9xl font-bold uppercase tracking-tighter text-white">Membership</h2>
-            <p class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mt-6 italic font-bold">Limited Access // Swaroop Nagar</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <div class="gsap-reveal border border-white/5 p-10 hover:bg-gold/5 transition-all">
-                <h3 class="text-gold font-bold uppercase tracking-widest text-xs mb-8 italic">03 Months Access</h3>
-                <p class="font-display text-5xl font-bold mb-10 text-white">₹35,000</p>
-                <button class="w-full border border-gold/30 py-4 text-gold font-bold uppercase tracking-[0.4em] text-[9px] hover:bg-gold hover:text-black transition-all">Enroll Now</button>
-            </div>
-            <div class="gsap-reveal border-2 border-gold/50 p-10 bg-gold/5 scale-105 relative">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold text-black px-4 py-1 text-[8px] font-bold uppercase">Best Value</div>
-                <h3 class="text-gold font-bold uppercase tracking-widest text-xs mb-8 italic">12 Months Access</h3>
-                <p class="font-display text-6xl font-bold mb-10 text-white">₹1,10,000</p>
-                <button class="w-full bg-gold text-black font-bold py-4 text-[10px] uppercase tracking-[0.4em]">Get Elite Access</button>
-            </div>
-            <div class="gsap-reveal border border-white/5 p-10 hover:bg-gold/5 transition-all">
-                <h3 class="text-gold font-bold uppercase tracking-widest text-xs mb-8 italic">01 Month Access</h3>
-                <p class="font-display text-5xl font-bold mb-10 text-white">₹12,500</p>
-                <button class="w-full border border-gold/30 py-4 text-gold font-bold uppercase tracking-[0.4em] text-[9px] hover:bg-gold hover:text-black transition-all">Enroll Now</button>
-            </div>
-        </div>
-    </section>
-
-    <footer id="trust" class="py-40 bg-black border-t border-white/5 text-center">
-        <div class="max-w-4xl mx-auto px-6 gsap-reveal">
-            <h2 class="font-display text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-10 text-white">
-                Directed By <span class="text-gold italic">Utkarsh Tiwari.</span>
-            </h2>
-            <p class="text-white/20 uppercase tracking-[0.5em] text-[9px] font-bold">Built by IceBug Studios // 2026 // Swaroop Nagar</p>
-        </div>
-    </footer>
-
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Menu Toggle Logic
-        function toggleMenu() {
-            const menu = document.getElementById('side-menu');
-            if(menu.classList.contains('translate-x-full')) {
-                menu.classList.remove('translate-x-full');
-                document.body.style.overflow = 'hidden';
-            } else {
-                menu.classList.add('translate-x-full');
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Fix for "Content not loading"
-        window.addEventListener('load', () => {
-            // Loader Kill
-            gsap.to("#loader", { opacity: 0, duration: 1, onComplete: () => {
-                document.getElementById('loader').style.display = 'none';
-                // Hero Reveal
-                gsap.from(".hero-fade", { y: 60, opacity: 0, stagger: 0.2, duration: 1.2, ease: "power4.out" });
-            }});
-
-            // Scroll Reveal Safety Check
-            gsap.utils.toArray(".gsap-reveal").forEach(el => {
-                gsap.fromTo(el, 
-                    { opacity: 0, y: 50 }, 
-                    { 
-                        opacity: 1, 
-                        y: 0, 
-                        duration: 1.2, 
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: el,
-                            start: "top 95%", // Load earlier
-                            toggleActions: "play none none none"
-                        }
-                    }
-                );
-            });
-        });
-    </script>
-</body>
-</html>
